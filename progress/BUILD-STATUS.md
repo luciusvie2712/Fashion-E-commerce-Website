@@ -163,3 +163,10 @@ All rows below were pushed to origin/main and verified with git ls-remote. No fo
 - The final checkpoint/run-guide commit is documentation only. Its exact SHA is returned in the handoff and can be obtained with `git log -1 --format=%H -- progress/BUILD-STATUS.md`. A commit cannot embed its own final hash without changing that hash.
 - Existing user work left unstaged: README.md, .gitignore, AGENTS.md and MASTER_PROMPT.md. Specification files under docs/ remain intact under the user's ignore rules.
 - No incomplete functional module is known. Verification limits remain explicit: Chromium only; selected manual visual checks; no exhaustive human screen-reader or professional linguistic review; no hosted deployment.
+
+## Follow-up: photorealistic imagery and larger typography
+- User requested replacement of product/section illustrations with generated realistic photographs and larger text across device layouts.
+- Typography module: body 18px desktop / 17px mobile; stronger heading scale; buttons/forms generally 16px; mobile product titles 16px and prices 15px; metadata/footers enlarged. Header switches earlier and mobile spacing was adjusted to prevent overflow.
+- npm.cmd run check PASS (typecheck/lint, 42 unit/component tests, production build). Responsive/a11y suite initially 7 PASS / 1 FAIL at 360px header; fixed spacing, isolated 360px rerun PASS. Other 390/768/1024/1280/1440 checks and axe audit PASS. Original README/instruction changes preserved.
+- Imagery still IN_PROGRESS: built-in ImageGen; original photorealistic campaign and per-product/color studio images are being generated, encoded to local WebP. No external runtime image service.
+- Commit: style(typography): enlarge text across responsive storefront layouts. Commit SHA/push verification recorded next.

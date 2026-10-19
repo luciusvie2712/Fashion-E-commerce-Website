@@ -48,7 +48,7 @@ a {
   --ink: #161616;
 }
 body {
-  font-size: 15px;
+  font-size: 18px;
   line-height: 1.6;
 }
 a {
@@ -70,21 +70,21 @@ p {
   margin-top: 0;
 }
 h1 {
-  font-size: clamp(32px, 4vw, 54px);
+  font-size: clamp(36px, 4.3vw, 60px);
   line-height: 1.12;
   letter-spacing: -0.045em;
   font-weight: 500;
   margin-bottom: 28px;
 }
 h2 {
-  font-size: clamp(24px, 2.5vw, 36px);
+  font-size: clamp(28px, 2.8vw, 42px);
   line-height: 1.2;
   letter-spacing: -0.03em;
   font-weight: 500;
   margin-bottom: 24px;
 }
 h3 {
-  font-size: 20px;
+  font-size: 23px;
   font-weight: 500;
 }
 img {
@@ -106,7 +106,7 @@ img {
   padding-bottom: 80px;
 }
 .eyebrow {
-  font-size: 11px;
+  font-size: 14px;
   letter-spacing: 0.18em;
   font-weight: 600;
   text-transform: uppercase;
@@ -115,7 +115,7 @@ img {
   color: var(--muted);
 }
 .small {
-  font-size: 12px;
+  font-size: 15px;
 }
 .button {
   display: inline-flex;
@@ -127,7 +127,7 @@ img {
   color: white;
   padding: 14px 24px;
   min-height: 48px;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.4;
   text-align: center;
   transition: background 0.18s;
@@ -166,7 +166,7 @@ img {
   text-underline-offset: 4px;
   min-height: 36px;
   padding: 0;
-  font-size: 13px;
+  font-size: 16px;
 }
 .actions {
   display: flex;
@@ -179,7 +179,7 @@ img {
   text-align: center;
   background: #333d33;
   color: #f0efe5;
-  font-size: 11px;
+  font-size: 14px;
   letter-spacing: 0.08em;
   padding: 9px 14px;
 }
@@ -196,13 +196,13 @@ img {
   z-index: 10;
 }
 .wordmark {
-  font-size: 32px;
+  font-size: 36px;
   letter-spacing: -2px;
   font-weight: 900;
   line-height: 1;
 }
 .wordmark span {
-  font-size: 12px;
+  font-size: 15px;
   letter-spacing: 0;
   vertical-align: top;
   margin-left: 3px;
@@ -210,7 +210,7 @@ img {
 .desktop-nav {
   display: flex;
   gap: 25px;
-  font-size: 12px;
+  font-size: 15px;
 }
 .desktop-nav a.active {
   border-bottom: 1px solid var(--ink);
@@ -224,7 +224,7 @@ img {
   border: none;
   background: transparent;
   width: 95px;
-  font-size: 11px;
+  font-size: 14px;
   padding: 8px 0;
   min-height: 40px;
 }
@@ -232,7 +232,7 @@ img {
   position: absolute;
   top: 0;
   right: 0;
-  font-size: 9px;
+  font-size: 12px;
   min-width: 15px;
   height: 15px;
   border-radius: 50%;
@@ -268,7 +268,7 @@ img {
   max-width: 800px;
 }
 .hero-copy h1 {
-  font-size: clamp(56px, 6.9vw, 108px);
+  font-size: clamp(60px, 7.2vw, 112px);
   white-space: pre-line;
   line-height: 0.98;
   letter-spacing: -0.065em;
@@ -276,7 +276,7 @@ img {
 }
 .hero-copy > p:not(.eyebrow) {
   max-width: 330px;
-  font-size: 14px;
+  font-size: 17px;
   color: #e9e9de;
   margin-bottom: 32px;
 }
@@ -284,7 +284,7 @@ img {
   position: absolute;
   bottom: 24px;
   right: 32px;
-  font-size: 10px;
+  font-size: 13px;
   letter-spacing: 0.14em;
 }
 .section-heading {
@@ -299,7 +299,7 @@ img {
   margin-bottom: 0;
 }
 .section-heading > a {
-  font-size: 12px;
+  font-size: 15px;
   white-space: nowrap;
 }
 .category-grid {
@@ -322,7 +322,7 @@ img {
 .category-grid span {
   display: block;
   margin-top: 12px;
-  font-size: 13px;
+  font-size: 16px;
 }
 .product-grid {
   display: grid;
@@ -361,15 +361,15 @@ img {
   background: #f8f7f4;
   color: #722e25;
   padding: 2px 8px;
-  font-size: 10px;
+  font-size: 13px;
 }
 .product-name {
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 500;
   display: block;
 }
 .price {
-  font-size: 13px;
+  font-size: 16px;
   margin: 5px 0;
 }
 .price del,
@@ -395,7 +395,7 @@ img {
   padding: 12%;
 }
 .editorial h2 {
-  font-size: clamp(32px, 4vw, 60px);
+  font-size: clamp(36px, 4.3vw, 64px);
   line-height: 1.05;
   max-width: 550px;
 }
@@ -406,7 +406,7 @@ img {
   padding-bottom: 70px;
 }
 .story h2 {
-  font-size: clamp(30px, 3.6vw, 50px);
+  font-size: clamp(34px, 3.8vw, 56px);
   line-height: 1.3;
 }
 .newsletter {
@@ -420,10 +420,10 @@ img {
 }
 .newsletter h2 {
   max-width: 450px;
-  font-size: 38px;
+  font-size: 42px;
 }
 .newsletter p {
-  font-size: 12px;
+  font-size: 15px;
 }
 .newsletter input {
   background: transparent;
@@ -448,17 +448,17 @@ footer {
   gap: 60px;
 }
 .footer-top > p {
-  font-size: 13px;
+  font-size: 16px;
   max-width: 240px;
 }
 .footer-links {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px 24px;
-  font-size: 12px;
+  font-size: 15px;
 }
 .demo-notice {
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.7;
   background: #eae9de;
   padding: 14px 18px;
@@ -470,15 +470,15 @@ footer {
   justify-content: space-between;
   border-top: 1px solid var(--border);
   padding-top: 18px;
-  font-size: 10px;
+  font-size: 13px;
   max-width: 1312px;
   margin: auto;
 }
 .footer-bottom .text-button {
-  font-size: 10px;
+  font-size: 13px;
 }
 .breadcrumb {
-  font-size: 12px;
+  font-size: 15px;
   color: var(--muted);
   margin-bottom: 34px;
 }
@@ -493,7 +493,7 @@ footer {
   margin-bottom: 0;
 }
 .catalog-title > p {
-  font-size: 12px;
+  font-size: 15px;
 }
 .catalog-toolbar {
   display: flex;
@@ -507,7 +507,7 @@ footer {
   display: flex;
   gap: 18px;
   align-items: center;
-  font-size: 12px;
+  font-size: 15px;
 }
 .catalog-toolbar select {
   width: 180px;
@@ -521,7 +521,7 @@ footer {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 .filters h2 {
-  font-size: 18px;
+  font-size: 21px;
 }
 .filters > label,
 .filters fieldset {
@@ -531,7 +531,7 @@ footer {
   margin-bottom: 8px;
 }
 .filters .button {
-  font-size: 12px;
+  font-size: 15px;
   padding: 10px;
   width: 100%;
 }
@@ -541,7 +541,7 @@ fieldset {
   margin: 24px 0;
 }
 legend {
-  font-size: 13px;
+  font-size: 16px;
   margin-bottom: 10px;
 }
 .chips {
@@ -553,7 +553,7 @@ legend {
   border: 1px solid var(--border);
   padding: 8px 12px;
   min-height: 42px;
-  font-size: 12px;
+  font-size: 15px;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -575,7 +575,7 @@ legend {
   display: flex !important;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+  font-size: 15px;
 }
 .check input {
   width: 16px;
@@ -589,7 +589,7 @@ legend {
   margin-top: 40px;
 }
 .pagination .button {
-  font-size: 12px;
+  font-size: 15px;
   padding: 10px 18px;
 }
 .collection-grid {
@@ -610,7 +610,7 @@ legend {
 }
 label {
   display: block;
-  font-size: 13px;
+  font-size: 16px;
 }
 input,
 select,
@@ -646,7 +646,7 @@ input[type='radio'] {
 }
 .field-error {
   color: #a52c22;
-  font-size: 13px;
+  font-size: 16px;
   margin-top: 8px;
 }
 .warning {
@@ -662,7 +662,7 @@ input[type='radio'] {
   margin: 20px 0;
 }
 .empty p {
-  font-size: 20px;
+  font-size: 23px;
 }
 .pdp {
   display: grid;
@@ -699,22 +699,22 @@ input[type='radio'] {
   top: 24px;
 }
 .purchase h1 {
-  font-size: 36px;
+  font-size: 40px;
   line-height: 1.2;
   margin-bottom: 15px;
 }
 .large-price {
-  font-size: 23px;
+  font-size: 26px;
 }
 .purchase > p {
-  font-size: 14px;
+  font-size: 17px;
 }
 .purchase fieldset {
   margin: 24px 0;
 }
 .purchase .section-heading {
   margin: 24px 0 12px;
-  font-size: 13px;
+  font-size: 16px;
 }
 .purchase-actions {
   margin: 18px 0 12px;
@@ -725,7 +725,7 @@ input[type='radio'] {
 .purchase details {
   border-top: 1px solid var(--border);
   padding: 17px 0;
-  font-size: 13px;
+  font-size: 16px;
 }
 .purchase summary {
   cursor: pointer;
@@ -747,10 +747,10 @@ input[type='radio'] {
   top: 24px;
 }
 .summary-panel h2 {
-  font-size: 24px;
+  font-size: 28px;
 }
 .summary-panel > p {
-  font-size: 12px;
+  font-size: 15px;
 }
 .summary {
   margin: 20px 0 28px;
@@ -760,7 +760,7 @@ input[type='radio'] {
   justify-content: space-between;
   gap: 12px;
   margin: 10px 0;
-  font-size: 14px;
+  font-size: 17px;
 }
 .summary dd {
   margin: 0;
@@ -771,7 +771,7 @@ input[type='radio'] {
   padding-top: 16px;
   margin-top: 20px;
   font-weight: 600;
-  font-size: 17px;
+  font-size: 20px;
 }
 .cart-row {
   display: grid;
@@ -782,14 +782,14 @@ input[type='radio'] {
   margin-bottom: 12px;
 }
 .cart-row h2 {
-  font-size: 18px;
+  font-size: 21px;
   margin-bottom: 4px;
 }
 .cart-row p {
   margin-bottom: 6px;
 }
 .cart-row > strong {
-  font-size: 13px;
+  font-size: 16px;
 }
 .review-grid {
   display: grid;
@@ -800,7 +800,7 @@ input[type='radio'] {
 .review-grid article {
   padding: 22px;
   background: #eeeee6;
-  font-size: 13px;
+  font-size: 16px;
 }
 .reviews > label {
   max-width: 180px;
@@ -827,7 +827,7 @@ input[type='radio'] {
   box-shadow: 0 24px 100px #0003;
 }
 .dialog-content h2 {
-  font-size: 24px;
+  font-size: 28px;
   padding-right: 24px;
 }
 .modal-close {
@@ -875,7 +875,7 @@ input[type='radio'] {
   display: flex;
   gap: 24px;
   flex-wrap: wrap;
-  font-size: 13px;
+  font-size: 16px;
   margin-top: 24px;
 }
 .account-layout {
@@ -887,7 +887,7 @@ input[type='radio'] {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  font-size: 14px;
+  font-size: 17px;
   align-items: flex-start;
 }
 .account-nav .active {
@@ -921,7 +921,7 @@ input[type='radio'] {
 .timeline li {
   position: relative;
   margin-bottom: 20px;
-  font-size: 13px;
+  font-size: 16px;
 }
 .timeline li:before {
   content: '';
@@ -936,7 +936,7 @@ input[type='radio'] {
 .timeline time {
   display: block;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
 }
 .reading {
   max-width: 860px;
@@ -946,12 +946,12 @@ input[type='radio'] {
 }
 .reading h2 {
   margin-top: 36px;
-  font-size: 26px;
+  font-size: 30px;
 }
 table {
   border-collapse: collapse;
   width: 100%;
-  font-size: 14px;
+  font-size: 17px;
 }
 th,
 td {
@@ -979,7 +979,7 @@ thead {
 }
 .status {
   display: inline-block;
-  font-size: 12px;
+  font-size: 15px;
   background: #e3e8d8;
   padding: 6px 10px;
   margin: 4px 4px 4px 0;
@@ -1015,7 +1015,7 @@ details {
   padding: 15px 0;
 }
 .account-layout h1 {
-  font-size: 40px;
+  font-size: 44px;
 }
 @media (min-width: 1600px) {
   .hero-copy {
@@ -1025,7 +1025,7 @@ details {
 @media (max-width: 1150px) {
   .desktop-nav {
     gap: 14px;
-    font-size: 11px;
+    font-size: 14px;
   }
   .header {
     padding: 12px 24px;
@@ -1074,7 +1074,7 @@ details {
     gap: 12px;
   }
   .wordmark {
-    font-size: 29px;
+    font-size: 32px;
   }
   .header > .wordmark {
     margin-right: auto;
@@ -1122,13 +1122,13 @@ details {
     width: 65%;
   }
   .hero-copy h1 {
-    font-size: 72px;
+    font-size: 78px;
   }
   .pdp {
     gap: 28px;
   }
   .purchase h1 {
-    font-size: 28px;
+    font-size: 32px;
   }
   .two-column {
     grid-template-columns: 1.3fr 1fr;
@@ -1160,10 +1160,10 @@ details {
 }
 @media (max-width: 600px) {
   body {
-    font-size: 14px;
+    font-size: 17px;
   }
   .announcement {
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: 0.02em;
   }
   .header {
@@ -1178,7 +1178,7 @@ details {
     width: 18px;
   }
   .header .wordmark {
-    font-size: 25px;
+    font-size: 28px;
     letter-spacing: -1.8px;
   }
   .header-actions {
@@ -1189,10 +1189,10 @@ details {
   }
   .header .language {
     width: 64px;
-    font-size: 9px;
+    font-size: 12px;
   }
   .header .badge {
-    font-size: 8px;
+    font-size: 11px;
     min-width: 12px;
     height: 12px;
     line-height: 12px;
@@ -1233,34 +1233,34 @@ details {
     z-index: 1;
   }
   .hero-copy h1 {
-    font-size: 64px;
+    font-size: 68px;
     margin: 20px 0;
   }
   .hero-copy > p:not(.eyebrow) {
-    font-size: 12px;
+    font-size: 15px;
     max-width: 280px;
   }
   .hero-caption {
     z-index: 2;
-    font-size: 8px;
+    font-size: 11px;
     right: 16px;
     bottom: 18px;
   }
   .hero .eyebrow {
-    font-size: 9px;
+    font-size: 12px;
   }
   .section-heading {
     gap: 12px;
   }
   .section-heading > a {
-    font-size: 10px;
+    font-size: 13px;
   }
   .category-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px 10px;
   }
   .category-grid span {
-    font-size: 11px;
+    font-size: 14px;
   }
   .product-grid,
   .catalog-layout .product-grid {
@@ -1268,10 +1268,10 @@ details {
     gap: 24px 12px;
   }
   .product-name {
-    font-size: 12px;
+    font-size: 15px;
   }
   .price {
-    font-size: 11px;
+    font-size: 14px;
   }
   .price del {
     display: block;
@@ -1284,7 +1284,7 @@ details {
     min-height: 32px;
   }
   .product-badge {
-    font-size: 8px;
+    font-size: 11px;
     left: 5px;
     top: 10px;
     padding: 2px 5px;
@@ -1300,7 +1300,7 @@ details {
     padding: 35px 24px;
   }
   .editorial h2 {
-    font-size: 36px;
+    font-size: 40px;
   }
   .story {
     padding-top: 60px;
@@ -1313,7 +1313,7 @@ details {
     margin-top: 45px;
   }
   .newsletter h2 {
-    font-size: 30px;
+    font-size: 34px;
   }
   .newsletter .eyebrow {
     margin-bottom: 12px;
@@ -1331,10 +1331,10 @@ details {
   .footer-links {
     grid-column: auto;
     gap: 12px;
-    font-size: 11px;
+    font-size: 14px;
   }
   .demo-notice {
-    font-size: 10px;
+    font-size: 13px;
     padding: 12px;
     margin-top: 24px;
   }
@@ -1350,7 +1350,7 @@ details {
     gap: 30px;
   }
   .collection-grid h2 {
-    font-size: 25px;
+    font-size: 28px;
   }
   .catalog-title {
     display: block;
@@ -1361,20 +1361,20 @@ details {
   }
   .catalog-toolbar label {
     gap: 7px;
-    font-size: 10px;
+    font-size: 13px;
   }
   .catalog-toolbar select {
     width: 145px;
-    font-size: 11px;
+    font-size: 14px;
   }
   .catalog-toolbar .button {
     padding: 10px 12px;
     min-height: 44px;
-    font-size: 11px;
+    font-size: 14px;
   }
   .breadcrumb {
     margin-bottom: 24px;
-    font-size: 10px;
+    font-size: 13px;
   }
   .pdp {
     grid-template-columns: 1fr;
@@ -1383,7 +1383,7 @@ details {
     position: static;
   }
   .purchase h1 {
-    font-size: 32px;
+    font-size: 36px;
   }
   .thumbnails img {
     width: 58px;
@@ -1399,7 +1399,7 @@ details {
     grid-template-columns: 85px 1fr;
   }
   .cart-row h2 {
-    font-size: 16px;
+    font-size: 18px;
   }
   .cart-row > strong {
     grid-column: 2;
@@ -1414,14 +1414,14 @@ details {
     align-items: start;
   }
   .reviews .section-heading span {
-    font-size: 11px;
+    font-size: 14px;
   }
   .dialog-content {
     padding: 28px 22px;
     max-height: 88svh;
   }
   .dialog-content h2 {
-    font-size: 22px;
+    font-size: 25px;
   }
   .row {
     flex-direction: column;
@@ -1434,7 +1434,7 @@ details {
     margin: 40px auto;
   }
   .account-layout h1 {
-    font-size: 32px;
+    font-size: 36px;
   }
   .panel {
     padding: 18px;
@@ -1444,25 +1444,25 @@ details {
   }
   .search-form .button {
     padding: 14px 12px;
-    font-size: 12px;
+    font-size: 15px;
   }
   .reading h2 {
-    font-size: 23px;
+    font-size: 26px;
   }
   .table-wrap th,
   .table-wrap td {
     padding: 10px;
-    font-size: 12px;
+    font-size: 15px;
   }
   .coupon-form .button {
-    font-size: 12px;
+    font-size: 15px;
     padding: 13px 10px;
   }
   .status {
-    font-size: 10px;
+    font-size: 13px;
   }
   .eyebrow {
-    font-size: 10px;
+    font-size: 13px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1494,7 +1494,7 @@ details {
     transform 0.15s;
   min-height: 40px;
   padding: 9px;
-  font-size: 11px;
+  font-size: 14px;
   background: #f8f7f4ed;
   color: var(--ink);
   border-color: transparent;
@@ -1519,7 +1519,7 @@ details {
     opacity: 1;
     transform: none;
     width: 100%;
-    font-size: 10px;
+    font-size: 13px;
     min-height: 36px;
   }
 }
@@ -1550,10 +1550,10 @@ details {
   padding-top: 22px;
 }
 .service-grid h2 {
-  font-size: 20px;
+  font-size: 23px;
 }
 .service-grid p {
-  font-size: 12px;
+  font-size: 15px;
   color: var(--muted);
 }
 @media (max-width: 600px) {
@@ -1573,9 +1573,192 @@ details {
   html:lang(ja) .hero-copy h1,
   html:lang(ko) .hero-copy h1,
   html:lang(zh-CN) .hero-copy h1 {
-    font-size: 48px;
+    font-size: 52px;
   }
   .skeleton-grid {
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Readability: preserve hierarchy while allowing larger localized copy to wrap. */
+body {
+  line-height: 1.65;
+}
+.language {
+  width: 110px;
+}
+.header {
+  column-gap: 20px;
+}
+.header-actions {
+  gap: 5px;
+}
+.eyebrow {
+  line-height: 1.65;
+  letter-spacing: 0.12em;
+}
+.hero-copy > p:not(.eyebrow) {
+  max-width: 430px;
+}
+.hero-caption {
+  line-height: 1.5;
+  max-width: 70%;
+  text-align: right;
+}
+.product-name {
+  line-height: 1.5;
+}
+.product-badge {
+  line-height: 1.5;
+}
+.purchase h1 {
+  overflow-wrap: anywhere;
+}
+.summary dt {
+  min-width: 0;
+}
+.check {
+  line-height: 1.6;
+}
+.catalog-toolbar label {
+  flex-wrap: wrap;
+}
+.quick-view {
+  min-height: 44px;
+}
+@media (max-width: 1150px) {
+  .desktop-nav {
+    gap: 16px;
+  }
+  .header {
+    gap: 14px;
+  }
+  .language {
+    width: 100px;
+  }
+}
+@media (max-width: 1050px) {
+  .desktop-nav {
+    display: none;
+  }
+  .mobile-menu {
+    display: flex;
+  }
+  .header > .wordmark {
+    margin-right: auto;
+  }
+}
+@media (max-width: 600px) {
+  body {
+    font-size: 17px;
+  }
+  .header .language {
+    width: 82px;
+    font-size: 12px;
+  }
+  .header {
+    padding: 10px 12px;
+    gap: 4px;
+  }
+  .header-actions {
+    gap: 0;
+  }
+  .header .wordmark {
+    font-size: 27px;
+  }
+  .header .badge {
+    font-size: 11px;
+    min-width: 17px;
+    height: 17px;
+    line-height: 17px;
+    top: 0;
+    right: -2px;
+  }
+  .hero-copy {
+    max-width: 100%;
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+  .hero-copy > p:not(.eyebrow) {
+    max-width: 320px;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  .hero-caption {
+    right: 16px;
+    bottom: 15px;
+    font-size: 11px;
+  }
+  .hero .eyebrow {
+    font-size: 12px;
+  }
+  .category-grid span {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .product-name {
+    font-size: 16px;
+  }
+  .price {
+    font-size: 15px;
+  }
+  .small,
+  .product-card > .small {
+    font-size: 13px;
+  }
+  .catalog-toolbar {
+    align-items: flex-start;
+  }
+  .catalog-toolbar label {
+    max-width: 58%;
+    font-size: 13px;
+    gap: 6px;
+  }
+  .catalog-toolbar select {
+    max-width: 100%;
+    width: 175px;
+    font-size: 14px;
+  }
+  .catalog-toolbar .button {
+    font-size: 14px;
+  }
+  .newsletter h2 {
+    font-size: 34px;
+  }
+  .footer-links {
+    font-size: 14px;
+  }
+  .demo-notice {
+    font-size: 13px;
+  }
+  .footer-bottom {
+    flex-wrap: wrap;
+    font-size: 12px;
+  }
+  .footer-bottom .text-button {
+    font-size: 13px;
+  }
+  .dialog-content {
+    padding: 30px 22px;
+  }
+  .dialog-content label,
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+  .purchase > p {
+    font-size: 17px;
+  }
+  .purchase .section-heading,
+  .purchase details {
+    font-size: 16px;
+  }
+  .cart-row h2 {
+    font-size: 19px;
+  }
+  .table-wrap th,
+  .table-wrap td {
+    font-size: 14px;
   }
 }
