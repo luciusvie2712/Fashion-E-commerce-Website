@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router';
 import { useLocale } from '../features/i18n';
 import { stories, faq } from '../data/content';
-import { products, collections, categories } from '../data/catalog';
+import { products, collections } from '../data/catalog';
+import { aboutPhoto, collectionPhoto } from '../data/photography';
 import { DemoNotice, SizeTable } from '../components/shared';
 import { Button } from '../components/ui';
 const pageKeys: Record<string, string> = {
@@ -33,7 +34,7 @@ export function ContentPage() {
         <>
           <p className="muted">{t('samplePolicy')}</p>
           {key === 'about' && (
-            <img src="/assets/campaign.svg" alt={t('illustration')} width="1600" height="1000" />
+            <img src={aboutPhoto} alt={t('illustration')} width="1600" height="1000" />
           )}
           {story.map((text, i) =>
             i % 2 === 0 ? <h2 key={i}>{text[locale]}</h2> : <p key={i}>{text[locale]}</p>,
@@ -113,13 +114,10 @@ export function ContentPage() {
       )}
       {key === 'lookbook' && (
         <div className="collection-grid">
-          {collections.map((c, i) => (
+          {collections.map((c) => (
             <article key={c.id}>
               <Link to={`/collections/${c.id}`}>
-                <img
-                  src={`/assets/${categories[i].id}-2.svg`}
-                  alt={`${c.name[locale]} — ${t('illustration')}`}
-                />
+                <img src={collectionPhoto(c.id)} alt={`${c.name[locale]} — ${t('illustration')}`} />
                 <h2>{c.name[locale]} ↗</h2>
               </Link>
               <p>{c.description[locale]}</p>

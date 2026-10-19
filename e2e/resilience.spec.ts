@@ -48,7 +48,7 @@ test('quick view, image fallback and localized demo forms work', async ({ page }
   await expect(page).toHaveURL(/product\//);
   await page.getByRole('button', { name: 'Submit locally' }).click();
   await expect(page.locator('.reviews [role="alert"]')).toBeVisible();
-  await page.route('**/assets/tshirts-0.svg', (route) => route.abort());
+  await page.route('**/assets/photos/p-001-ink.webp', (route) => route.abort());
   await page.goto('/shop');
   await expect(page.locator('.product-image svg').first()).toBeVisible();
   await page.goto('/contact');

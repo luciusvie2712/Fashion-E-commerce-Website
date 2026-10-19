@@ -23,11 +23,11 @@ export const stories = {
       '意図のあるデザイン',
     ),
     l(
-      'Mỗi mẫu minh họa bắt đầu từ cách bạn di chuyển trong ngày. Hãy thử các lớp áo, tìm size phù hợp và tạo bộ trang phục theo nhịp riêng. Toàn bộ hình ảnh là tác phẩm minh họa gốc cho dự án, không phải ảnh hàng hóa thật.',
-      'Each illustrated piece starts with how you move through the day. Try layers, find your fit and build a look at your own pace. All artwork is original project illustration, rather than photography of real merchandise.',
-      '각 일러스트 아이템은 하루의 움직임에서 시작합니다. 레이어를 시도하고 맞는 사이즈를 찾아 나만의 룩을 만들어 보세요. 모든 이미지는 실제 상품 사진이 아닌 프로젝트 오리지널 일러스트입니다.',
-      '每件插画单品都从日常活动出发。尝试叠穿、选择适合的尺码，按自己的节奏搭配。所有图片均为项目原创插画，并非真实商品照片。',
-      'イラストの服は、一日の動きから生まれました。重ね着やサイズ選びを楽しみ、自分のペースで着こなしを。画像はすべて本プロジェクトのオリジナルイラストで、実物の商品写真ではありません。',
+      'Mỗi thiết kế bắt đầu từ cách bạn di chuyển trong ngày. Hãy thử các lớp áo, tìm size phù hợp và tạo bộ trang phục theo nhịp riêng. Ảnh chân thực trên website được tạo bằng AI riêng cho dự án, không phải ảnh chụp hàng hóa thực tế.',
+      'Each design starts with how you move through the day. Try layers, find your fit and build a look at your own pace. The photorealistic images were created with AI for this project and are not photographs of actual merchandise.',
+      '각 디자인은 하루의 움직임에서 시작합니다. 레이어를 시도하고 맞는 사이즈를 찾아 나만의 룩을 만들어 보세요. 사실적인 이미지는 이 프로젝트를 위해 AI로 제작되었으며 실제 판매 상품의 사진이 아닙니다.',
+      '每件设计都从日常活动出发。尝试叠穿、选择适合的尺码，按自己的节奏搭配。网站上的写实图像由 AI 为本项目创作，并非真实在售商品的照片。',
+      'デザインは一日の動きから生まれました。重ね着やサイズ選びを楽しみ、自分のペースで着こなしを。写真のような画像は本プロジェクト用にAIで生成したもので、実際に販売される商品の写真ではありません。',
     ),
   ],
   shippingPolicy: [

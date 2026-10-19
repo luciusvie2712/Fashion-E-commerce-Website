@@ -6,12 +6,19 @@ import { ProductGrid, Empty } from '../../components/shared';
 import { Button, Modal } from '../../components/ui';
 import { filterCatalog } from './selectors';
 import { Newsletter } from '../../components/layout/Shell';
+import { campaignHero, categoryPhoto, collectionPhoto } from '../../data/photography';
 export function Home() {
   const { t, locale } = useLocale();
   return (
     <>
       <section className="hero">
-        <img src="/assets/campaign.svg" width="1600" height="1000" alt={t('illustration')} />
+        <img
+          src={campaignHero}
+          width="1600"
+          height="1000"
+          alt={t('illustration')}
+          fetchPriority="high"
+        />
         <div className="hero-copy">
           <p className="eyebrow">FLUIVIX / 2026</p>
           <h1>{t('hero')}</h1>
@@ -28,10 +35,10 @@ export function Home() {
           <Link to="/shop">{t('viewAll')} ↗</Link>
         </div>
         <div className="category-grid">
-          {categories.map((c) => (
+          {categories.map((c, i) => (
             <Link key={c.id} to={`/category/${c.id}`}>
               <img
-                src={`/assets/${c.id}-1.svg`}
+                src={categoryPhoto(c.id, i)}
                 alt={c.name[locale]}
                 loading="lazy"
                 width="400"
@@ -53,7 +60,7 @@ export function Home() {
         <ProductGrid items={products.filter((_, i) => i % 8 === 0).slice(0, 4)} />
       </section>
       <section className="editorial">
-        <img src="/assets/campaign.svg" alt={t('illustration')} loading="lazy" />
+        <img src={collectionPhoto('studio')} alt={t('illustration')} loading="lazy" />
         <div>
           <p className="eyebrow">FLUIVIX / STUDIO</p>
           <h2>{t('editorial')}</h2>
@@ -110,12 +117,9 @@ export function CollectionList() {
       <p className="eyebrow">FLUIVIX / 2026</p>
       <h1>{t('collections')}</h1>
       <div className="collection-grid">
-        {collections.map((c, i) => (
+        {collections.map((c) => (
           <Link key={c.id} to={`/collections/${c.id}`}>
-            <img
-              src={`/assets/${categories[i].id}-1.svg`}
-              alt={`${c.name[locale]} — ${t('illustration')}`}
-            />
+            <img src={collectionPhoto(c.id)} alt={`${c.name[locale]} — ${t('illustration')}`} />
             <h2>{c.name[locale]} ↗</h2>
             <p>{c.description[locale]}</p>
           </Link>

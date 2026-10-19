@@ -1,4 +1,5 @@
 import { localized as l, type Product } from '../types/domain';
+import { productPhotos } from './photography';
 export const categories = [
   { id: 'tshirts', name: l('Áo thun', 'T-shirts', '티셔츠', 'T 恤', 'Tシャツ') },
   { id: 'shirts', name: l('Sơ mi', 'Shirts', '셔츠', '衬衫', 'シャツ') },
@@ -157,7 +158,7 @@ export const products: Product[] = categories.flatMap((cat, ci) =>
       ...(di % 3 === 0 ? { compareAtPriceVnd: basePriceVnd + 100000 } : {}),
       popularity: 1000 - n * 7,
       createdAt: new Date(Date.UTC(2026, 8, di + ci + 1)).toISOString(),
-      imageUrls: [`/assets/${cat.id}-0.svg`, `/assets/${cat.id}-1.svg`, `/assets/${cat.id}-2.svg`],
+      imageUrls: productPhotos(id, cat.id),
       variants,
     };
   }),

@@ -26,6 +26,7 @@ export function ProductPage() {
     if (p) view(owner, p.id);
   }, [p, owner, view]);
   if (!p) return <Empty message="notFound" />;
+  const activeImage = Math.min(image, p.imageUrls.length - 1);
   const variant =
     p.variants.length === 1
       ? p.variants[0]
@@ -66,7 +67,7 @@ export function ProductPage() {
               trigger={
                 <button className="gallery-main" aria-label={t('zoom')}>
                   <LocalImage
-                    src={p.imageUrls[image]}
+                    src={p.imageUrls[activeImage]}
                     alt={`${p.name[locale]} — ${t('illustration')}`}
                     width="400"
                     height="500"
@@ -74,14 +75,18 @@ export function ProductPage() {
                 </button>
               }
             >
-              <LocalImage className="zoom-image" src={p.imageUrls[image]} alt={p.name[locale]} />
+              <LocalImage
+                className="zoom-image"
+                src={p.imageUrls[activeImage]}
+                alt={p.name[locale]}
+              />
             </Modal>
             <div className="thumbnails">
               {p.imageUrls.map((url, i) => (
                 <button
                   key={url}
                   aria-label={`${t('zoom')} ${i + 1}`}
-                  aria-pressed={image === i}
+                  aria-pressed={activeImage === i}
                   onClick={() => setImage(i)}
                 >
                   <LocalImage src={url} alt={p.name[locale]} width="80" height="100" />

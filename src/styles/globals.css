@@ -1584,6 +1584,11 @@ details {
 body {
   line-height: 1.65;
 }
+@media (max-width: 600px) {
+  .hero > img {
+    object-position: 78% center;
+  }
+}
 .language {
   width: 110px;
 }

@@ -55,7 +55,7 @@ Browser state uses versioned `fluivix:v1:` keys and schema validation. If storag
 
 ## Architecture and assets
 
-Feature modules live in `src/features/`. Pure pricing/cart/order rules are separate from UI and are tested with deterministic data. The catalog contains 48 products, six categories, four collections and local original SVG artwork. `scripts/generate-assets.mjs` regenerates that artwork. Illustrations are visibly identified; no brand photography or external fonts are required.
+Feature modules live in `src/features/`. Pure pricing/cart/order rules are separate from UI and are tested with deterministic data. The catalog contains 48 products, six categories and four collections. Product and editorial imagery is being replaced with original photorealistic images generated using the built-in ImageGen tool. Local WebP files and their prompts live in `public/assets/photos/`. Original SVG files remain for fallback and historical order snapshots. No external image service or font request is needed at runtime.
 
 Translations are authored locally in `src/features/i18n/dictionaries.ts`, with localized catalog and policy fixtures in `src/data/`. Currency uses `Intl` presentation only. Product/variant IDs, snapshots and integer prices do not change with language.
 
