@@ -1,0 +1,12 @@
+import { useState } from 'react';
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { z } from 'zod';
+import { useLocale } from '../i18n';
+import { useOwner } from '../auth/store';
+import { persistOptions } from '../../lib/persist';
+import type { Review } from '../../types/domain';
+import { Button } from '../../components/ui';
+interface State{reviews:Review[];add:(review:Review)=>void}
+const useReviews=create<State>()(persist(set=>({reviews:[],add:review=>set(s=>({reviews:[review,...s.reviews]}))}),persistOptions('reviews',z.object({reviews:z.array(z.object({id:z.string(),productId:z.string(),author:z.string(),rating:z.number().int().min(1).max(5),body:z.string(),ownerId:z.string()}))}),s=>({reviews:s.reviews}))));
+export function Reviews({productId}:{productId:string}){const {t}=useLocale(),owner=useOwner(),store=useReviews(),[filter,setFilter]=useState(''),[sent,setSent]=useState(false);const entries=[...store.reviews.filter(r=>r.productId===productId),...[5,4,4].map((rating,i)=>({id:`seed-${i}`,rating,body:t('reviewBody'),author:'FLUIVIX / DEMO'}))];return <section className="section reviews"><div className="section-heading"><h2>{t('reviews')}</h2><span>★ {(entries.reduce((n,r)=>n+r.rating,0)/entries.length).toFixed(1)} / 5 · {entries.length}</span></div><p className="muted">{t('samplePolicy')}</p><label>{t('rating')}<select value={filter} onChange={e=>setFilter(e.target.value)}><option value="">{t('all')}</option>{[5,4,3,2,1].map(n=><option key={n} value={n}>{n} ★</option>)}</select></label><div className="review-grid">{entries.filter(r=>!filter||r.rating===Number(filter)).map(r=><article key={r.id}><p>{'★'.repeat(r.rating)}</p><strong>{r.author}</strong><p>{r.body}</p></article>)}</div><form className="form compact" onSubmit={e=>{e.preventDefault();const data=new FormData(e.currentTarget);store.add({id:crypto.randomUUID(),productId,ownerId:owner,author:String(data.get('author')),rating:Number(data.get('rating')),body:String(data.get('body'))});e.currentTarget.reset();setSent(true);}}><label>{t('fullName')}<input name="author" required minLength={2} maxLength={80}/></label><label>{t('rating')}<select name="rating">{[5,4,3,2,1].map(n=><option key={n}>{n}</option>)}</select></label><label>{t('message')}<textarea name="body" required minLength={5} maxLength={1000}/></label><Button>{t('send')}</Button>{sent&&<p role="status">{t('formSent')}</p>}</form></section>;}
