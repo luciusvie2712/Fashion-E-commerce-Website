@@ -1,8 +1,8 @@
 # FLUIVIX — Implementation and verification checkpoint
 
 **Checkpoint version:** 1.0 (spec pack generated 2026-10-19)
-**State:** IMPLEMENTED — FINAL QA IN PROGRESS
-**Maintainer:** Codex once execution starts.
+**State:** IMPLEMENTED AND VERIFIED LOCALLY — NO DEPLOYMENT PERFORMED
+**Maintainer:** Codex, 2026-10-19 (Asia/Saigon).
 **Source of truth:** `AGENTS.md`, `MASTER_PROMPT.md`, `docs/01`–`docs/10`.
 
 ## What exists now
@@ -12,8 +12,8 @@
 - [x] React/Vite source app created, built and exercised in Chromium.
 - [x] All 34 routes implemented; 170 route × locale smoke combinations passed.
 - [x] Five bundled locales; dictionary/placeholder parity and localized purchase flows passed.
-- [ ] Unit/integration/E2E checks executed successfully.
-- [ ] Responsive/a11y and link audit completed.
+- [x] Unit/component and production Chromium E2E checks executed successfully.
+- [x] Responsive, automated accessibility and internal-link audits completed; manual limits stated below.
 
 ## Phase table — Codex fills evidence; never pre-mark pass
 | Phase | Status | Changes delivered | Tests actually run | Blocker / next action |
@@ -24,26 +24,29 @@
 | 3 Account/address | COMPLETE | Demo auth/profile/address CRUD/default | Account browser/no-secret tests PASS | No real authentication |
 | 4 Checkout/orders | COMPLETE | COD, online retry, snapshots, tracking and returns | Checkout and five-language commerce tests PASS | No real payments |
 | 5 Brand/support/reviews | COMPLETE | Localized support prose/forms/reviews/lookbook | Content, responsive, axe and resilience tests PASS | Final regression run pending |
-| 6 QA/performance/release | IN_PROGRESS | Formatted source, split bundles, run guide, expanded tests | 39 unit tests PASS; full 35 E2E running | Final review and push pending |
+| 6 QA/performance/release | COMPLETE | Formatted source, split bundles, run guide, expanded tests | 42 unit/component and 37 production E2E PASS | No deployment; manual review limits below |
 
 Allowed phase statuses: `NOT_STARTED`, `IN_PROGRESS`, `BLOCKED`, `COMPLETE`. Set `COMPLETE` only after exit checks reported in `docs/09-IMPLEMENTATION-PLAN.md` pass.
 
 ## Commands evidence (Codex append actual executions)
 | Timestamp | Command | Result (PASS/FAIL/BLOCKED/NOT_RUN) | Observed output/error | Relevant phase |
 | --- | --- | --- | --- | --- |
-| — | `npm install` | NOT_RUN | App not generated yet | 0 |
-| — | `npm run typecheck` | NOT_RUN | — | 0–6 |
-| — | `npm run lint` | NOT_RUN | — | 0–6 |
-| — | `npm run test` | NOT_RUN | — | 0–6 |
-| — | `npm run build` | NOT_RUN | — | 0–6 |
-| — | `npm run test:e2e` | NOT_RUN | — | 6 |
+| 2026-10-19 | `npm.cmd install …` | PASS | Compatible runtime/dev dependencies locked; resolver v6 failure and v5 recovery recorded below | 0 |
+| 2026-10-19 | `npm.cmd run typecheck` | PASS | TypeScript strict, exit 0 | 0–6 |
+| 2026-10-19 | `npm.cmd run lint` | PASS | ESLint, exit 0 | 0–6 |
+| 2026-10-19 | `npm.cmd run test` | PASS | 6 files, 42 unit/component tests passed, exit 0 | 0–6 |
+| 2026-10-19 | `npm.cmd run build` | PASS | Vite production `dist/`; no chunk-size warning, exit 0 | 0–6 |
+| 2026-10-19 | `$env:FLUIVIX_PREVIEW='1'; npm.cmd run test:e2e` | PASS | 37 Chromium scenarios passed against production preview, exit 0; task-owned server cleanup described below | 6 |
+| 2026-10-19 | `npx.cmd playwright install chromium` | PASS | Chromium and headless shell installed | 6 |
+| 2026-10-19 | `npx.cmd prettier --check …` | PASS | All application/test/config inputs formatted | 6 |
 
 ## Coverage ledger (Codex track numeric actual results)
 - Route patterns required: **34**, plus wildcard 404. Implemented: **34/34** plus wildcard 404; full locale smoke passed.
 - Locales required: **5** (`vi`, `en`, `ko`, `zh-CN`, `ja`). Route smoke and core purchase journeys verified: **5/5**. Full linguistic editorial review is not claimed.
 - Route×locale coverage expected: **170** combinations plus localized wildcard/invalid slugs. Verified: **170/170** route renders, with valid demo identity/order fixtures.
-- FLX-01–FLX-16 implemented: **16/16**, with final acceptance evidence being collected.
-- Latest completed unit/component run: **39 passed / 0 failed**. Full 35-scenario browser run pending. Historical failures and fixes are retained below.
+- FLX-01–FLX-16 implemented: **16/16**. Automated checks and selected manual visual evidence are mapped below.
+- Latest completed unit/component run: **42 passed / 0 failed / 0 blocked**.
+- Latest completed production browser run: **37 passed / 0 failed / 0 blocked**. Historical failures and fixes are retained below.
 
 ## Risks/decisions (update as implemented)
 1. Editorial brand tokens, demo logistics/vouchers, artwork and legal text are suggested demo content, not official Fluivix policy.
@@ -55,13 +58,15 @@ Allowed phase statuses: `NOT_STARTED`, `IN_PROGRESS`, `BLOCKED`, `COMPLETE`. Set
 ## Resume contract
 Before continuing: read root `AGENTS.md`, this checkpoint, Phase plan, applicable docs and current code. Determine true completed tasks from files/tests rather than trusting stale checked items. Continue at earliest unverified exit gate. Preserve user modifications and report any conflicts.
 
-## Final handoff (leave unfilled until genuinely done)
-- Start command: `NOT_AVAILABLE`.
-- Actual route list verified: `NOT_RUN`.
-- Five-language coverage: `NOT_RUN`.
-- Typecheck/lint/unit/build/E2E: `NOT_RUN`.
-- Local demo reset instructions: `NOT_AVAILABLE`.
-- Known limitations/blockers: `APPLICATION_NOT_BUILT`.
+## Final handoff
+- Start: `npm.cmd ci` on a fresh checkout, then `npm.cmd run dev`; current workspace dependencies are already installed.
+- All 34 routes are listed in `src/app/route-inventory.ts`; wildcard and invalid dynamic slugs have recovery screens.
+- Five-language coverage: 170 route renders, dictionary/placeholder parity, five-language registration validation and payment/tracking journeys PASS.
+- Typecheck/lint/unit/build/E2E: PASS on the source delivered by commit `46b0722`; subsequent checkpoint changes are documentation only.
+- Production bundle: `dist/`, root `/`; `npm.cmd run preview` for local review. Static host must rewrite nested SPA paths to `index.html`; example in `public/_redirects`.
+- Reset: footer → Reset demo data → Confirm. Clears only `fluivix:` keys; unrelated storage preservation is tested.
+- Full start/demo/privacy/hosting instructions: `RUNNING.md`. Existing user README edits remain untouched and unstaged.
+- Open implementation/tool blockers: **none**. No hosted deployment or hosted rewrite test was performed. Chromium is the tested browser; exhaustive human screen-reader, cross-browser and professional linguistic reviews were not performed and are not claimed as PASS.
 
 ## Execution ledger — 2026-10-19
 - Existing user work preserved: modified README.md; untracked AGENTS.md, MASTER_PROMPT.md and .gitignore. These are not staged as implementation files.
@@ -116,3 +121,45 @@ Before continuing: read root `AGENTS.md`, this checkpoint, Phase plan, applicabl
 - MANUAL visual evidence: actual production screenshots inspected for vi/ko/zh-CN/ja at 390px and en at 1440px; CJK glyphs visible, hero/CTA readable. Also inspected full Japanese desktop home and mobile PDP. Files retained locally in .tmp/visual. This does not claim exhaustive screen-reader or linguistic review.
 - Commit: fix(storefront): harden accessibility state and production bundles. SHA/push outcome follow.
 - Production E2E command completed with exit 0: `FLUIVIX_PREVIEW=1 npm.cmd run test:e2e` -> 37 passed (5.0m), 0 failed, 0 blocked. Windows sandbox teardown stalled after all scenarios; Stop-Process hit a PowerShell NullReferenceException. Verified exact workspace Vite PIDs (24432 preview, 11308 earlier dev) were closed with .NET Process.Kill; both parent Playwright runs then exited 0. No unrelated processes were targeted. No runtime source changed after the validated build.
+
+## Final requirement-to-evidence map
+| Requirement | Implemented module | Evidence actually executed |
+| --- | --- | --- |
+| FLX-01 | Responsive shell, local search, navigation, footer | route/link sweep, mobile drawer and keyboard tests |
+| FLX-02 | Editorial home, categories, collections, merchandising, newsletter | 5-locale home routes, responsive screenshots, local form validation |
+| FLX-03 | Catalog/search/filters/sort/page with URL history | shopping filter/reload/back scenario, full route sweep |
+| FLX-04 | Gallery/zoom, variant stock, quantity, size guide, related products | missing/sold-out tests, dialog focus, variant/domain tests |
+| FLX-05 | Owner-scoped wishlist | persistence/removal/guest merge tests |
+| FLX-06 | Cart quantities/variant edit/merge/clear and totals | stock/merge unit tests, browser editor/merge/persistence |
+| FLX-07 | Demo signup/login/logout/reset/profile | account E2E, 5-locale registration errors, safe redirect and no-secret assertions |
+| FLX-08 | Address CRUD/default and checkout selection | account browser persistence, default reassignment unit test |
+| FLX-09 | Guest/user checkout, shared pricing and coupons | all worked pricing examples, valid/invalid voucher and shipping scenario |
+| FLX-10 | COD and online success/fail/cancel/retry | idempotent unit tests, five-language online commerce and COD browser tests |
+| FLX-11 | Snapshots/owned history/tracking/lifecycle/cancel/return/refund/reorder | order unit state/ownership/time-window tests and browser lifecycle |
+| FLX-12 | Synthetic ratings/filter/local review form | localized PDP route coverage, local form/resilience browser scenario |
+| FLX-13 | New/best/sale/collections/lookbook/recent views | five-language route/link sweep and shopping journeys |
+| FLX-14 | Authored About/Contact/FAQ/size/shipping/returns/privacy/terms | content parity, full locale route sweep, local contact form validation |
+| FLX-15 | Toasts/dialogs/empty/error/storage warning/fallback/reduced motion | blocked/corrupt storage, reset, image fallback, focus/Escape, axe; reduced-motion CSS source audit |
+| FLX-16 | Five bundled locales and stable VND state | 170 route combinations, parity/interpolation, mid-checkout locale change, localized paid receipts |
+
+## Verified implementation commits
+All rows below were pushed to origin/main and verified with git ls-remote. No force push or history reset was used.
+| SHA | Conventional Commit |
+| --- | --- |
+| 673d395 | chore(setup): initialize strict React storefront tooling |
+| 1d0460a | feat(domain): add localized catalog and tested commerce rules |
+| 9b7bb34 | feat(state): persist owner-scoped shopping and demo identities |
+| 1b0f41c | feat(ui): add editorial design system and original local artwork |
+| 9541c72 | feat(catalog): add discovery product and demo review components |
+| 8fb4c63 | feat(cart): add persistent bag wishlist and safe guest identity |
+| 98f750c | feat(orders): add idempotent snapshot and lifecycle services |
+| 51e7dfb | feat(account): implement demo authentication profile and addresses |
+| c96ac0f | feat(checkout): complete demo payment receipts and order journeys |
+| 99abef3 | feat(content): author localized brand support and policy pages |
+| e643ee0 | feat(app): connect all storefront routes and localized interactions |
+| 46b0722 | fix(storefront): harden accessibility state and production bundles |
+
+- Full quality commit SHA: 46b07222a09f9b39140dbd5938cd9fdc208d41db; origin/main matched after push.
+- The final checkpoint/run-guide commit is documentation only. Its exact SHA is returned in the handoff and can be obtained with `git log -1 --format=%H -- progress/BUILD-STATUS.md`. A commit cannot embed its own final hash without changing that hash.
+- Existing user work left unstaged: README.md, .gitignore, AGENTS.md and MASTER_PROMPT.md. Specification files under docs/ remain intact under the user's ignore rules.
+- No incomplete functional module is known. Verification limits remain explicit: Chromium only; selected manual visual checks; no exhaustive human screen-reader or professional linguistic review; no hosted deployment.

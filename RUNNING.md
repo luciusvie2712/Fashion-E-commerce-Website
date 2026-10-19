@@ -23,6 +23,17 @@ npm run preview
 
 `check` runs strict TypeScript, ESLint, Vitest/React Testing Library and the production build. Browser tests are separate. E2E screenshots go to `.tmp/visual/`; failure traces go to `test-results/`. These are local artifacts and are not committed.
 
+To repeat the production-build browser verification in PowerShell:
+
+```powershell
+npm.cmd run build
+$env:FLUIVIX_PREVIEW = '1'
+npm.cmd run test:e2e
+Remove-Item Env:FLUIVIX_PREVIEW
+```
+
+This starts Vite preview on port 4173. The default browser-test mode uses the development server on port 5173. The verified delivery has 42 passing unit/component tests and 37 passing production browser scenarios. Tests include all 170 route × locale combinations, localized commerce, storage failures, six responsive widths and automated WCAG AA checks. They do not replace a complete human accessibility or linguistic review.
+
 ## Try the shopping flows
 
 - Select a language in the header: Vietnamese (default), English, Korean, Simplified Chinese or Japanese. Prices stay in VND.
