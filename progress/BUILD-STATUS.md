@@ -91,3 +91,7 @@ Before continuing: read root `AGENTS.md`, this checkpoint, Phase plan, applicabl
 - Cart commit 8fb4c637fbe9812bdad18b72f4f17593e954cae8 pushed and verified.
 - Order domain module (FLX-10/11 groundwork): immutable localized snapshots, synchronous intent idempotence, same-ID online payment retry, precise cart consumption, guarded fulfillment/return/refund, six seeded demo-user orders. 31 unit tests PASS; typecheck/lint/build PASS. Online failure/retry, voucher, delivered return browser scenarios observed PASS. COD browser scenario still under investigation; no completion claim.
 - Commit: feat(orders): add idempotent snapshot and lifecycle services. SHA/push outcome follow.
+- Order services commit 98f750c8282aaa1542b34093d0552e7abeb62973 pushed and verified.
+- Auth/account UI module (FLX-07/08): login/register/forgot validation, local-only disclosure, protected routing, profile editing, saved-address CRUD/default, own account and voucher wallet. Browser account scenarios 2/2 PASS; no secrets in persisted identity assertion PASS. Typecheck/lint and previous 31 unit/build checks PASS. Phase 3 implemented; exhaustive field/error/viewport auditing continues.
+- Browser locale sweep: vi/ko/zh-CN/ja 34 routes each PASS; English route assertions ran but artifact finalization failed because two concurrent Playwright commands shared output. Sequential full rerun required; this is not recorded as full locale PASS.
+- Commit: feat(account): implement demo authentication profile and addresses. SHA/push outcome follow.
