@@ -71,3 +71,6 @@ Before continuing: read root `AGENTS.md`, this checkpoint, Phase plan, applicabl
 - npm run check: typecheck and lint PASS; 22 unit tests PASS (includes in-progress domain files); production build result recorded below. No browser checks yet.
 - Commit: chore(setup): initialize strict React storefront tooling. SHA and push verification follow in next ledger entry.
 - No module is claimed fully complete until its push is verified. docs/ and progress/ are ignored by the existing user .gitignore; only the explicitly required ledger is force-added.
+- Tooling commit 673d3954333e2823eb8e3b64472c40c99e789fd4 pushed and verified by git ls-remote; build PASS (Vite 8.3.4).
+- Domain module: localized catalog of 48 products, 6 categories, 4 collections; stock/variant/cart helpers, coupon/shipping totals, URL guards and safe storage. 22 tests passed, typecheck/lint/build passed. BR-01–04, BR-08–10 groundwork, FLX-16 dictionary parity. UI acceptance remains pending.
+- Commit: feat(domain): add localized catalog and tested commerce rules. Push SHA recorded in next entry.
