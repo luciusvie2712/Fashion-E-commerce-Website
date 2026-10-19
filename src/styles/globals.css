@@ -1,0 +1,2 @@
+@import "tailwindcss";
+:root{font-family:Arial,"Segoe UI","Malgun Gothic","Microsoft YaHei","Yu Gothic",sans-serif;color:#161616;background:#f8f7f4;font-synthesis:none}body{margin:0}*{box-sizing:border-box}main{min-height:60vh}button,input,select,textarea{font:inherit}button,a,input,select,textarea{outline-offset:4px}button{cursor:pointer}button:disabled{cursor:not-allowed}a{color:inherit}
