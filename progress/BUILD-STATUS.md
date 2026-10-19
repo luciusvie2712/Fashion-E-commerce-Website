@@ -74,3 +74,8 @@ Before continuing: read root `AGENTS.md`, this checkpoint, Phase plan, applicabl
 - Tooling commit 673d3954333e2823eb8e3b64472c40c99e789fd4 pushed and verified by git ls-remote; build PASS (Vite 8.3.4).
 - Domain module: localized catalog of 48 products, 6 categories, 4 collections; stock/variant/cart helpers, coupon/shipping totals, URL guards and safe storage. 22 tests passed, typecheck/lint/build passed. BR-01–04, BR-08–10 groundwork, FLX-16 dictionary parity. UI acceptance remains pending.
 - Commit: feat(domain): add localized catalog and tested commerce rules. Push SHA recorded in next entry.
+- Domain commit 1d0460a17736083f9b61397c6cc9f27b0734a807 pushed and remote verified.
+- Module: owner-scoped shopping persistence and demo identity services (FLX-05/06/07 groundwork, BR-05/08). Zustand persist with schema guards; isolated Buy Now; guest merge; credential-free profiles; address operations. 25 unit tests PASS, typecheck/lint/build PASS. UI coverage remains pending.
+- Chromium installed successfully. First browser smoke passed: home renders in Vietnamese (1 assertion scenario); full browser suite not yet implemented.
+- Phase 0 foundations delivered; shell and full locale browser gates still in progress. Phases 1–3 IN_PROGRESS, no full acceptance claim.
+- Commit: feat(state): persist owner-scoped shopping and demo identities. SHA and push outcome follow.
