@@ -1,0 +1,10 @@
+import { render,screen,fireEvent } from '@testing-library/react';
+import { MemoryRouter } from 'react-router';
+import { afterEach,it,expect } from 'vitest';
+import { cleanup } from '@testing-library/react';
+import { AuthPage } from '../features/auth/Pages';
+import i18n from '../features/i18n';
+import { locales } from '../types/domain';
+import { resources } from '../features/i18n/dictionaries';
+afterEach(cleanup);
+it.each(locales)('registration validates and translates in %s',async(locale)=>{await i18n.changeLanguage(locale);const t=resources[locale].translation;render(<MemoryRouter initialEntries={['/register']}><AuthPage/></MemoryRouter>);fireEvent.change(screen.getByLabelText(t.email),{target:{value:'invalid'}});fireEvent.click(screen.getByRole('button',{name:t.register}));expect(await screen.findByText(t.emailError)).toBeVisible();});

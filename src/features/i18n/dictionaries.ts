@@ -1,6 +1,7 @@
 import { locales, type Locale } from '../../types/domain';
 // Each row is authored in vi / en / ko / Simplified Chinese / ja order.
 export const copy = {
+ quickView:['Xem nhanh','Quick view','빠른 보기','快速查看','クイックビュー'],
  results_one:['{{count}} sản phẩm','{{count}} product','상품 {{count}}개','{{count}} 件商品','{{count}} 点の商品'],results_other:['{{count}} sản phẩm','{{count}} products','상품 {{count}}개','{{count}} 件商品','{{count}} 点の商品'],
  notifications:['Thông báo','Notifications','알림','通知','通知'],required:['Trường này là bắt buộc.','This field is required.','필수 항목입니다.','此项为必填。','必須項目です。'],phoneError:['Nhập số 0 và 9 chữ số, hoặc +84 và 9 chữ số.','Enter 0 followed by 9 digits, or +84 followed by 9 digits.','0 또는 +84 뒤에 숫자 9자리를 입력하세요.','请输入 0 或 +84 后接 9 位数字。','0または+84の後に9桁の数字を入力してください。'],
  home:['Trang chủ','Home','홈','首页','ホーム'],shop:['Cửa hàng','Shop','쇼핑','商店','ショップ'],collections:['Bộ sưu tập','Collections','컬렉션','系列','コレクション'],new:['Mới ra mắt','New arrivals','신상품','新品','新着'],best:['Bán chạy','Best sellers','베스트셀러','畅销','ベストセラー'],sale:['Ưu đãi','Sale','세일','优惠','セール'],search:['Tìm kiếm','Search','검색','搜索','検索'],wishlist:['Yêu thích','Wishlist','위시리스트','收藏','お気に入り'],cart:['Giỏ hàng','Shopping bag','장바구니','购物袋','ショッピングバッグ'],account:['Tài khoản','Account','계정','账户','アカウント'],menu:['Danh mục','Menu','메뉴','菜单','メニュー'],close:['Đóng','Close','닫기','关闭','閉じる'],language:['Ngôn ngữ','Language','언어','语言','言語'],
