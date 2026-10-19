@@ -1,13 +1,342 @@
-import { Link,useLocation,useParams,useSearchParams } from 'react-router';
-import { ArrowUpRight,SlidersHorizontal } from 'lucide-react';
+import { Link, useLocation, useParams, useSearchParams } from 'react-router';
+import { ArrowUpRight, SlidersHorizontal } from 'lucide-react';
 import { useLocale } from '../i18n';
-import { categories,collections,colors,products } from '../../data/catalog';
-import { ProductGrid,Empty } from '../../components/shared';
-import { Button,Modal } from '../../components/ui';
+import { categories, collections, colors, products } from '../../data/catalog';
+import { ProductGrid, Empty } from '../../components/shared';
+import { Button, Modal } from '../../components/ui';
 import { filterCatalog } from './selectors';
 import { Newsletter } from '../../components/layout/Shell';
-export function Home(){const {t,locale}=useLocale();return <><section className="hero"><img src="/assets/campaign.svg" width="1600" height="1000" alt={t('illustration')}/><div className="hero-copy"><p className="eyebrow">FLUIVIX / 2026</p><h1>{t('hero')}</h1><p>{t('heroBody')}</p><Link className="button light" to="/collections/everyday">{t('explore')} <ArrowUpRight size={20}/></Link></div><span className="hero-caption">01 / 04 · {t('illustration')}</span></section><section className="container section"><div className="section-heading"><h2>{t('category')}</h2><Link to="/shop">{t('viewAll')} ↗</Link></div><div className="category-grid">{categories.map(c=><Link key={c.id} to={`/category/${c.id}`}><img src={`/assets/${c.id}-1.svg`} alt={c.name[locale]} loading="lazy" width="400" height="500"/><span>{c.name[locale]} ↗</span></Link>)}</div></section><section className="container section"><div className="section-heading"><div><p className="eyebrow">FLUIVIX / 01</p><h2>{t('new')}</h2></div><Link to="/new-arrivals">{t('viewAll')} ↗</Link></div><ProductGrid items={products.filter((_,i)=>i%8===0).slice(0,4)}/></section><section className="editorial"><img src="/assets/campaign.svg" alt={t('illustration')} loading="lazy"/><div><p className="eyebrow">FLUIVIX / STUDIO</p><h2>{t('editorial')}</h2><p>{collections[3].description[locale]}</p><Link className="button" to="/collections/studio">{t('explore')} ↗</Link></div></section><section className="container section"><div className="section-heading"><h2>{t('best')}</h2><Link to="/best-sellers">{t('viewAll')} ↗</Link></div><ProductGrid items={products.slice(4,8)}/></section><section className="container section story"><p className="eyebrow">FLUIVIX / {t('about')}</p><h2>{t('heroBody')}</h2><Link to="/about">{t('about')} ↗</Link></section><section className="container section"><div className="section-heading"><h2>{t('sale')}</h2><Link to="/sale">{t('viewAll')} ↗</Link></div><ProductGrid items={products.filter(p=>p.compareAtPriceVnd).slice(0,4)}/></section><Newsletter/></>;}
-export function CollectionList(){const {t,locale}=useLocale();return <section className="container section"><p className="eyebrow">FLUIVIX / 2026</p><h1>{t('collections')}</h1><div className="collection-grid">{collections.map((c,i)=><Link key={c.id} to={`/collections/${c.id}`}><img src={`/assets/${categories[i].id}-1.svg`} alt={`${c.name[locale]} — ${t('illustration')}`}/><h2>{c.name[locale]} ↗</h2><p>{c.description[locale]}</p></Link>)}</div></section>;}
-export function Catalog(){const {t,locale}=useLocale(),{slug}=useParams(),location=useLocation();const [params,setParams]=useSearchParams();const isCategory=location.pathname.startsWith('/category/'),isCollection=location.pathname.startsWith('/collections/');const category=categories.find(c=>c.id===slug),collection=collections.find(c=>c.id===slug);if((isCategory&&!category)||(isCollection&&!collection))return <Empty message="notFound"/>;const title=isCategory?category!.name[locale]:isCollection?collection!.name[locale]:t(location.pathname==='/new-arrivals'?'new':location.pathname==='/best-sellers'?'best':location.pathname==='/sale'?'sale':location.pathname==='/search'?'search':'shop');const source=products.filter(p=>(!isCategory||p.categoryId===slug)&&(!isCollection||p.collectionIds.includes(slug!))&&(location.pathname!=='/sale'||p.compareAtPriceVnd));const effective=new URLSearchParams(params);if(!effective.has('sort')&&location.pathname==='/best-sellers')effective.set('sort','best');const filtered=filterCatalog(source,effective,locale);const page=Math.min(Math.max(1,Math.floor(Number(params.get('page'))||1)),Math.max(1,Math.ceil(filtered.length/12)));function update(key:string,value:string,multi=false){const next=new URLSearchParams(params);next.delete('page');if(multi){const values=next.getAll(key);next.delete(key);for(const v of values.includes(value)?values.filter(v=>v!==value):[...values,value])next.append(key,v);}else if(value)next.set(key,value);else next.delete(key);setParams(next);}
-const filters=<div className="filters"><h2>{t('filters')}</h2><label>{t('search')}<input value={params.get('q')??''} onChange={e=>update('q',e.target.value)}/></label><label>{t('category')}<select value={params.get('category')??''} onChange={e=>update('category',e.target.value)}><option value="">{t('all')}</option>{categories.map(c=><option key={c.id} value={c.id}>{c.name[locale]}</option>)}</select></label>{['min','max'].map(key=><label key={key}>{t(key==='min'?'minPrice':'maxPrice')}<input inputMode="numeric" type="number" min="0" value={params.get(key)??''} onChange={e=>update(key,e.target.value)}/></label>)}<fieldset><legend>{t('size')}</legend><div className="chips">{['S','M','L','XL','XXL','ONE_SIZE'].map(size=><button key={size} className={params.getAll('size').includes(size)?'selected':''} onClick={()=>update('size',size,true)} aria-pressed={params.getAll('size').includes(size)}>{size}</button>)}</div></fieldset><fieldset><legend>{t('color')}</legend>{colors.map(c=><label className="check" key={c.id}><input type="checkbox" checked={params.getAll('color').includes(c.id)} onChange={()=>update('color',c.id,true)}/><span className="swatch" style={{background:c.hex}}/>{c.name[locale]}</label>)}</fieldset>{[['stock','inStock'],['sale','sale']].map(([key,label])=><label className="check" key={key}><input type="checkbox" checked={params.has(key)} onChange={()=>update(key,params.has(key)?'':'1')}/>{t(label)}</label>)}<Button className="secondary" onClick={()=>setParams({})}>{t('clear')}</Button></div>;
-return <section className="container section"><nav className="breadcrumb"><Link to="/">{t('home')}</Link> / {title}</nav><div className="catalog-title"><div><p className="eyebrow">FLUIVIX / 2026</p><h1>{title}</h1>{collection&&<p>{collection.description[locale]}</p>}</div><p>{t('results',{count:filtered.length})}</p></div><div className="catalog-toolbar"><Modal title={t('filters')} trigger={<Button className="secondary mobile-filter"><SlidersHorizontal size={16}/>{t('filters')}</Button>}>{filters}</Modal><label>{t('sort')}<select value={effective.get('sort')??'latest'} onChange={e=>update('sort',e.target.value)}>{[['latest','latest'],['price_asc','priceAsc'],['price_desc','priceDesc'],['best','best'],['name','nameSort']].map(([id,key])=><option key={id} value={id}>{t(key)}</option>)}</select></label></div><div className="catalog-layout"><aside>{filters}</aside><div><ProductGrid items={filtered.slice((page-1)*12,page*12)}/>{!filtered.length&&<Button onClick={()=>setParams({})}>{t('clear')}</Button>}<div className="pagination"><Button className="secondary" disabled={page===1} onClick={()=>{const p=new URLSearchParams(params);p.set('page',String(page-1));setParams(p);}}>{t('prev')}</Button><span>{page} / {Math.max(1,Math.ceil(filtered.length/12))}</span><Button className="secondary" disabled={page*12>=filtered.length} onClick={()=>{const p=new URLSearchParams(params);p.set('page',String(page+1));setParams(p);}}>{t('next')}</Button></div></div></div></section>;}
+export function Home() {
+  const { t, locale } = useLocale();
+  return (
+    <>
+      <section className="hero">
+        <img src="/assets/campaign.svg" width="1600" height="1000" alt={t('illustration')} />
+        <div className="hero-copy">
+          <p className="eyebrow">FLUIVIX / 2026</p>
+          <h1>{t('hero')}</h1>
+          <p>{t('heroBody')}</p>
+          <Link className="button light" to="/collections/everyday">
+            {t('explore')} <ArrowUpRight size={20} />
+          </Link>
+        </div>
+        <span className="hero-caption">01 / 04 · {t('illustration')}</span>
+      </section>
+      <section className="container section">
+        <div className="section-heading">
+          <h2>{t('category')}</h2>
+          <Link to="/shop">{t('viewAll')} ↗</Link>
+        </div>
+        <div className="category-grid">
+          {categories.map((c) => (
+            <Link key={c.id} to={`/category/${c.id}`}>
+              <img
+                src={`/assets/${c.id}-1.svg`}
+                alt={c.name[locale]}
+                loading="lazy"
+                width="400"
+                height="500"
+              />
+              <span>{c.name[locale]} ↗</span>
+            </Link>
+          ))}
+        </div>
+      </section>
+      <section className="container section">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">FLUIVIX / 01</p>
+            <h2>{t('new')}</h2>
+          </div>
+          <Link to="/new-arrivals">{t('viewAll')} ↗</Link>
+        </div>
+        <ProductGrid items={products.filter((_, i) => i % 8 === 0).slice(0, 4)} />
+      </section>
+      <section className="editorial">
+        <img src="/assets/campaign.svg" alt={t('illustration')} loading="lazy" />
+        <div>
+          <p className="eyebrow">FLUIVIX / STUDIO</p>
+          <h2>{t('editorial')}</h2>
+          <p>{collections[3].description[locale]}</p>
+          <Link className="button" to="/collections/studio">
+            {t('explore')} ↗
+          </Link>
+        </div>
+      </section>
+      <section className="container section">
+        <div className="section-heading">
+          <h2>{t('best')}</h2>
+          <Link to="/best-sellers">{t('viewAll')} ↗</Link>
+        </div>
+        <ProductGrid items={products.slice(4, 8)} />
+      </section>
+      <section className="container section story">
+        <p className="eyebrow">FLUIVIX / {t('about')}</p>
+        <h2>{t('heroBody')}</h2>
+        <Link to="/about">{t('about')} ↗</Link>
+      </section>
+      <section className="container section">
+        <div className="section-heading">
+          <h2>{t('sale')}</h2>
+          <Link to="/sale">{t('viewAll')} ↗</Link>
+        </div>
+        <ProductGrid items={products.filter((p) => p.compareAtPriceVnd).slice(0, 4)} />
+      </section>
+      <section className="container section service-grid">
+        {(
+          [
+            ['/shipping-policy', 'shippingPolicy', 'freeThreshold'],
+            ['/size-guide', 'sizeGuide', 'measure'],
+            ['/return-policy', 'returnPolicy', 'returnWindow'],
+          ] as const
+        ).map(([path, title, body]) => (
+          <article key={path}>
+            <p className="eyebrow">DEMO</p>
+            <h2>
+              <Link to={path}>{t(title)} ↗</Link>
+            </h2>
+            <p>{t(body)}</p>
+          </article>
+        ))}
+      </section>
+      <Newsletter />
+    </>
+  );
+}
+export function CollectionList() {
+  const { t, locale } = useLocale();
+  return (
+    <section className="container section">
+      <p className="eyebrow">FLUIVIX / 2026</p>
+      <h1>{t('collections')}</h1>
+      <div className="collection-grid">
+        {collections.map((c, i) => (
+          <Link key={c.id} to={`/collections/${c.id}`}>
+            <img
+              src={`/assets/${categories[i].id}-1.svg`}
+              alt={`${c.name[locale]} — ${t('illustration')}`}
+            />
+            <h2>{c.name[locale]} ↗</h2>
+            <p>{c.description[locale]}</p>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
+export function Catalog() {
+  const { t, locale } = useLocale(),
+    { slug } = useParams(),
+    location = useLocation();
+  const [params, setParams] = useSearchParams();
+  const isCategory = location.pathname.startsWith('/category/'),
+    isCollection = location.pathname.startsWith('/collections/');
+  const category = categories.find((c) => c.id === slug),
+    collection = collections.find((c) => c.id === slug);
+  if ((isCategory && !category) || (isCollection && !collection))
+    return <Empty message="notFound" />;
+  const title = isCategory
+    ? category!.name[locale]
+    : isCollection
+      ? collection!.name[locale]
+      : t(
+          location.pathname === '/new-arrivals'
+            ? 'new'
+            : location.pathname === '/best-sellers'
+              ? 'best'
+              : location.pathname === '/sale'
+                ? 'sale'
+                : location.pathname === '/search'
+                  ? 'search'
+                  : 'shop',
+        );
+  const source = products.filter(
+    (p) =>
+      (!isCategory || p.categoryId === slug) &&
+      (!isCollection || p.collectionIds.includes(slug!)) &&
+      (location.pathname !== '/sale' || p.compareAtPriceVnd),
+  );
+  const effective = new URLSearchParams(params);
+  if (!effective.has('sort') && location.pathname === '/best-sellers')
+    effective.set('sort', 'best');
+  const filtered = filterCatalog(source, effective, locale);
+  const page = Math.min(
+    Math.max(1, Math.floor(Number(params.get('page')) || 1)),
+    Math.max(1, Math.ceil(filtered.length / 12)),
+  );
+  function update(key: string, value: string, multi = false) {
+    const next = new URLSearchParams(params);
+    next.delete('page');
+    if (multi) {
+      const values = next.getAll(key);
+      next.delete(key);
+      for (const v of values.includes(value)
+        ? values.filter((v) => v !== value)
+        : [...values, value])
+        next.append(key, v);
+    } else if (value) next.set(key, value);
+    else next.delete(key);
+    setParams(next);
+  }
+  const filters = (
+    <div className="filters">
+      <h2>{t('filters')}</h2>
+      <label>
+        {t('search')}
+        <input value={params.get('q') ?? ''} onChange={(e) => update('q', e.target.value)} />
+      </label>
+      <label>
+        {t('category')}
+        <select
+          value={params.get('category') ?? ''}
+          onChange={(e) => update('category', e.target.value)}
+        >
+          <option value="">{t('all')}</option>
+          {categories.map((c) => (
+            <option key={c.id} value={c.id}>
+              {c.name[locale]}
+            </option>
+          ))}
+        </select>
+      </label>
+      {['min', 'max'].map((key) => (
+        <label key={key}>
+          {t(key === 'min' ? 'minPrice' : 'maxPrice')}
+          <input
+            inputMode="numeric"
+            type="number"
+            min="0"
+            value={params.get(key) ?? ''}
+            onChange={(e) => update(key, e.target.value)}
+          />
+        </label>
+      ))}
+      <fieldset>
+        <legend>{t('size')}</legend>
+        <div className="chips">
+          {['S', 'M', 'L', 'XL', 'XXL', 'ONE_SIZE'].map((size) => (
+            <button
+              key={size}
+              className={params.getAll('size').includes(size) ? 'selected' : ''}
+              onClick={() => update('size', size, true)}
+              aria-pressed={params.getAll('size').includes(size)}
+            >
+              {size}
+            </button>
+          ))}
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>{t('color')}</legend>
+        {colors.map((c) => (
+          <label className="check" key={c.id}>
+            <input
+              type="checkbox"
+              checked={params.getAll('color').includes(c.id)}
+              onChange={() => update('color', c.id, true)}
+            />
+            <span className="swatch" style={{ background: c.hex }} />
+            {c.name[locale]}
+          </label>
+        ))}
+      </fieldset>
+      {[
+        ['stock', 'inStock'],
+        ['sale', 'sale'],
+      ].map(([key, label]) => (
+        <label className="check" key={key}>
+          <input
+            type="checkbox"
+            checked={params.has(key)}
+            onChange={() => update(key, params.has(key) ? '' : '1')}
+          />
+          {t(label)}
+        </label>
+      ))}
+      <Button className="secondary" onClick={() => setParams({})}>
+        {t('clear')}
+      </Button>
+    </div>
+  );
+  return (
+    <section className="container section">
+      <nav className="breadcrumb">
+        <Link to="/">{t('home')}</Link> / {title}
+      </nav>
+      <div className="catalog-title">
+        <div>
+          <p className="eyebrow">FLUIVIX / 2026</p>
+          <h1>{title}</h1>
+          {collection && <p>{collection.description[locale]}</p>}
+        </div>
+        <p>{t('results', { count: filtered.length })}</p>
+      </div>
+      <div className="catalog-toolbar">
+        <Modal
+          title={t('filters')}
+          trigger={
+            <Button className="secondary mobile-filter">
+              <SlidersHorizontal size={16} />
+              {t('filters')}
+            </Button>
+          }
+        >
+          {filters}
+        </Modal>
+        <label>
+          {t('sort')}
+          <select
+            value={effective.get('sort') ?? 'latest'}
+            onChange={(e) => update('sort', e.target.value)}
+          >
+            {[
+              ['latest', 'latest'],
+              ['price_asc', 'priceAsc'],
+              ['price_desc', 'priceDesc'],
+              ['best', 'best'],
+              ['name', 'nameSort'],
+            ].map(([id, key]) => (
+              <option key={id} value={id}>
+                {t(key)}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+      <div className="catalog-layout">
+        <aside>{filters}</aside>
+        <div>
+          <ProductGrid items={filtered.slice((page - 1) * 12, page * 12)} />
+          {!filtered.length && <Button onClick={() => setParams({})}>{t('clear')}</Button>}
+          <div className="pagination">
+            <Button
+              className="secondary"
+              disabled={page === 1}
+              onClick={() => {
+                const p = new URLSearchParams(params);
+                p.set('page', String(page - 1));
+                setParams(p);
+              }}
+            >
+              {t('prev')}
+            </Button>
+            <span>
+              {page} / {Math.max(1, Math.ceil(filtered.length / 12))}
+            </span>
+            <Button
+              className="secondary"
+              disabled={page * 12 >= filtered.length}
+              onClick={() => {
+                const p = new URLSearchParams(params);
+                p.set('page', String(page + 1));
+                setParams(p);
+              }}
+            >
+              {t('next')}
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

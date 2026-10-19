@@ -1,43 +1,253 @@
 import { localized as l } from '../types/domain';
-export const stories={
- about:[
- l('Một tủ đồ, nhiều nhịp sống','One wardrobe, many rhythms','하나의 옷장, 다양한 리듬','一间衣橱，多种节奏','一つのワードローブ、さまざまなリズム'),
- l('FLUIVIX trong bản demo này là một ý tưởng về trang phục đương đại: vừa đủ tinh tế để ra phố, vừa đủ thoải mái để là chính mình. Chúng tôi khám phá phom dáng gọn gàng, màu sắc tự nhiên và những món đồ dễ kết hợp.','This FLUIVIX demo explores contemporary clothing: considered enough for the city and comfortable enough to feel like yourself. It brings together clean silhouettes, grounded colors and pieces that work together.','이 FLUIVIX 데모는 도시의 세련됨과 나다운 편안함을 함께 담은 현대적인 의류를 탐구합니다. 깔끔한 실루엣, 자연스러운 색상, 함께 어울리는 아이템을 제안합니다.','此 FLUIVIX 演示探索当代服装理念：兼顾都市精致感与自在舒适。我们以利落廓形、自然色调和易于搭配的单品构建衣橱。','このFLUIVIXデモは、街に似合う洗練と自分らしい心地よさを両立する現代の服を探ります。すっきりした形、自然な色、組み合わせやすい一着を提案します。'),
- l('Thiết kế có chủ đích','Designed with intention','의도 있는 디자인','用心设计','意図のあるデザイン'),
- l('Mỗi mẫu minh họa bắt đầu từ cách bạn di chuyển trong ngày. Hãy thử các lớp áo, tìm size phù hợp và tạo bộ trang phục theo nhịp riêng. Toàn bộ hình ảnh là tác phẩm minh họa gốc cho dự án, không phải ảnh hàng hóa thật.','Each illustrated piece starts with how you move through the day. Try layers, find your fit and build a look at your own pace. All artwork is original project illustration, rather than photography of real merchandise.','각 일러스트 아이템은 하루의 움직임에서 시작합니다. 레이어를 시도하고 맞는 사이즈를 찾아 나만의 룩을 만들어 보세요. 모든 이미지는 실제 상품 사진이 아닌 프로젝트 오리지널 일러스트입니다.','每件插画单品都从日常活动出发。尝试叠穿、选择适合的尺码，按自己的节奏搭配。所有图片均为项目原创插画，并非真实商品照片。','イラストの服は、一日の動きから生まれました。重ね着やサイズ選びを楽しみ、自分のペースで着こなしを。画像はすべて本プロジェクトのオリジナルイラストで、実物の商品写真ではありません。')
- ],
- shippingPolicy:[
- l('Phạm vi giao hàng mô phỏng','Simulated delivery coverage','배송 시뮬레이션 범위','模拟配送范围','配送シミュレーションの範囲'),
- l('Không có kiện hàng nào được đóng gói hoặc gửi đi. Địa chỉ được nhập chỉ dùng để minh họa bước đặt hàng và lưu trên trình duyệt này. Không kết nối đơn vị vận chuyển hoặc tra cứu địa giới trực tuyến.','No parcel is packed or dispatched. The address you enter illustrates checkout and stays in this browser. There is no courier connection or online administrative-area lookup.','상품은 포장되거나 발송되지 않습니다. 입력 주소는 주문 시연에만 사용되며 이 브라우저에 저장됩니다. 배송사 연결이나 온라인 주소 조회는 없습니다.','不会包装或寄出任何包裹。输入地址仅用于演示结算，保存在此浏览器。没有物流接口或在线行政区查询。','荷物の梱包・発送は行いません。入力住所は購入手続きのデモ用として、このブラウザ内に保存されます。配送会社や住所検索サービスとは接続していません。'),
- l('Phí và tiến độ mẫu','Sample fees and progress','예시 요금 및 진행','示例费用和进度','サンプル料金と進捗'),
- l('Tiêu chuẩn: 30.000 VND; miễn phí khi giá trị hàng sau giảm từ 599.000 VND. Nhanh: 49.000 VND. FREESHIP áp dụng cho tiêu chuẩn từ 250.000 VND trước giảm. Tiến độ chỉ thay đổi khi bạn dùng điều khiển mô phỏng trong đơn.','Standard: 30,000 VND, free from 599,000 VND after discount. Express: 49,000 VND. FREESHIP applies to standard shipping from a 250,000 VND subtotal. Progress changes only through the order simulation controls.','일반 배송은 30,000 VND이며 할인 후 599,000 VND 이상 무료입니다. 빠른 배송은 49,000 VND입니다. FREESHIP은 상품 합계 250,000 VND 이상 일반 배송에 적용됩니다. 진행은 주문 시뮬레이션으로만 변경됩니다.','标准配送 30,000 VND，折后满 599,000 VND 免费。快速配送 49,000 VND。FREESHIP 适用于商品小计满 250,000 VND 的标准配送。进度仅通过订单模拟控件改变。','通常配送は30,000 VND、割引後599,000 VND以上で無料。速達は49,000 VND。FREESHIPは小計250,000 VND以上の通常配送に適用。進捗は注文のシミュレーション操作でのみ変わります。')
- ],
- returnPolicy:[
- l('Điều kiện đổi trả demo','Demo return eligibility','데모 반품 조건','演示退换条件','デモ返品の条件'),
- l('Đơn đã giao có thể yêu cầu đổi trả trong 7 ngày kể từ thời điểm giao mô phỏng. Bạn có thể thử chuỗi yêu cầu, xem xét, chấp nhận hoặc từ chối. Không gửi sản phẩm thật đến bất kỳ địa chỉ nào từ bản demo.','Delivered demo orders can request a return within 7 days of simulated delivery. Test request, review, approval and rejection states. Do not send real products to any address based on this demo.','배송 시뮬레이션 완료 후 7일 이내 반품을 요청할 수 있습니다. 요청, 검토, 승인, 거절을 테스트하세요. 이 데모를 근거로 실제 상품을 보내지 마세요.','模拟签收后 7 天内可申请退换，可测试申请、审核、批准和拒绝状态。请勿根据演示向任何地址寄送真实商品。','配達シミュレーションから7日以内に返品申請ができます。申請・審査・承認・却下を試せます。このデモを根拠に実物を発送しないでください。'),
- l('Hủy đơn và hoàn tiền mô phỏng','Cancellation and simulated refunds','취소 및 환불 시뮬레이션','取消与模拟退款','キャンセルと返金シミュレーション'),
- l('Có thể hủy trước trạng thái đang giao; đơn đang giao không thể hủy. Sau khi yêu cầu được chấp nhận, có thể mô phỏng hoàn tiền. Không có tiền được thu hay chuyển; đây không phải quy trình khiếu nại hoặc cam kết hoàn tiền của cửa hàng.','Orders may be cancelled before dispatch; shipping orders cannot be cancelled. An approved return can progress to a simulated refund. No money is collected or transferred; this is not a merchant claim or refund commitment.','배송 전에는 취소할 수 있으나 배송 중에는 취소할 수 없습니다. 승인된 반품은 환불 시뮬레이션으로 진행됩니다. 실제 금액은 수취·송금되지 않으며 상점의 환불 약속이 아닙니다.','发货前可取消，配送中不可取消。批准后可继续模拟退款。不会收取或转移资金，这不是商家的售后流程或退款承诺。','発送前はキャンセル可能ですが、配送中はできません。承認された返品は返金シミュレーションへ進めます。実際の集金・送金はなく、店舗の返金保証ではありません。')
- ],
- privacyPolicy:[
- l('Dữ liệu trên thiết bị','Data on your device','기기 내 데이터','设备内数据','端末内のデータ'),
- l('Giỏ hàng, yêu thích, hồ sơ, địa chỉ và đơn demo được lưu trong localStorage có tiền tố fluivix:. Không sử dụng máy chủ, bộ theo dõi hoặc dịch vụ phân tích. Người có quyền vào trình duyệt có thể đọc hoặc sửa dữ liệu này; đây không phải lưu trữ bảo mật.','Bags, favorites, profiles, addresses and demo orders use localStorage keys prefixed fluivix:. There is no server, tracker or analytics service. Anyone with browser access may read or edit these records; this is not secure storage.','장바구니, 즐겨찾기, 프로필, 주소, 데모 주문은 fluivix:로 시작하는 localStorage에 저장됩니다. 서버, 추적기, 분석 서비스는 없습니다. 브라우저 접근자는 기록을 읽거나 수정할 수 있으며 보안 저장소가 아닙니다.','购物袋、收藏、资料、地址和演示订单保存在以 fluivix: 为前缀的 localStorage 中。无服务器、跟踪器或分析服务。有权访问浏览器的人可读取或编辑记录，此处并非安全存储。','バッグ、お気に入り、プロフィール、住所、デモ注文はfluivix:で始まるlocalStorageに保存します。サーバー、トラッカー、分析サービスはありません。ブラウザにアクセスできる人は読み取り・編集でき、安全な保管場所ではありません。'),
- l('Kiểm soát và xóa dữ liệu','Control and deletion','관리 및 삭제','控制和删除','管理と削除'),
- l('Không nhập thông tin cá nhân thật. Mật khẩu không được lưu hay xác minh; không thu thông tin thẻ. Dùng Xóa dữ liệu demo ở cuối trang để xóa các khóa FLUIVIX sau xác nhận. Việc này không xóa dữ liệu khác của trình duyệt.','Use sample personal details. Passwords are neither stored nor verified; card information is never collected. Use Reset demo data in the footer to remove FLUIVIX keys after confirmation. Other browser data is untouched.','실제 개인정보를 입력하지 마세요. 비밀번호는 저장·검증하지 않으며 카드 정보를 수집하지 않습니다. 하단의 데모 데이터 초기화를 확인하면 FLUIVIX 키만 삭제됩니다. 다른 브라우저 데이터는 유지됩니다.','请使用示例个人信息。密码不保存或验证，也不收集银行卡信息。在页脚选择重置演示数据并确认后，仅删除 FLUIVIX 数据键，不影响其他浏览器数据。','架空の個人情報を使用してください。パスワードの保存・検証、カード情報の収集はしません。フッターのデモデータリセットで確認後にFLUIVIXキーのみ削除します。他のブラウザデータは残ります。')
- ],
- terms:[
- l('Mục đích sử dụng','Purpose of use','이용 목적','使用目的','利用目的'),
- l('Bản demo FLUIVIX được tạo để kiểm thử trải nghiệm mua sắm bằng dữ liệu tĩnh và trạng thái trên trình duyệt. Giá, tồn kho, chương trình, đánh giá và chính sách đều là mẫu. Không có hợp đồng mua bán phát sinh khi xác nhận đơn.','The FLUIVIX demo tests shopping interactions with static data and browser state. Prices, inventory, promotions, reviews and policies are samples. Confirming an order does not create a sales contract.','FLUIVIX 데모는 정적 데이터와 브라우저 상태로 쇼핑 경험을 테스트합니다. 가격, 재고, 프로모션, 리뷰, 정책은 예시입니다. 주문 확정은 판매 계약을 만들지 않습니다.','FLUIVIX 演示使用静态数据和浏览器状态测试购物交互。价格、库存、促销、评价和政策均为示例。确认订单不会形成买卖合同。','FLUIVIXデモは静的データとブラウザ内の状態で買い物を試すためのものです。価格、在庫、特典、レビュー、ポリシーはサンプルです。注文確定で売買契約は成立しません。'),
- l('Giới hạn trải nghiệm','Experience limitations','체험 제한','体验限制','体験の制限'),
- l('Dữ liệu không đồng bộ giữa các thiết bị và có thể mất khi xóa bộ nhớ trình duyệt. Thanh toán, giao hàng, email và đổi trả không được thực hiện thật. Nội dung mẫu không thay thế chính sách chính thức hoặc tư vấn pháp lý.','Data does not sync across devices and may be lost when browser storage is cleared. Payments, delivery, emails and returns are not real. Sample content does not replace official policies or legal advice.','데이터는 기기 간 동기화되지 않으며 브라우저 저장소를 지우면 사라질 수 있습니다. 실제 결제, 배송, 이메일, 반품은 없습니다. 예시 내용은 공식 정책이나 법률 자문을 대체하지 않습니다.','数据不跨设备同步，清除浏览器存储后可能丢失。不进行真实支付、配送、邮件发送或退换。示例内容不代替正式政策或法律建议。','データは端末間で同期せず、ブラウザの保存領域を消すと失われます。実際の決済・配送・メール・返品はありません。サンプルは正式なポリシーや法的助言に代わりません。')
- ]
+export const stories = {
+  about: [
+    l(
+      'Một tủ đồ, nhiều nhịp sống',
+      'One wardrobe, many rhythms',
+      '하나의 옷장, 다양한 리듬',
+      '一间衣橱，多种节奏',
+      '一つのワードローブ、さまざまなリズム',
+    ),
+    l(
+      'FLUIVIX trong bản demo này là một ý tưởng về trang phục đương đại: vừa đủ tinh tế để ra phố, vừa đủ thoải mái để là chính mình. Chúng tôi khám phá phom dáng gọn gàng, màu sắc tự nhiên và những món đồ dễ kết hợp.',
+      'This FLUIVIX demo explores contemporary clothing: considered enough for the city and comfortable enough to feel like yourself. It brings together clean silhouettes, grounded colors and pieces that work together.',
+      '이 FLUIVIX 데모는 도시의 세련됨과 나다운 편안함을 함께 담은 현대적인 의류를 탐구합니다. 깔끔한 실루엣, 자연스러운 색상, 함께 어울리는 아이템을 제안합니다.',
+      '此 FLUIVIX 演示探索当代服装理念：兼顾都市精致感与自在舒适。我们以利落廓形、自然色调和易于搭配的单品构建衣橱。',
+      'このFLUIVIXデモは、街に似合う洗練と自分らしい心地よさを両立する現代の服を探ります。すっきりした形、自然な色、組み合わせやすい一着を提案します。',
+    ),
+    l(
+      'Thiết kế có chủ đích',
+      'Designed with intention',
+      '의도 있는 디자인',
+      '用心设计',
+      '意図のあるデザイン',
+    ),
+    l(
+      'Mỗi mẫu minh họa bắt đầu từ cách bạn di chuyển trong ngày. Hãy thử các lớp áo, tìm size phù hợp và tạo bộ trang phục theo nhịp riêng. Toàn bộ hình ảnh là tác phẩm minh họa gốc cho dự án, không phải ảnh hàng hóa thật.',
+      'Each illustrated piece starts with how you move through the day. Try layers, find your fit and build a look at your own pace. All artwork is original project illustration, rather than photography of real merchandise.',
+      '각 일러스트 아이템은 하루의 움직임에서 시작합니다. 레이어를 시도하고 맞는 사이즈를 찾아 나만의 룩을 만들어 보세요. 모든 이미지는 실제 상품 사진이 아닌 프로젝트 오리지널 일러스트입니다.',
+      '每件插画单品都从日常活动出发。尝试叠穿、选择适合的尺码，按自己的节奏搭配。所有图片均为项目原创插画，并非真实商品照片。',
+      'イラストの服は、一日の動きから生まれました。重ね着やサイズ選びを楽しみ、自分のペースで着こなしを。画像はすべて本プロジェクトのオリジナルイラストで、実物の商品写真ではありません。',
+    ),
+  ],
+  shippingPolicy: [
+    l(
+      'Phạm vi giao hàng mô phỏng',
+      'Simulated delivery coverage',
+      '배송 시뮬레이션 범위',
+      '模拟配送范围',
+      '配送シミュレーションの範囲',
+    ),
+    l(
+      'Không có kiện hàng nào được đóng gói hoặc gửi đi. Địa chỉ được nhập chỉ dùng để minh họa bước đặt hàng và lưu trên trình duyệt này. Không kết nối đơn vị vận chuyển hoặc tra cứu địa giới trực tuyến.',
+      'No parcel is packed or dispatched. The address you enter illustrates checkout and stays in this browser. There is no courier connection or online administrative-area lookup.',
+      '상품은 포장되거나 발송되지 않습니다. 입력 주소는 주문 시연에만 사용되며 이 브라우저에 저장됩니다. 배송사 연결이나 온라인 주소 조회는 없습니다.',
+      '不会包装或寄出任何包裹。输入地址仅用于演示结算，保存在此浏览器。没有物流接口或在线行政区查询。',
+      '荷物の梱包・発送は行いません。入力住所は購入手続きのデモ用として、このブラウザ内に保存されます。配送会社や住所検索サービスとは接続していません。',
+    ),
+    l(
+      'Phí và tiến độ mẫu',
+      'Sample fees and progress',
+      '예시 요금 및 진행',
+      '示例费用和进度',
+      'サンプル料金と進捗',
+    ),
+    l(
+      'Tiêu chuẩn: 30.000 VND; miễn phí khi giá trị hàng sau giảm từ 599.000 VND. Nhanh: 49.000 VND. FREESHIP áp dụng cho tiêu chuẩn từ 250.000 VND trước giảm. Tiến độ chỉ thay đổi khi bạn dùng điều khiển mô phỏng trong đơn.',
+      'Standard: 30,000 VND, free from 599,000 VND after discount. Express: 49,000 VND. FREESHIP applies to standard shipping from a 250,000 VND subtotal. Progress changes only through the order simulation controls.',
+      '일반 배송은 30,000 VND이며 할인 후 599,000 VND 이상 무료입니다. 빠른 배송은 49,000 VND입니다. FREESHIP은 상품 합계 250,000 VND 이상 일반 배송에 적용됩니다. 진행은 주문 시뮬레이션으로만 변경됩니다.',
+      '标准配送 30,000 VND，折后满 599,000 VND 免费。快速配送 49,000 VND。FREESHIP 适用于商品小计满 250,000 VND 的标准配送。进度仅通过订单模拟控件改变。',
+      '通常配送は30,000 VND、割引後599,000 VND以上で無料。速達は49,000 VND。FREESHIPは小計250,000 VND以上の通常配送に適用。進捗は注文のシミュレーション操作でのみ変わります。',
+    ),
+  ],
+  returnPolicy: [
+    l(
+      'Điều kiện đổi trả demo',
+      'Demo return eligibility',
+      '데모 반품 조건',
+      '演示退换条件',
+      'デモ返品の条件',
+    ),
+    l(
+      'Đơn đã giao có thể yêu cầu đổi trả trong 7 ngày kể từ thời điểm giao mô phỏng. Bạn có thể thử chuỗi yêu cầu, xem xét, chấp nhận hoặc từ chối. Không gửi sản phẩm thật đến bất kỳ địa chỉ nào từ bản demo.',
+      'Delivered demo orders can request a return within 7 days of simulated delivery. Test request, review, approval and rejection states. Do not send real products to any address based on this demo.',
+      '배송 시뮬레이션 완료 후 7일 이내 반품을 요청할 수 있습니다. 요청, 검토, 승인, 거절을 테스트하세요. 이 데모를 근거로 실제 상품을 보내지 마세요.',
+      '模拟签收后 7 天内可申请退换，可测试申请、审核、批准和拒绝状态。请勿根据演示向任何地址寄送真实商品。',
+      '配達シミュレーションから7日以内に返品申請ができます。申請・審査・承認・却下を試せます。このデモを根拠に実物を発送しないでください。',
+    ),
+    l(
+      'Hủy đơn và hoàn tiền mô phỏng',
+      'Cancellation and simulated refunds',
+      '취소 및 환불 시뮬레이션',
+      '取消与模拟退款',
+      'キャンセルと返金シミュレーション',
+    ),
+    l(
+      'Có thể hủy trước trạng thái đang giao; đơn đang giao không thể hủy. Sau khi yêu cầu được chấp nhận, có thể mô phỏng hoàn tiền. Không có tiền được thu hay chuyển; đây không phải quy trình khiếu nại hoặc cam kết hoàn tiền của cửa hàng.',
+      'Orders may be cancelled before dispatch; shipping orders cannot be cancelled. An approved return can progress to a simulated refund. No money is collected or transferred; this is not a merchant claim or refund commitment.',
+      '배송 전에는 취소할 수 있으나 배송 중에는 취소할 수 없습니다. 승인된 반품은 환불 시뮬레이션으로 진행됩니다. 실제 금액은 수취·송금되지 않으며 상점의 환불 약속이 아닙니다.',
+      '发货前可取消，配送中不可取消。批准后可继续模拟退款。不会收取或转移资金，这不是商家的售后流程或退款承诺。',
+      '発送前はキャンセル可能ですが、配送中はできません。承認された返品は返金シミュレーションへ進めます。実際の集金・送金はなく、店舗の返金保証ではありません。',
+    ),
+  ],
+  privacyPolicy: [
+    l(
+      'Dữ liệu trên thiết bị',
+      'Data on your device',
+      '기기 내 데이터',
+      '设备内数据',
+      '端末内のデータ',
+    ),
+    l(
+      'Giỏ hàng, yêu thích, hồ sơ, địa chỉ và đơn demo được lưu trong localStorage có tiền tố fluivix:. Không sử dụng máy chủ, bộ theo dõi hoặc dịch vụ phân tích. Người có quyền vào trình duyệt có thể đọc hoặc sửa dữ liệu này; đây không phải lưu trữ bảo mật.',
+      'Bags, favorites, profiles, addresses and demo orders use localStorage keys prefixed fluivix:. There is no server, tracker or analytics service. Anyone with browser access may read or edit these records; this is not secure storage.',
+      '장바구니, 즐겨찾기, 프로필, 주소, 데모 주문은 fluivix:로 시작하는 localStorage에 저장됩니다. 서버, 추적기, 분석 서비스는 없습니다. 브라우저 접근자는 기록을 읽거나 수정할 수 있으며 보안 저장소가 아닙니다.',
+      '购物袋、收藏、资料、地址和演示订单保存在以 fluivix: 为前缀的 localStorage 中。无服务器、跟踪器或分析服务。有权访问浏览器的人可读取或编辑记录，此处并非安全存储。',
+      'バッグ、お気に入り、プロフィール、住所、デモ注文はfluivix:で始まるlocalStorageに保存します。サーバー、トラッカー、分析サービスはありません。ブラウザにアクセスできる人は読み取り・編集でき、安全な保管場所ではありません。',
+    ),
+    l(
+      'Kiểm soát và xóa dữ liệu',
+      'Control and deletion',
+      '관리 및 삭제',
+      '控制和删除',
+      '管理と削除',
+    ),
+    l(
+      'Không nhập thông tin cá nhân thật. Mật khẩu không được lưu hay xác minh; không thu thông tin thẻ. Dùng Xóa dữ liệu demo ở cuối trang để xóa các khóa FLUIVIX sau xác nhận. Việc này không xóa dữ liệu khác của trình duyệt.',
+      'Use sample personal details. Passwords are neither stored nor verified; card information is never collected. Use Reset demo data in the footer to remove FLUIVIX keys after confirmation. Other browser data is untouched.',
+      '실제 개인정보를 입력하지 마세요. 비밀번호는 저장·검증하지 않으며 카드 정보를 수집하지 않습니다. 하단의 데모 데이터 초기화를 확인하면 FLUIVIX 키만 삭제됩니다. 다른 브라우저 데이터는 유지됩니다.',
+      '请使用示例个人信息。密码不保存或验证，也不收集银行卡信息。在页脚选择重置演示数据并确认后，仅删除 FLUIVIX 数据键，不影响其他浏览器数据。',
+      '架空の個人情報を使用してください。パスワードの保存・検証、カード情報の収集はしません。フッターのデモデータリセットで確認後にFLUIVIXキーのみ削除します。他のブラウザデータは残ります。',
+    ),
+  ],
+  terms: [
+    l('Mục đích sử dụng', 'Purpose of use', '이용 목적', '使用目的', '利用目的'),
+    l(
+      'Bản demo FLUIVIX được tạo để kiểm thử trải nghiệm mua sắm bằng dữ liệu tĩnh và trạng thái trên trình duyệt. Giá, tồn kho, chương trình, đánh giá và chính sách đều là mẫu. Không có hợp đồng mua bán phát sinh khi xác nhận đơn.',
+      'The FLUIVIX demo tests shopping interactions with static data and browser state. Prices, inventory, promotions, reviews and policies are samples. Confirming an order does not create a sales contract.',
+      'FLUIVIX 데모는 정적 데이터와 브라우저 상태로 쇼핑 경험을 테스트합니다. 가격, 재고, 프로모션, 리뷰, 정책은 예시입니다. 주문 확정은 판매 계약을 만들지 않습니다.',
+      'FLUIVIX 演示使用静态数据和浏览器状态测试购物交互。价格、库存、促销、评价和政策均为示例。确认订单不会形成买卖合同。',
+      'FLUIVIXデモは静的データとブラウザ内の状態で買い物を試すためのものです。価格、在庫、特典、レビュー、ポリシーはサンプルです。注文確定で売買契約は成立しません。',
+    ),
+    l('Giới hạn trải nghiệm', 'Experience limitations', '체험 제한', '体验限制', '体験の制限'),
+    l(
+      'Dữ liệu không đồng bộ giữa các thiết bị và có thể mất khi xóa bộ nhớ trình duyệt. Thanh toán, giao hàng, email và đổi trả không được thực hiện thật. Nội dung mẫu không thay thế chính sách chính thức hoặc tư vấn pháp lý.',
+      'Data does not sync across devices and may be lost when browser storage is cleared. Payments, delivery, emails and returns are not real. Sample content does not replace official policies or legal advice.',
+      '데이터는 기기 간 동기화되지 않으며 브라우저 저장소를 지우면 사라질 수 있습니다. 실제 결제, 배송, 이메일, 반품은 없습니다. 예시 내용은 공식 정책이나 법률 자문을 대체하지 않습니다.',
+      '数据不跨设备同步，清除浏览器存储后可能丢失。不进行真实支付、配送、邮件发送或退换。示例内容不代替正式政策或法律建议。',
+      'データは端末間で同期せず、ブラウザの保存領域を消すと失われます。実際の決済・配送・メール・返品はありません。サンプルは正式なポリシーや法的助言に代わりません。',
+    ),
+  ],
 };
-export const faq=[
- [l('Đây có phải cửa hàng thật?','Is this a real store?','실제 매장인가요?','这是真实商店吗？','実際の店舗ですか？'),l('Không. Đây là trải nghiệm frontend; không thu tiền hoặc gửi hàng.','No. This is a frontend demo with no real payments or shipments.','아니요. 실제 결제나 배송이 없는 프런트엔드 데모입니다.','不是。这是前端演示，不收款或发货。','いいえ。実際の決済や発送のないフロントエンドデモです。')],
- [l('Chọn size thế nào?','How do I choose a size?','사이즈는 어떻게 고르나요?','如何选择尺码？','サイズの選び方は？'),l('Đo số đo cơ thể và so sánh bảng cm tại Hướng dẫn chọn size.','Compare your body measurements with the size guide in cm.','신체 치수를 cm 사이즈표와 비교하세요.','将身体尺寸与厘米尺码表比较。','体の寸法をcmのサイズ表と比較してください。')],
- [l('Mua không cần tài khoản được không?','Can I order as a guest?','비회원 주문이 가능한가요?','可以游客下单吗？','ゲスト購入できますか？'),l('Có. Đơn Guest chỉ có thể tra cứu trên trình duyệt đã tạo đơn.','Yes. Guest orders can be looked up only in the browser where they were created.','네. 비회원 주문은 생성한 브라우저에서만 조회됩니다.','可以，游客订单仅能在创建订单的浏览器查询。','はい。ゲスト注文は作成したブラウザ内でのみ追跡できます。')],
- [l('Phí vận chuyển tính thế nào?','How is shipping calculated?','배송비는 어떻게 계산하나요?','运费如何计算？','送料はどう計算されますか？'),stories.shippingPolicy[3]],
- [l('Có lưu mật khẩu không?','Are passwords stored?','비밀번호를 저장하나요?','保存密码吗？','パスワードは保存しますか？'),l('Không. Bất kỳ mật khẩu hợp lệ từ 8 ký tự nào đều dùng được cho hồ sơ demo có sẵn.','No. Any form-valid password of 8+ characters works for an existing demo profile.','아니요. 기존 데모 프로필은 8자 이상 임의의 비밀번호를 허용합니다.','不保存，已有演示资料可使用任意至少 8 字符的合规密码。','いいえ。既存のデモプロフィールは8文字以上の任意のパスワードで操作できます。')],
- [l('Thanh toán thất bại phải làm gì?','What if payment fails?','결제가 실패하면 어떻게 하나요?','支付失败怎么办？','決済に失敗したら？'),l('Chọn thử lại ở màn hình thanh toán. Cùng mã đơn được giữ, không tạo đơn mới.','Choose retry on the payment screen. The same order ID is kept without creating another order.','결제 화면에서 재시도를 선택하세요. 같은 주문 번호가 유지됩니다.','在支付页面选择重试，保留同一订单号，不创建新订单。','決済画面で再試行してください。同じ注文番号を保ち、新しい注文は作りません。')],
- [l('Khi nào có thể đổi trả?','When can I request a return?','언제 반품할 수 있나요?','何时可以申请退换？','返品申請はいつできますか？'),stories.returnPolicy[1]],
- [l('Xóa dữ liệu bằng cách nào?','How do I delete local data?','로컬 데이터는 어떻게 삭제하나요?','如何删除本地数据？','ローカルデータの削除方法は？'),stories.privacyPolicy[3]]
+export const faq = [
+  [
+    l(
+      'Đây có phải cửa hàng thật?',
+      'Is this a real store?',
+      '실제 매장인가요?',
+      '这是真实商店吗？',
+      '実際の店舗ですか？',
+    ),
+    l(
+      'Không. Đây là trải nghiệm frontend; không thu tiền hoặc gửi hàng.',
+      'No. This is a frontend demo with no real payments or shipments.',
+      '아니요. 실제 결제나 배송이 없는 프런트엔드 데모입니다.',
+      '不是。这是前端演示，不收款或发货。',
+      'いいえ。実際の決済や発送のないフロントエンドデモです。',
+    ),
+  ],
+  [
+    l(
+      'Chọn size thế nào?',
+      'How do I choose a size?',
+      '사이즈는 어떻게 고르나요?',
+      '如何选择尺码？',
+      'サイズの選び方は？',
+    ),
+    l(
+      'Đo số đo cơ thể và so sánh bảng cm tại Hướng dẫn chọn size.',
+      'Compare your body measurements with the size guide in cm.',
+      '신체 치수를 cm 사이즈표와 비교하세요.',
+      '将身体尺寸与厘米尺码表比较。',
+      '体の寸法をcmのサイズ表と比較してください。',
+    ),
+  ],
+  [
+    l(
+      'Mua không cần tài khoản được không?',
+      'Can I order as a guest?',
+      '비회원 주문이 가능한가요?',
+      '可以游客下单吗？',
+      'ゲスト購入できますか？',
+    ),
+    l(
+      'Có. Đơn Guest chỉ có thể tra cứu trên trình duyệt đã tạo đơn.',
+      'Yes. Guest orders can be looked up only in the browser where they were created.',
+      '네. 비회원 주문은 생성한 브라우저에서만 조회됩니다.',
+      '可以，游客订单仅能在创建订单的浏览器查询。',
+      'はい。ゲスト注文は作成したブラウザ内でのみ追跡できます。',
+    ),
+  ],
+  [
+    l(
+      'Phí vận chuyển tính thế nào?',
+      'How is shipping calculated?',
+      '배송비는 어떻게 계산하나요?',
+      '运费如何计算？',
+      '送料はどう計算されますか？',
+    ),
+    stories.shippingPolicy[3],
+  ],
+  [
+    l(
+      'Có lưu mật khẩu không?',
+      'Are passwords stored?',
+      '비밀번호를 저장하나요?',
+      '保存密码吗？',
+      'パスワードは保存しますか？',
+    ),
+    l(
+      'Không. Bất kỳ mật khẩu hợp lệ từ 8 ký tự nào đều dùng được cho hồ sơ demo có sẵn.',
+      'No. Any form-valid password of 8+ characters works for an existing demo profile.',
+      '아니요. 기존 데모 프로필은 8자 이상 임의의 비밀번호를 허용합니다.',
+      '不保存，已有演示资料可使用任意至少 8 字符的合规密码。',
+      'いいえ。既存のデモプロフィールは8文字以上の任意のパスワードで操作できます。',
+    ),
+  ],
+  [
+    l(
+      'Thanh toán thất bại phải làm gì?',
+      'What if payment fails?',
+      '결제가 실패하면 어떻게 하나요?',
+      '支付失败怎么办？',
+      '決済に失敗したら？',
+    ),
+    l(
+      'Chọn thử lại ở màn hình thanh toán. Cùng mã đơn được giữ, không tạo đơn mới.',
+      'Choose retry on the payment screen. The same order ID is kept without creating another order.',
+      '결제 화면에서 재시도를 선택하세요. 같은 주문 번호가 유지됩니다.',
+      '在支付页面选择重试，保留同一订单号，不创建新订单。',
+      '決済画面で再試行してください。同じ注文番号を保ち、新しい注文は作りません。',
+    ),
+  ],
+  [
+    l(
+      'Khi nào có thể đổi trả?',
+      'When can I request a return?',
+      '언제 반품할 수 있나요?',
+      '何时可以申请退换？',
+      '返品申請はいつできますか？',
+    ),
+    stories.returnPolicy[1],
+  ],
+  [
+    l(
+      'Xóa dữ liệu bằng cách nào?',
+      'How do I delete local data?',
+      '로컬 데이터는 어떻게 삭제하나요?',
+      '如何删除本地数据？',
+      'ローカルデータの削除方法は？',
+    ),
+    stories.privacyPolicy[3],
+  ],
 ];

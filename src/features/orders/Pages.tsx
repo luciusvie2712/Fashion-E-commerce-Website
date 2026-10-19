@@ -1,16 +1,242 @@
 import { useState } from 'react';
-import { Link,useNavigate,useParams,useSearchParams } from 'react-router';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router';
 import { toast } from 'sonner';
-import { useLocale,money } from '../i18n';
-import { useOwner,useAuth } from '../auth/store';
+import { useLocale, money } from '../i18n';
+import { useOwner, useAuth } from '../auth/store';
 import { useOrders } from './store';
-import { flow,returnFlow,canRequestReturn } from './domain';
+import { flow, returnFlow, canRequestReturn } from './domain';
 import { useCart } from '../cart/store';
-import { DemoNotice,Empty,Summary } from '../../components/shared';
-import { Button,Confirm } from '../../components/ui';
+import { DemoNotice, Empty, Summary } from '../../components/shared';
+import { Button, Confirm } from '../../components/ui';
 import type { Order } from '../../types/domain';
-export function Receipt({order:o}:{order:Order}){const {t,locale}=useLocale();return <><div><span className="status">{t(o.fulfillmentStatus)}</span><span className="status">{t(o.paymentStatus)}</span>{o.returnStatus!=='NONE'&&<span className="status">{t(o.returnStatus)}</span>}</div>{o.items.map(item=><div className="cart-row" key={item.variantId}><img src={item.imageUrl} alt={item.nameAtPurchase[locale]} width="100" height="125"/><div><h2>{item.nameAtPurchase[locale]}</h2><p className="small">{item.sku}</p><p>{item.colorNameAtPurchase[locale]} / {item.size} × {item.quantity}</p></div><strong>{money(item.unitPriceVnd*item.quantity,locale)}</strong></div>)}<Summary pricing={o.pricingSnapshot}/><div className="panel"><h2>{t('recipient')}</h2><p>{o.addressSnapshot.recipient} · {o.addressSnapshot.phone}</p><p>{o.addressSnapshot.street}, {o.addressSnapshot.district}, {o.addressSnapshot.province}</p><p>{t(o.shippingMethod==='STANDARD'?'standard':'express')} · {t(o.paymentMethod==='COD'?'cod':'online')}</p></div></>;}
-export function OrderDetail({order}:{order:Order}){const {t,locale}=useLocale(),store=useOrders(),owner=useOwner(),cart=useCart(),navigate=useNavigate();const date=(value:string)=>new Intl.DateTimeFormat(locale,{dateStyle:'medium',timeStyle:'short'}).format(new Date(value));function advance(status:Parameters<typeof store.transition>[2]){try{store.transition(order.ownerId,order.id,status);toast.success(t('updated'));}catch(e){toast.error(t(e instanceof Error?e.message:'transitionError'));}}const cancellable=flow[order.fulfillmentStatus].includes('CANCELLED');return <><h1>{t('receipt')}</h1><DemoNotice/><p><strong>{order.id}</strong> · {date(order.createdAt)}</p><Receipt order={order}/><h2>{t('track')}</h2><ol className="timeline">{order.timeline.map((event,i)=><li key={i}>{t(event.status)}<time>{date(event.at)}</time></li>)}</ol>{order.fulfillmentStatus==='AWAITING_PAYMENT'&&<Link className="button" to={`/checkout/payment?orderId=${order.id}`}>{t('retry')}</Link>}<div className="panel"><h2>{t('simulate')}</h2><p className="small">{t('localOnly')}</p><div className="actions">{flow[order.fulfillmentStatus].filter(s=>s!=='CANCELLED').map(s=><Button key={s} className="secondary" onClick={()=>advance(s)}>{t(s)}</Button>)}</div><div className="actions">{cancellable?<Confirm title={t('cancelOrder')} onConfirm={()=>advance('CANCELLED')} trigger={<Button className="secondary">{t('cancelOrder')}</Button>}/>:<div><Button disabled className="secondary">{t('cancelOrder')}</Button><p className="small">{t('cannotCancel')}</p></div>}{order.returnStatus==='NONE'?<Button className="secondary" disabled={!canRequestReturn(order)} onClick={()=>advance('REQUESTED')}>{t('return')}</Button>:returnFlow[order.returnStatus].map(s=><Button className="secondary" key={s} onClick={()=>advance(s)}>{t(s)}</Button>)}</div><p className="small">{t('returnWindow')}</p></div><Button onClick={()=>{let failed=false;for(const item of order.items){try{cart.add(owner,{productId:item.productId,variantId:item.variantId,quantity:item.quantity});}catch{failed=true;}}if(failed)toast.warning(t('unavailable'));navigate('/cart');}}>{t('reorder')}</Button></>;}
-export function Orders(){const {t,locale}=useLocale(),owner=useOwner(),[status,setStatus]=useState(''),orders=useOrders().orders.filter(o=>o.ownerId===owner&&o.ownerType==='USER');return <><h1>{t('orders')}</h1><label>{t('filters')}<select value={status} onChange={e=>setStatus(e.target.value)}><option value="">{t('all')}</option>{Object.keys(flow).map(s=><option key={s} value={s}>{t(s)}</option>)}</select></label>{!orders.length?<Empty/>:orders.filter(o=>!status||o.fulfillmentStatus===status).map(o=><Link className="order-card" key={o.id} to={`/account/orders/${o.id}`}><strong>{o.id}</strong><p>{t(o.fulfillmentStatus)} · {t(o.paymentStatus)}</p><p>{money(o.pricingSnapshot.totalVnd,locale)}</p></Link>)}</>;}
-export function AccountOrder(){const {id}=useParams(),owner=useOwner(),order=useOrders(s=>s.orders.find(o=>o.id===id&&o.ownerId===owner&&o.ownerType==='USER'));return order?<OrderDetail order={order}/>:<Empty message="notFound"/>;}
-export function Track(){const {t}=useLocale(),guest=useAuth(s=>s.guestId),[params,setParams]=useSearchParams(),[id,setId]=useState(params.get('orderId')??'');const order=useOrders(s=>s.orders.find(o=>o.id===params.get('orderId')&&o.ownerId===guest&&o.ownerType==='GUEST'));return <section className="container section reading"><h1>{t('track')}</h1><DemoNotice/><form className="search-form" onSubmit={e=>{e.preventDefault();setParams({orderId:id.trim()});}}><label>{t('orderId')}<input value={id} onChange={e=>setId(e.target.value)} required/></label><Button>{t('search')}</Button></form>{order?<div className="section"><OrderDetail order={order}/></div>:params.has('orderId')?<Empty message="notFound"/>:<p className="section">{t('localOnly')}</p>}</section>;}
+export function Receipt({ order: o }: { order: Order }) {
+  const { t, locale } = useLocale();
+  return (
+    <>
+      <div>
+        <span className="status">{t(o.fulfillmentStatus)}</span>
+        <span className="status">{t(o.paymentStatus)}</span>
+        {o.returnStatus !== 'NONE' && <span className="status">{t(o.returnStatus)}</span>}
+      </div>
+      {o.items.map((item) => (
+        <div className="cart-row" key={item.variantId}>
+          <img src={item.imageUrl} alt={item.nameAtPurchase[locale]} width="100" height="125" />
+          <div>
+            <h2>{item.nameAtPurchase[locale]}</h2>
+            <p className="small">{item.sku}</p>
+            <p>
+              {item.colorNameAtPurchase[locale]} / {item.size} × {item.quantity}
+            </p>
+          </div>
+          <strong>{money(item.unitPriceVnd * item.quantity, locale)}</strong>
+        </div>
+      ))}
+      <Summary pricing={o.pricingSnapshot} />
+      <div className="panel">
+        <h2>{t('recipient')}</h2>
+        <p>
+          {o.addressSnapshot.recipient} · {o.addressSnapshot.phone}
+        </p>
+        <p>
+          {o.addressSnapshot.street}, {o.addressSnapshot.district}, {o.addressSnapshot.province}
+        </p>
+        <p>
+          {t(o.shippingMethod === 'STANDARD' ? 'standard' : 'express')} ·{' '}
+          {t(o.paymentMethod === 'COD' ? 'cod' : 'online')}
+        </p>
+      </div>
+    </>
+  );
+}
+export function OrderDetail({ order }: { order: Order }) {
+  const { t, locale } = useLocale(),
+    store = useOrders(),
+    owner = useOwner(),
+    cart = useCart(),
+    navigate = useNavigate();
+  const date = (value: string) =>
+    new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short' }).format(
+      new Date(value),
+    );
+  function advance(status: Parameters<typeof store.transition>[2]) {
+    try {
+      store.transition(order.ownerId, order.id, status);
+      toast.success(t('updated'));
+    } catch (e) {
+      toast.error(t(e instanceof Error ? e.message : 'transitionError'));
+    }
+  }
+  const cancellable = flow[order.fulfillmentStatus].includes('CANCELLED');
+  return (
+    <>
+      <h1>{t('receipt')}</h1>
+      <DemoNotice />
+      <p>
+        <strong>{order.id}</strong> · {date(order.createdAt)}
+      </p>
+      <Receipt order={order} />
+      <h2>{t('track')}</h2>
+      <ol className="timeline">
+        {order.timeline.map((event, i) => (
+          <li key={i}>
+            {t(event.status)}
+            <time>{date(event.at)}</time>
+          </li>
+        ))}
+      </ol>
+      {order.fulfillmentStatus === 'AWAITING_PAYMENT' && (
+        <Link className="button" to={`/checkout/payment?orderId=${order.id}`}>
+          {t('retry')}
+        </Link>
+      )}
+      <div className="panel">
+        <h2>{t('simulate')}</h2>
+        <p className="small">{t('localOnly')}</p>
+        <div className="actions">
+          {flow[order.fulfillmentStatus]
+            .filter((s) => s !== 'CANCELLED')
+            .map((s) => (
+              <Button key={s} className="secondary" onClick={() => advance(s)}>
+                {t(s)}
+              </Button>
+            ))}
+        </div>
+        <div className="actions">
+          {cancellable ? (
+            <Confirm
+              title={t('cancelOrder')}
+              onConfirm={() => advance('CANCELLED')}
+              trigger={<Button className="secondary">{t('cancelOrder')}</Button>}
+            />
+          ) : (
+            <div>
+              <Button disabled className="secondary">
+                {t('cancelOrder')}
+              </Button>
+              <p className="small">{t('cannotCancel')}</p>
+            </div>
+          )}
+          {order.returnStatus === 'NONE' ? (
+            <Button
+              className="secondary"
+              disabled={!canRequestReturn(order)}
+              onClick={() => advance('REQUESTED')}
+            >
+              {t('return')}
+            </Button>
+          ) : (
+            returnFlow[order.returnStatus].map((s) => (
+              <Button className="secondary" key={s} onClick={() => advance(s)}>
+                {t(s)}
+              </Button>
+            ))
+          )}
+        </div>
+        <p className="small">{t('returnWindow')}</p>
+      </div>
+      <Button
+        onClick={() => {
+          let failed = false;
+          for (const item of order.items) {
+            try {
+              cart.add(owner, {
+                productId: item.productId,
+                variantId: item.variantId,
+                quantity: item.quantity,
+              });
+            } catch {
+              failed = true;
+            }
+          }
+          if (failed) toast.warning(t('unavailable'));
+          navigate('/cart');
+        }}
+      >
+        {t('reorder')}
+      </Button>
+    </>
+  );
+}
+export function Orders() {
+  const { t, locale } = useLocale(),
+    owner = useOwner(),
+    [status, setStatus] = useState(''),
+    orders = useOrders().orders.filter((o) => o.ownerId === owner && o.ownerType === 'USER');
+  const visible = orders.filter((o) => !status || o.fulfillmentStatus === status);
+  return (
+    <>
+      <h1>{t('orders')}</h1>
+      <label>
+        {t('filters')}
+        <select value={status} onChange={(e) => setStatus(e.target.value)}>
+          <option value="">{t('all')}</option>
+          {Object.keys(flow).map((s) => (
+            <option key={s} value={s}>
+              {t(s)}
+            </option>
+          ))}
+        </select>
+      </label>
+      {!visible.length ? (
+        <Empty />
+      ) : (
+        visible.map((o) => (
+          <Link className="order-card" key={o.id} to={`/account/orders/${o.id}`}>
+            <strong>{o.id}</strong>
+            <p>
+              {t(o.fulfillmentStatus)} · {t(o.paymentStatus)}
+            </p>
+            <p>{money(o.pricingSnapshot.totalVnd, locale)}</p>
+          </Link>
+        ))
+      )}
+    </>
+  );
+}
+export function AccountOrder() {
+  const { id } = useParams(),
+    owner = useOwner(),
+    order = useOrders((s) =>
+      s.orders.find((o) => o.id === id && o.ownerId === owner && o.ownerType === 'USER'),
+    );
+  return order ? <OrderDetail order={order} /> : <Empty message="notFound" />;
+}
+export function Track() {
+  const { t } = useLocale(),
+    guest = useAuth((s) => s.guestId),
+    [params, setParams] = useSearchParams(),
+    [id, setId] = useState(params.get('orderId') ?? '');
+  const order = useOrders((s) =>
+    s.orders.find(
+      (o) => o.id === params.get('orderId') && o.ownerId === guest && o.ownerType === 'GUEST',
+    ),
+  );
+  return (
+    <section className="container section reading">
+      <h1>{t('track')}</h1>
+      <DemoNotice />
+      <form
+        className="search-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          setParams({ orderId: id.trim() });
+        }}
+      >
+        <label>
+          {t('orderId')}
+          <input value={id} onChange={(e) => setId(e.target.value)} required />
+        </label>
+        <Button>{t('search')}</Button>
+      </form>
+      {order ? (
+        <div className="section">
+          <OrderDetail order={order} />
+        </div>
+      ) : params.has('orderId') ? (
+        <Empty message="notFound" />
+      ) : (
+        <p className="section">{t('localOnly')}</p>
+      )}
+    </section>
+  );
+}

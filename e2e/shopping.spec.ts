@@ -1,9 +1,90 @@
-import { test,expect,type Page } from '@playwright/test';
-async function english(page:Page){await page.goto('/');await page.getByRole('combobox',{name:'Ngôn ngữ',exact:true}).selectOption('en');}
-export async function selectProduct(page:Page,index=1){await page.goto(`/product/fluivix-tshirts-${index}`);await page.getByRole('button',{name:'Ink',exact:true}).click();await page.getByRole('button',{name:'M',exact:true}).click();}
-test('home category product cart persists',async({page})=>{await english(page);await page.locator('.category-grid a').first().click();await expect(page).toHaveURL(/category\/tshirts/);await page.locator('.product-name').first().click();await page.getByRole('button',{name:'Ink',exact:true}).click();await page.getByRole('button',{name:'S',exact:true}).click();await page.getByRole('button',{name:'Add to bag',exact:true}).click();await page.goto('/cart');await expect(page.locator('.cart-row')).toHaveCount(1);await page.reload();await expect(page.locator('.cart-row')).toHaveCount(1);});
-test('missing options, sold out and max stock guarded',async({page})=>{await english(page);await page.goto('/product/fluivix-tshirts-1');await page.getByRole('button',{name:'Add to bag',exact:true}).click();await expect(page.getByRole('alert')).toContainText('select a color');await page.goto('/product/fluivix-accessories-8');await expect(page.getByRole('button',{name:'Add to bag',exact:true})).toBeDisabled();});
-test('duplicate variant merges and distinct variant stays separate',async({page})=>{await english(page);await selectProduct(page);await page.getByRole('button',{name:'Add to bag',exact:true}).click();await page.getByRole('button',{name:'Add to bag',exact:true}).click();await page.getByRole('button',{name:'L',exact:true}).click();await page.getByRole('button',{name:'Add to bag',exact:true}).click();await page.goto('/cart');await expect(page.locator('.cart-row')).toHaveCount(2);await expect(page.getByRole('spinbutton').first()).toHaveValue('2');});
-test('wishlist persists and remove yields actionable empty state',async({page})=>{await english(page);await page.goto('/product/fluivix-tshirts-1');await page.locator('.purchase').getByRole('button',{name:'Wishlist',exact:true}).click();await page.goto('/wishlist');await page.reload();await expect(page.locator('.product-card')).toHaveCount(1);await page.locator('.product-card').getByRole('button',{name:'Wishlist',exact:true}).click();await expect(page.getByRole('link',{name:'Continue shopping',exact:true})).toBeVisible();});
-test('filter URL survives reload and back',async({page})=>{await english(page);await page.goto('/shop?q=ao&size=M&size=L&color=ink&sort=price_asc');await expect(page.locator('.product-card').first()).toBeVisible();const before=await page.locator('.product-name').allTextContents();await page.reload();expect(await page.locator('.product-name').allTextContents()).toEqual(before);await page.locator('aside').getByRole('button',{name:'M',exact:true}).click();await expect(page).not.toHaveURL(/size=M/);await page.goBack();await expect(page).toHaveURL(/size=M/);});
-test('size dialog escapes and restores focus',async({page})=>{await english(page);await page.goto('/product/fluivix-tshirts-1');const trigger=page.getByRole('button',{name:'Size guide',exact:true});await trigger.click();await expect(page.getByRole('dialog')).toBeVisible();await page.keyboard.press('Escape');await expect(page.getByRole('dialog')).toHaveCount(0);await expect(trigger).toBeFocused();});
+import { test, expect, type Page } from '@playwright/test';
+async function english(page: Page) {
+  await page.goto('/');
+  await page.getByRole('combobox', { name: 'Ngôn ngữ', exact: true }).selectOption('en');
+}
+export async function selectProduct(page: Page, index = 1) {
+  await page.goto(`/product/fluivix-tshirts-${index}`);
+  await page.getByRole('button', { name: 'Ink', exact: true }).click();
+  await page.getByRole('button', { name: 'M', exact: true }).click();
+}
+test('home category product cart persists', async ({ page }) => {
+  await english(page);
+  await page.locator('.category-grid a').first().click();
+  await expect(page).toHaveURL(/category\/tshirts/);
+  await page.locator('.product-name').first().click();
+  await page.getByRole('button', { name: 'Ink', exact: true }).click();
+  await page.getByRole('button', { name: 'S', exact: true }).click();
+  await page.getByRole('button', { name: 'Add to bag', exact: true }).click();
+  await page.goto('/cart');
+  await expect(page.locator('.cart-row')).toHaveCount(1);
+  await page.reload();
+  await expect(page.locator('.cart-row')).toHaveCount(1);
+});
+test('missing options, sold out and max stock guarded', async ({ page }) => {
+  await english(page);
+  await page.goto('/product/fluivix-tshirts-1');
+  await page.getByRole('button', { name: 'Add to bag', exact: true }).click();
+  await expect(page.getByRole('alert')).toContainText('select a color');
+  await page.goto('/product/fluivix-accessories-8');
+  await expect(page.getByRole('button', { name: 'Add to bag', exact: true })).toBeDisabled();
+});
+test('duplicate variant merges and distinct variant stays separate', async ({ page }) => {
+  await english(page);
+  await selectProduct(page);
+  await page.getByRole('button', { name: 'Add to bag', exact: true }).click();
+  await page.getByRole('button', { name: 'Add to bag', exact: true }).click();
+  await page.getByRole('button', { name: 'L', exact: true }).click();
+  await page.getByRole('button', { name: 'Add to bag', exact: true }).click();
+  await page.goto('/cart');
+  await expect(page.locator('.cart-row')).toHaveCount(2);
+  await expect(page.getByRole('spinbutton').first()).toHaveValue('2');
+});
+test('wishlist persists and remove yields actionable empty state', async ({ page }) => {
+  await english(page);
+  await page.goto('/product/fluivix-tshirts-1');
+  await page.locator('.purchase').getByRole('button', { name: 'Wishlist', exact: true }).click();
+  await page.goto('/wishlist');
+  await page.reload();
+  await expect(page.locator('.product-card')).toHaveCount(1);
+  await page
+    .locator('.product-card')
+    .getByRole('button', { name: 'Wishlist', exact: true })
+    .click();
+  await expect(page.getByRole('link', { name: 'Continue shopping', exact: true })).toBeVisible();
+});
+test('filter URL survives reload and back', async ({ page }) => {
+  await english(page);
+  await page.goto('/shop?q=ao&size=M&size=L&color=ink&sort=price_asc');
+  await expect(page.locator('.product-card').first()).toBeVisible();
+  const before = await page.locator('.product-name').allTextContents();
+  await page.reload();
+  expect(await page.locator('.product-name').allTextContents()).toEqual(before);
+  await page.locator('aside').getByRole('button', { name: 'M', exact: true }).click();
+  await expect(page).not.toHaveURL(/size=M/);
+  await page.goBack();
+  await expect(page).toHaveURL(/size=M/);
+});
+test('size dialog escapes and restores focus', async ({ page }) => {
+  await english(page);
+  await page.goto('/product/fluivix-tshirts-1');
+  const trigger = page.getByRole('button', { name: 'Size guide', exact: true });
+  await trigger.click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+  await expect(trigger).toBeFocused();
+});
+test('cart variant editor merges a duplicate variant atomically', async ({ page }) => {
+  await english(page);
+  await selectProduct(page);
+  await page.getByRole('button', { name: 'Add to bag', exact: true }).click();
+  await page.getByRole('button', { name: 'L', exact: true }).click();
+  await page.getByRole('button', { name: 'Add to bag', exact: true }).click();
+  await page.goto('/cart');
+  await page.getByRole('button', { name: 'Edit', exact: true }).last().click();
+  await page.getByRole('dialog').getByRole('combobox').selectOption('p-001-ink-M');
+  await page.getByRole('dialog').getByRole('button', { name: 'Save changes' }).click();
+  await expect(page.locator('.cart-row')).toHaveCount(1);
+  await expect(page.getByRole('spinbutton')).toHaveValue('2');
+});

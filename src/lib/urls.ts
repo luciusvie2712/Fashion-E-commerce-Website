@@ -1,2 +1,24 @@
-export const normalizeVietnameseSearch=(value:string)=>value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/gi,'d').toLocaleLowerCase();
-export function sanitizeInternalRedirect(value:string|null){if(!value||!value.startsWith('/')||value.startsWith('//')||value.includes('\\')||[...value].some(c=>c.charCodeAt(0)<32))return '/account';try {const url=new URL(value,'https://fluivix.local');return url.origin==='https://fluivix.local'?url.pathname+url.search+url.hash:'/account';}catch{return '/account';}}
+export const normalizeVietnameseSearch = (value: string) =>
+  value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/gi, 'd')
+    .toLocaleLowerCase();
+export function sanitizeInternalRedirect(value: string | null) {
+  if (
+    !value ||
+    !value.startsWith('/') ||
+    value.startsWith('//') ||
+    value.includes('\\') ||
+    [...value].some((c) => c.charCodeAt(0) < 32)
+  )
+    return '/account';
+  try {
+    const url = new URL(value, 'https://fluivix.local');
+    return url.origin === 'https://fluivix.local'
+      ? url.pathname + url.search + url.hash
+      : '/account';
+  } catch {
+    return '/account';
+  }
+}

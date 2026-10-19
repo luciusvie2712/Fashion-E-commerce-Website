@@ -1,7 +1,7 @@
 # FLUIVIX — Implementation and verification checkpoint
 
 **Checkpoint version:** 1.0 (spec pack generated 2026-10-19)
-**State:** SPECIFICATIONS READY — APPLICATION NOT YET BUILT
+**State:** IMPLEMENTED — FINAL QA IN PROGRESS
 **Maintainer:** Codex once execution starts.
 **Source of truth:** `AGENTS.md`, `MASTER_PROMPT.md`, `docs/01`–`docs/10`.
 
@@ -9,22 +9,22 @@
 - [x] 15-file requirements/instruction/checkpoint package prepared.
 - [x] User SRS v1.0 preserved verbatim in `docs/02-FUNCTIONAL-REQUIREMENTS.md`.
 - [x] Five languages required: Vietnamese, English, Korean, Simplified Chinese, Japanese.
-- [ ] React/Vite source app created and run.
-- [ ] All 34 routes implemented.
-- [ ] All five locales wired and all dictionaries complete.
+- [x] React/Vite source app created, built and exercised in Chromium.
+- [x] All 34 routes implemented; 170 route × locale smoke combinations passed.
+- [x] Five bundled locales; dictionary/placeholder parity and localized purchase flows passed.
 - [ ] Unit/integration/E2E checks executed successfully.
 - [ ] Responsive/a11y and link audit completed.
 
 ## Phase table — Codex fills evidence; never pre-mark pass
 | Phase | Status | Changes delivered | Tests actually run | Blocker / next action |
 | --- | --- | --- | --- | --- |
-| 0 Foundation, domain, i18n | NOT_STARTED | — | NOT_RUN | Bootstrap safely in repo root |
-| 1 Catalog/PDP | NOT_STARTED | — | NOT_RUN | Depends on Phase 0 |
-| 2 Wishlist/cart/Buy Now | NOT_STARTED | — | NOT_RUN | Depends on Phase 1 |
-| 3 Account/address | NOT_STARTED | — | NOT_RUN | Depends on Phase 2 |
-| 4 Checkout/orders | NOT_STARTED | — | NOT_RUN | Depends on Phases 2–3 |
-| 5 Brand/support/reviews | NOT_STARTED | — | NOT_RUN | Depends on core flows |
-| 6 QA/performance/release | NOT_STARTED | — | NOT_RUN | Depends on completed app |
+| 0 Foundation, domain, i18n | COMPLETE | Strict locked frontend stack, domain, persistence and five locales | install/type/lint/unit/build PASS | No backend |
+| 1 Catalog/PDP | COMPLETE | Editorial home/catalog/search/collections/PDP | Shopping and five-locale route tests PASS | Local original illustrations |
+| 2 Wishlist/cart/Buy Now | COMPLETE | Owner-scoped shopping, stock guards, isolated intents | Unit and browser journeys PASS | Storage limitations disclosed |
+| 3 Account/address | COMPLETE | Demo auth/profile/address CRUD/default | Account browser/no-secret tests PASS | No real authentication |
+| 4 Checkout/orders | COMPLETE | COD, online retry, snapshots, tracking and returns | Checkout and five-language commerce tests PASS | No real payments |
+| 5 Brand/support/reviews | COMPLETE | Localized support prose/forms/reviews/lookbook | Content, responsive, axe and resilience tests PASS | Final regression run pending |
+| 6 QA/performance/release | IN_PROGRESS | Formatted source, split bundles, run guide, expanded tests | 39 unit tests PASS; full 35 E2E running | Final review and push pending |
 
 Allowed phase statuses: `NOT_STARTED`, `IN_PROGRESS`, `BLOCKED`, `COMPLETE`. Set `COMPLETE` only after exit checks reported in `docs/09-IMPLEMENTATION-PLAN.md` pass.
 
@@ -39,11 +39,11 @@ Allowed phase statuses: `NOT_STARTED`, `IN_PROGRESS`, `BLOCKED`, `COMPLETE`. Set
 | — | `npm run test:e2e` | NOT_RUN | — | 6 |
 
 ## Coverage ledger (Codex track numeric actual results)
-- Route patterns required: **34**, plus wildcard 404. Implemented: **0/34** (initial state).
-- Locales required: **5** (`vi`, `en`, `ko`, `zh-CN`, `ja`). Fully verified: **0/5**.
-- Route×locale coverage expected: **170** combinations plus localized wildcard/invalid slugs. Verified: **0/170**.
-- FLX-01–FLX-16 fully implemented: **0/16**.
-- Automated tests passing/failing/blocked: **0/0/0** (no code/tests executed yet).
+- Route patterns required: **34**, plus wildcard 404. Implemented: **34/34** plus wildcard 404; full locale smoke passed.
+- Locales required: **5** (`vi`, `en`, `ko`, `zh-CN`, `ja`). Route smoke and core purchase journeys verified: **5/5**. Full linguistic editorial review is not claimed.
+- Route×locale coverage expected: **170** combinations plus localized wildcard/invalid slugs. Verified: **170/170** route renders, with valid demo identity/order fixtures.
+- FLX-01–FLX-16 implemented: **16/16**, with final acceptance evidence being collected.
+- Latest completed unit/component run: **39 passed / 0 failed**. Full 35-scenario browser run pending. Historical failures and fixes are retained below.
 
 ## Risks/decisions (update as implemented)
 1. Editorial brand tokens, demo logistics/vouchers, artwork and legal text are suggested demo content, not official Fluivix policy.
@@ -108,3 +108,11 @@ Before continuing: read root `AGENTS.md`, this checkpoint, Phase plan, applicabl
 - Sequential 170/170 route×locale smoke PASS; locale switching mid-checkout PASS. 38 unit/component tests PASS; typecheck/lint/build PASS. Responsive/image smoke at 360/390/768/1024/1440 PASS across six templates. Axe AA checks six screens PASS. Mobile menu/filter Escape PASS. MANUAL visual: inspected actual generated Japanese 390px home screenshot; CJK glyphs visible, layout readable. This is not a full manual audit of all routes.
 - Resilience run initially 9/10 PASS: blocked-storage test used a full reload and incorrectly expected in-memory English to survive. Test now uses SPA links; rerun pending. Build still has a 566kB main-chunk warning; optimizing before final release.
 - Commit: feat(app): connect all storefront routes and localized interactions. SHA/push outcome follow.
+- App integration commit e643ee096ef4b6ec3cebcb0efe1f5aaa422ec06e pushed and remote verified.
+- Final quality module: formatted readable modules; catalog keyword/identifier validation; meaningful accessory names; default-address reassignment; category-selectable size guide; home policy links; explicit empty-checkout recovery; localized checkout variants; filtered-order empty state; larger radio/checkbox targets; lazy routes and vendor chunk splitting. Build now emits no chunk-size warning (main application chunk ~145 kB; React vendor ~258 kB).
+- npm run check PASS on final source: typecheck/lint PASS, 42 unit/component tests PASS, production build PASS. Prettier check PASS. Static source audit found no fetch/API calls, third-party runtime services, real credentials, localStorage.clear or unsafe HTML injection.
+- Full development-server browser run: 34 PASS / 1 FAIL. The one failure was checkout radio target size in the expanded axe audit; fixed and isolated 8-screen axe rerun PASS.
+- Final production-preview browser run: 37 scenarios observed PASS, including 170 route/locale combinations, all generated internal links, five localized payment/tracking flows, six widths (360/390/768/1024/1280/1440), populated cart/checkout/order templates, eight-screen axe AA audit, dialogs, variant edit/merge, corruption/blocked-storage/image fallback and reset preservation. Final command exit is checked before committing.
+- MANUAL visual evidence: actual production screenshots inspected for vi/ko/zh-CN/ja at 390px and en at 1440px; CJK glyphs visible, hero/CTA readable. Also inspected full Japanese desktop home and mobile PDP. Files retained locally in .tmp/visual. This does not claim exhaustive screen-reader or linguistic review.
+- Commit: fix(storefront): harden accessibility state and production bundles. SHA/push outcome follow.
+- Production E2E command completed with exit 0: `FLUIVIX_PREVIEW=1 npm.cmd run test:e2e` -> 37 passed (5.0m), 0 failed, 0 blocked. Windows sandbox teardown stalled after all scenarios; Stop-Process hit a PowerShell NullReferenceException. Verified exact workspace Vite PIDs (24432 preview, 11308 earlier dev) were closed with .NET Process.Kill; both parent Playwright runs then exited 0. No unrelated processes were targeted. No runtime source changed after the validated build.
