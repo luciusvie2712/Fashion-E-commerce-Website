@@ -79,3 +79,6 @@ Before continuing: read root `AGENTS.md`, this checkpoint, Phase plan, applicabl
 - Chromium installed successfully. First browser smoke passed: home renders in Vietnamese (1 assertion scenario); full browser suite not yet implemented.
 - Phase 0 foundations delivered; shell and full locale browser gates still in progress. Phases 1–3 IN_PROGRESS, no full acceptance claim.
 - Commit: feat(state): persist owner-scoped shopping and demo identities. SHA and push outcome follow.
+- Shopping-state commit 9b7bb34b124dfa5be419b1c6e6f09f3feff3019e pushed and remote verified.
+- UI foundation module (FLX-01/15): responsive tokens/styles, Radix accessible dialog/confirmation, shared product/summary/size UI, original SVG artwork and deterministic generator. npm run check PASS: 31 tests; typecheck/lint/build PASS. Browser dialog Escape/focus test PASS. Full shopping E2E initially 3 failed/3 passed; investigation found initial guest ID was not persisted until first identity mutation. Fixed explicit initial identity persistence; rerun pending. Also fixed allocating array selectors.
+- Commit: feat(ui): add editorial design system and original local artwork. SHA/push outcome follow.
