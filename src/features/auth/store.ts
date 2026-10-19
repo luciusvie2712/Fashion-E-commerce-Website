@@ -13,3 +13,5 @@ export const useAuth=create<State>()(persist((set,get)=>({guestId:`guest-${crypt
  saveAddress:(address)=>set(s=>({addresses:[...s.addresses.filter(a=>a.id!==address.id).map(a=>a.ownerId===address.ownerId&&address.isDefault?{...a,isDefault:false}:a),address]})),removeAddress:(id)=>set(s=>({addresses:s.addresses.filter(a=>a.id!==id)}))
 }),persistOptions('identity',z.object({guestId:z.string(),session:z.string().nullable(),profiles:z.array(profileSchema),addresses:z.array(addressSchema)}),s=>({guestId:s.guestId,session:s.session,profiles:s.profiles,addresses:s.addresses}))));
 export function useOwner(){const s=useAuth();return s.session&&s.profiles.some(p=>p.id===s.session)?s.session:s.guestId;}
+// Persist the initial guest identity before the first full-page navigation.
+useAuth.setState(s=>({guestId:s.guestId,session:s.profiles.some(p=>p.id===s.session)?s.session:null}));
