@@ -27,7 +27,6 @@ export function Home() {
             {t('explore')} <ArrowUpRight size={20} />
           </Link>
         </div>
-        <span className="hero-caption">01 / 04 · {t('illustration')}</span>
       </section>
       <section className="container section">
         <div className="section-heading">
