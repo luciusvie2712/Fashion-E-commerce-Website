@@ -168,6 +168,11 @@ export const findVariant = (id: string) =>
   products.flatMap((p) => p.variants).find((v) => v.id === id);
 export const unitPrice = (product: Product, variantId: string) =>
   product.variants.find((v) => v.id === variantId)?.priceOverrideVnd ?? product.basePriceVnd;
+export const variantImage = (product: Product, variantId: string) => {
+  const color = product.variants.find((v) => v.id === variantId)?.colorId;
+  const index = [...new Set(product.variants.map((v) => v.colorId))].indexOf(color ?? '');
+  return product.imageUrls[Math.max(0, index)] ?? product.imageUrls[0];
+};
 export const displayPrice = (p: Product) =>
   Math.min(...p.variants.filter((v) => v.stock > 0).map((v) => unitPrice(p, v.id)), p.basePriceVnd);
 export function validateCatalog() {

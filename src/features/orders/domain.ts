@@ -1,4 +1,4 @@
-import { findProduct, colors, findVariant, unitPrice } from '../../data/catalog';
+import { findProduct, colors, findVariant, unitPrice, variantImage } from '../../data/catalog';
 import type {
   Order,
   Intent,
@@ -63,7 +63,7 @@ export function createOrderSnapshot(
         colorNameAtPurchase: structuredClone(colors.find((c) => c.id === v.colorId)!.name),
         sku: v.sku,
         size: v.size,
-        imageUrl: p.imageUrls[0],
+        imageUrl: variantImage(p, v.id),
         unitPriceVnd: unitPrice(p, v.id),
       };
     }),

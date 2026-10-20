@@ -3,17 +3,18 @@ import { Link, useNavigate, useSearchParams } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
+import { CheckCircle2, TicketPercent, X } from 'lucide-react';
 import { useLocale, money } from '../i18n';
 import { useAuth, useOwner } from '../auth/store';
 import { useCart } from '../cart/store';
 import { useOrders } from '../orders/store';
 import { calculateSubtotal, validLine } from '../cart/domain';
-import { calculateTotal } from './pricing';
+import { calculateTotal, coupons } from './pricing';
 import { contactSchema, addressFields, type ContactFields } from '../account/Pages';
 import type { Payment, Shipping } from '../../types/domain';
-import { Empty, Summary, DemoNotice } from '../../components/shared';
+import { Empty, Summary, DemoNotice, OrderProduct } from '../../components/shared';
 import { Button } from '../../components/ui';
-import { findProduct, findVariant, colors } from '../../data/catalog';
+import { findProduct, findVariant, colors, unitPrice, variantImage } from '../../data/catalog';
 import { Receipt } from '../orders/Pages';
 export function Checkout() {
   const { t, locale } = useLocale(),
@@ -71,7 +72,7 @@ export function Checkout() {
     }
   }
   return (
-    <section className="container section">
+    <section className="container section checkout-page">
       <h1>{t('checkout')}</h1>
       <DemoNotice />
       <form className="two-column" noValidate onSubmit={form.handleSubmit(submit)}>
@@ -149,58 +150,116 @@ export function Checkout() {
             ))}
           </fieldset>
         </div>
-        <aside className="summary-panel">
+        <aside className="summary-panel checkout-summary">
           <h2>{t('cart')}</h2>
-          {intent.items.map((line) => (
-            <div className="panel" key={line.variantId}>
-              <p>
-                {findProduct(line.productId)?.name[locale]} × {line.quantity}
-              </p>
-              <span className="small">
-                {colors.find((c) => c.id === findVariant(line.variantId)?.colorId)?.name[locale]} /{' '}
-                {findVariant(line.variantId)?.size} · {findVariant(line.variantId)?.sku}
-              </span>
-            </div>
-          ))}
-          <div className="coupon-form">
-            <label>
-              {t('coupon')}
-              <input value={coupon} onChange={(e) => setCoupon(e.target.value)} />
-            </label>
-            <Button
-              type="button"
-              className="secondary"
-              onClick={() => {
-                const result = calculateTotal(subtotal, shipping, coupon);
-                if (result.error) {
-                  setApplied('');
-                  setError(result.error);
-                } else {
-                  setApplied(coupon);
-                  setError('');
-                  toast.success(t('couponApplied'));
-                }
-              }}
-            >
-              {t('apply')}
-            </Button>
+          <div className="checkout-products">
+            {intent.items.map((line) => {
+              const product = findProduct(line.productId),
+                variant = findVariant(line.variantId);
+              return product && variant ? (
+                <OrderProduct
+                  key={line.variantId}
+                  image={variantImage(product, variant.id)}
+                  name={product.name[locale]}
+                  color={colors.find((c) => c.id === variant.colorId)!.name[locale]}
+                  size={variant.size}
+                  quantity={line.quantity}
+                  sku={variant.sku}
+                  total={unitPrice(product, variant.id) * line.quantity}
+                />
+              ) : (
+                <p className="field-error" key={line.variantId}>
+                  {t('unavailable')}
+                </p>
+              );
+            })}
           </div>
-          <p className="small">FLUIVIX10 / FREESHIP</p>
-          {applied && (
-            <button
-              type="button"
-              className="text-button"
-              onClick={() => {
-                setApplied('');
-                setCoupon('');
-                setError('');
-              }}
-            >
-              {t('remove')} {applied}
-            </button>
-          )}
+          <section className="coupon-panel" aria-labelledby="coupon-heading">
+            <h3 id="coupon-heading">
+              <TicketPercent size={21} aria-hidden="true" />
+              {t('coupon')}
+            </h3>
+            <div className="coupon-form">
+              <label>
+                <span className="sr-only">{t('coupon')}</span>
+                <input
+                  aria-describedby={`coupon-suggestions${(error || pricing.error)?.startsWith('coupon') ? ' checkout-pricing-error' : ''}`}
+                  aria-invalid={!!(error || pricing.error)?.startsWith('coupon')}
+                  value={coupon}
+                  autoCapitalize="characters"
+                  autoComplete="off"
+                  spellCheck={false}
+                  onChange={(e) => setCoupon(e.target.value)}
+                />
+              </label>
+              <Button
+                type="button"
+                className="secondary"
+                onClick={() => {
+                  const result = calculateTotal(subtotal, shipping, coupon);
+                  if (result.error) {
+                    setApplied('');
+                    setError(result.error);
+                  } else {
+                    setApplied(result.couponCode ?? '');
+                    setError('');
+                    toast.success(t('couponApplied'));
+                  }
+                }}
+              >
+                {t('apply')}
+              </Button>
+            </div>
+            <p id="coupon-suggestions" className="coupon-suggestions-label">
+              {t('couponSuggestions')}
+            </p>
+            <div className="coupon-suggestions">
+              {coupons
+                .filter((c) => ['FLUIVIX10', 'FREESHIP'].includes(c.code))
+                .map((c) => (
+                  <button
+                    type="button"
+                    key={c.code}
+                    className="coupon-ticket"
+                    aria-pressed={coupon.trim().toUpperCase() === c.code}
+                    onClick={() => {
+                      setCoupon(c.code);
+                      setError('');
+                    }}
+                  >
+                    <span>{c.code}</span>
+                    <small>
+                      {t(c.type === 'SHIPPING' ? 'couponShippingHint' : 'couponPercentHint', {
+                        min: money(c.min, locale),
+                        cap: money(c.cap, locale),
+                      })}
+                    </small>
+                  </button>
+                ))}
+            </div>
+            {applied && (
+              <div className="coupon-applied" data-invalid={!!pricing.error} role="status">
+                {!pricing.error && <CheckCircle2 size={18} aria-hidden="true" />}
+                <span>
+                  {t(pricing.error ? 'coupon' : 'couponApplied')} <strong>{applied}</strong>
+                </span>
+                <button
+                  type="button"
+                  className="icon"
+                  aria-label={`${t('remove')} ${applied}`}
+                  onClick={() => {
+                    setApplied('');
+                    setCoupon('');
+                    setError('');
+                  }}
+                >
+                  <X size={17} aria-hidden="true" />
+                </button>
+              </div>
+            )}
+          </section>
           {(error || pricing.error) && (
-            <p className="field-error" role="alert">
+            <p className="field-error" id="checkout-pricing-error" role="alert">
               {t(error || pricing.error!)}
             </p>
           )}
@@ -287,7 +346,7 @@ export function SuccessPage() {
       </section>
     );
   return (
-    <section className="container section reading">
+    <section className="container section order-success">
       <p className="eyebrow">FLUIVIX / DEMO</p>
       <h1>{t('success')}</h1>
       <DemoNotice />

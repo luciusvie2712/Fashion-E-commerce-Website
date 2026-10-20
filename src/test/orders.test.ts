@@ -77,6 +77,25 @@ it('snapshots remain independent of mutable catalog and address values', () => {
   expect(o.addressSnapshot).not.toBe(address);
   expect(o.items[0].unitPriceVnd).toBe(199000);
 });
+it('new order snapshots retain the purchased variant photograph', () => {
+  const selected = { ...intent, items: [{ ...line, variantId: 'p-001-sand-M' }] };
+  const order = createOrderSnapshot(
+    selected,
+    address,
+    calculateTotal(199000),
+    'STANDARD',
+    'COD',
+    'test-guest',
+  );
+  expect(order.items[0].imageUrl).toBe('/assets/photos/p-001-sand.webp');
+  const original = products[0].imageUrls[1];
+  products[0].imageUrls[1] = '/changed-after-purchase.webp';
+  try {
+    expect(order.items[0].imageUrl).toBe('/assets/photos/p-001-sand.webp');
+  } finally {
+    products[0].imageUrls[1] = original;
+  }
+});
 it('validates fulfillment, return and time-window transitions', () => {
   const date = new Date('2026-10-19');
   let o = createOrderSnapshot(

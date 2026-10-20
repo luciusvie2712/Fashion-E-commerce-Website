@@ -11,6 +11,7 @@ import { Button, Confirm } from '../../components/ui';
 import { DemoNotice } from '../../components/shared';
 import type { Address } from '../../types/domain';
 import { coupons } from '../checkout/pricing';
+import { OrderCard } from '../orders/Pages';
 export const addressFields = ['recipient', 'phone', 'province', 'district', 'street'] as const;
 export const contactSchema = z.object({
   recipient: z.string().trim().min(2, 'required'),
@@ -61,7 +62,7 @@ export function AccountLayout() {
   );
 }
 export function AccountHome() {
-  const { t, locale } = useLocale(),
+  const { t } = useLocale(),
     auth = useAuth(),
     owner = useOwner(),
     orders = useOrders().orders.filter((o) => o.ownerId === owner);
@@ -76,12 +77,7 @@ export function AccountHome() {
       </div>
       <h2>{t('orders')}</h2>
       {orders.slice(0, 3).map((o) => (
-        <Link className="order-card" key={o.id} to={`/account/orders/${o.id}`}>
-          <strong>{o.id}</strong>
-          <p>
-            {t(o.fulfillmentStatus)} · {money(o.pricingSnapshot.totalVnd, locale)}
-          </p>
-        </Link>
+        <OrderCard key={o.id} order={o} />
       ))}
       <Link className="button secondary" to="/account/orders">
         {t('viewAll')}

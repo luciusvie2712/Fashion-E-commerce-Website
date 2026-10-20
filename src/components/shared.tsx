@@ -119,6 +119,41 @@ export function ProductGrid({ items }: { items: Product[] }) {
     <Empty />
   );
 }
+export function OrderProduct({
+  image,
+  name,
+  color,
+  size,
+  quantity,
+  total,
+  sku,
+}: {
+  image: string;
+  name: string;
+  color: string;
+  size: string;
+  quantity: number;
+  total: number;
+  sku?: string;
+}) {
+  const { t, locale } = useLocale();
+  return (
+    <div className="order-product">
+      <LocalImage className="order-product-image" src={image} alt={name} width="80" height="100" />
+      <div className="order-product-info">
+        {sku && <p className="order-product-sku">{sku}</p>}
+        <h3>{name}</h3>
+        <p>
+          {color} <span aria-hidden="true">·</span> {t('size')} / {size}
+        </p>
+        <p className="order-product-quantity">
+          {t('quantity')}: {quantity}
+        </p>
+      </div>
+      <strong className="order-product-price">{money(total, locale)}</strong>
+    </div>
+  );
+}
 export function Summary({ pricing }: { pricing: Pricing }) {
   const { t, locale } = useLocale();
   return (

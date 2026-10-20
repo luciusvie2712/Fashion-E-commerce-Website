@@ -32,7 +32,7 @@ npm.cmd run test:e2e
 Remove-Item Env:FLUIVIX_PREVIEW
 ```
 
-This starts Vite preview on port 4173. The default browser-test mode uses the development server on port 5173. The suite contains 45 unit/component tests and 50 production browser scenarios. Actual full-suite and focused-run results are recorded in `progress/BUILD-STATUS.md`. Tests include all 170 route × locale combinations, localized commerce, storage failures, six responsive widths, photography/typography, Vietnamese glyph/font consistency, scroll direction, keyboard access, interrupted Anime.js reveals, button hover/focus contrast, cart quantity controls and variant photography, motion preferences and automated WCAG AA checks. Color-contrast audits wait for active transitions to finish. They do not replace a complete human accessibility or linguistic review.
+This starts Vite preview on port 4173. The default browser-test mode uses the development server on port 5173. The suite contains 46 unit/component tests and 52 production browser scenarios. Actual full-suite and focused-run results are recorded in `progress/BUILD-STATUS.md`. Tests include all 170 route × locale combinations, localized commerce, storage failures, six responsive widths, photography/typography, Vietnamese glyph/font consistency, scroll direction, keyboard access, interrupted Anime.js reveals, button hover/focus contrast, cart quantity controls and variant photography, voucher selection/application, centered order thumbnails and tracking layouts, motion preferences and automated WCAG AA checks. Color-contrast audits wait for active transitions to finish. They do not replace a complete human accessibility or linguistic review.
 
 ## Try the shopping flows
 
@@ -68,5 +68,7 @@ Typography uses the system Georgia font with local serif/CJK fallbacks. Vietname
 For a subdirectory host such as a GitHub Pages project path, configure Vite's `base` and the router basename together before deployment. The current verified configuration serves at `/`. Client-rendered metadata does not provide SSR/SSG indexing.
 
 The storefront palette uses terracotta for prices, key shopping actions and section accents; deep teal for new-product tags; warm gold for bestseller tags; and neutral stone for sold-out tags. Labels remain translated in all five languages. Price calculations and stock rules are independent of these presentation colors.
+
+Checkout suggestions show voucher conditions from local pricing fixtures and require Apply before changing totals. Product rows in checkout, receipts, order cards and tracking use fixed 80x100px thumbnails centered vertically. New orders snapshot the purchased color image; existing order snapshots remain unchanged.
 
 Verification details, commit references and remaining acceptance limits are recorded in [progress/BUILD-STATUS.md](progress/BUILD-STATUS.md).

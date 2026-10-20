@@ -15,7 +15,14 @@ import { useLocale, money } from '../i18n';
 import { useCart } from './store';
 import { useOwner } from '../auth/store';
 import { useWishlist } from '../wishlist/store';
-import { findProduct, findVariant, products, colors, unitPrice } from '../../data/catalog';
+import {
+  findProduct,
+  findVariant,
+  products,
+  colors,
+  unitPrice,
+  variantImage,
+} from '../../data/catalog';
 import { calculateSubtotal, validLine } from './domain';
 import { calculateTotal } from '../checkout/pricing';
 import { Empty, LocalImage, ProductGrid, Summary } from '../../components/shared';
@@ -136,15 +143,7 @@ export function Cart() {
             {lines.map((line) => {
               const p = findProduct(line.productId),
                 v = findVariant(line.variantId),
-                color = colors.find((c) => c.id === v?.colorId),
-                imageIndex = p
-                  ? Math.max(
-                      0,
-                      [...new Set(p.variants.map((variant) => variant.colorId))].indexOf(
-                        v?.colorId ?? '',
-                      ),
-                    )
-                  : 0;
+                color = colors.find((c) => c.id === v?.colorId);
               return (
                 <article
                   key={line.variantId}
@@ -154,7 +153,7 @@ export function Cart() {
                   {p && (
                     <Link className="cart-product-image" to={`/product/${p.slug}`}>
                       <LocalImage
-                        src={p.imageUrls[imageIndex] ?? p.imageUrls[0]}
+                        src={variantImage(p, line.variantId)}
                         alt={p.name[locale]}
                         width="160"
                         height="200"
