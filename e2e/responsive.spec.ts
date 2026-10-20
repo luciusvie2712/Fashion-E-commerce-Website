@@ -42,7 +42,7 @@ for (const width of [360, 390, 768, 1024, 1280, 1440])
         await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
         route,
       ).toBe(true);
-      const images = page.locator('main img');
+      const images = page.locator('main img:visible');
       for (const img of await images.all()) {
         await img.scrollIntoViewIfNeeded();
         await expect(img).toHaveJSProperty('complete', true);

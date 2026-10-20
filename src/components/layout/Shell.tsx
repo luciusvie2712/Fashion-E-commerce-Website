@@ -198,15 +198,19 @@ export function Shell() {
             </Link>
             <Link
               className="icon"
-              aria-label={`${t('wishlist')} (${favorites.lists[owner]?.length ?? 0})`}
+              aria-label={`${t('wishlist')} · ${favorites.lists[owner]?.length ?? 0}`}
               to="/wishlist"
             >
               <Heart size={21} />
-              <span className="badge">{favorites.lists[owner]?.length ?? 0}</span>
+              <span className="badge" aria-hidden="true">
+                {favorites.lists[owner]?.length ?? 0}
+              </span>
             </Link>
-            <Link className="icon" aria-label={`${t('cart')} (${count})`} to="/cart">
+            <Link className="icon" aria-label={`${t('cart')} · ${count}`} to="/cart">
               <ShoppingBag size={21} />
-              <span className="badge">{count}</span>
+              <span className="badge" aria-hidden="true">
+                {count}
+              </span>
             </Link>
           </div>
         </header>

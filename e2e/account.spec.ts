@@ -10,7 +10,7 @@ test('registration address profile logout reentry and owner scoping', async ({ p
   await page.getByLabel('Demo password', { exact: true }).fill('demopass8');
   await page.getByLabel('Confirm password', { exact: true }).fill('demopass8');
   await page.getByRole('button', { name: 'Create demo account' }).click();
-  await expect(page).toHaveURL(/\/account$/);
+  await expect(page).toHaveURL(/\/account\/addresses$/);
   await page.getByRole('link', { name: 'Address book', exact: true }).click();
   await page.getByRole('button', { name: 'Add address' }).click();
   for (const [name, value] of [

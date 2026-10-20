@@ -15,7 +15,7 @@ test('blocked local storage leaves a usable shopping session and warning', async
   await page.getByRole('button', { name: 'Ink', exact: true }).click();
   await page.getByRole('button', { name: 'M', exact: true }).click();
   await page.getByRole('button', { name: 'Add to bag', exact: true }).click();
-  await page.getByRole('link', { name: 'Shopping bag (1)', exact: true }).click();
+  await page.getByRole('link', { name: 'Shopping bag · 1', exact: true }).click();
   await expect(page.locator('.cart-row')).toHaveCount(1);
 });
 test('reset confirms and preserves unrelated browser keys', async ({ page }) => {
