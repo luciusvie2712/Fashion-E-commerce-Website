@@ -246,16 +246,18 @@ img {
 }
 .hero {
   position: relative;
-  background: #26362c;
+  height: calc(100svh - var(--hero-offset, 130px));
+  background: #292d21;
   color: #f7f4e8;
   overflow: hidden;
 }
 .hero > img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  min-height: 0;
   object-fit: contain;
-  object-position: center;
+  object-position: right center;
 }
 .hero-copy {
   position: absolute;
@@ -267,7 +269,7 @@ img {
   max-width: 800px;
 }
 .hero-copy h1 {
-  font-size: clamp(60px, 7.2vw, 112px);
+  font-size: clamp(48px, min(7.2vw, 12svh), 112px);
   white-space: pre-line;
   line-height: 0.98;
   letter-spacing: -0.065em;
@@ -1055,6 +1057,13 @@ details {
   }
 }
 @media (max-width: 900px) {
+  .hero {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+  .hero > img {
+    object-position: center;
+  }
   .desktop-nav {
     display: none;
   }
@@ -1109,12 +1118,13 @@ details {
     position: relative;
     top: auto;
     transform: none;
-    padding: 40px 28px;
+    padding: 24px 28px;
     width: 100%;
     max-width: none;
   }
   .hero-copy h1 {
-    font-size: 78px;
+    font-size: clamp(44px, 6.5vw, 68px);
+    margin: 16px 0;
   }
   .pdp {
     gap: 28px;
@@ -1205,12 +1215,12 @@ details {
   .hero-copy {
     width: 100%;
     max-width: 100%;
-    padding: 32px 24px 40px;
+    padding: 20px 24px 28px;
     z-index: 1;
   }
   .hero-copy h1 {
-    font-size: 68px;
-    margin: 20px 0;
+    font-size: 48px;
+    margin: 14px 0;
   }
   .hero-copy > p:not(.eyebrow) {
     font-size: 15px;
@@ -1720,5 +1730,44 @@ body {
   .table-wrap th,
   .table-wrap td {
     font-size: 14px;
+  }
+}
+
+@media (max-height: 650px) {
+  .hero-copy {
+    padding: 12px 4%;
+  }
+  .hero-copy .eyebrow {
+    margin-bottom: 0;
+  }
+  .hero-copy h1 {
+    font-size: 36px;
+    margin: 10px 0;
+  }
+  .hero-copy > p:not(.eyebrow) {
+    font-size: 15px;
+    line-height: 1.45;
+    margin-bottom: 12px;
+  }
+  .hero-copy .button {
+    min-height: 44px;
+    padding: 10px 16px;
+  }
+}
+@media (max-width: 900px) and (orientation: landscape) {
+  .hero {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: minmax(0, 1fr);
+  }
+  .hero > img {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .hero-copy {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+    padding-left: 6%;
+    padding-right: 6%;
   }
 }

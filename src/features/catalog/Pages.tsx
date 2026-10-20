@@ -1,4 +1,5 @@
 import { Link, useLocation, useParams, useSearchParams } from 'react-router';
+import { useLayoutEffect, useRef } from 'react';
 import { ArrowUpRight, SlidersHorizontal } from 'lucide-react';
 import { useLocale } from '../i18n';
 import { categories, collections, colors, products } from '../../data/catalog';
@@ -9,9 +10,26 @@ import { Newsletter } from '../../components/layout/Shell';
 import { campaignHero, categoryPhoto, collectionPhoto } from '../../data/photography';
 export function Home() {
   const { t, locale } = useLocale();
+  const heroRef = useRef<HTMLElement>(null);
+  useLayoutEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+    const measure = () => {
+      const offset = hero.getBoundingClientRect().top + window.scrollY;
+      hero.style.setProperty('--hero-offset', `${offset}px`);
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(document.body);
+    window.addEventListener('resize', measure);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, []);
   return (
     <>
-      <section className="hero">
+      <section className="hero" ref={heroRef}>
         <img
           src={campaignHero}
           width="1600"
