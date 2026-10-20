@@ -177,6 +177,20 @@ export const copy = {
   add: ['Thêm vào giỏ hàng', 'Add to bag', '장바구니에 담기', '加入购物袋', 'バッグに追加'],
   buy: ['Mua ngay', 'Buy now', '바로 구매', '立即购买', '今すぐ購入'],
   quantity: ['Số lượng', 'Quantity', '수량', '数量', '数量'],
+  decreaseQuantity: [
+    'Giảm số lượng',
+    'Decrease quantity',
+    '수량 줄이기',
+    '减少数量',
+    '数量を減らす',
+  ],
+  increaseQuantity: [
+    'Tăng số lượng',
+    'Increase quantity',
+    '수량 늘리기',
+    '增加数量',
+    '数量を増やす',
+  ],
   choose: [
     'Vui lòng chọn màu và size.',
     'Please select a color and size.',

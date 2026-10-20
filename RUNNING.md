@@ -32,7 +32,7 @@ npm.cmd run test:e2e
 Remove-Item Env:FLUIVIX_PREVIEW
 ```
 
-This starts Vite preview on port 4173. The default browser-test mode uses the development server on port 5173. The suite contains 45 unit/component tests and 48 production browser scenarios. Actual full-suite and focused-run results are recorded in `progress/BUILD-STATUS.md`. Tests include all 170 route × locale combinations, localized commerce, storage failures, six responsive widths, photography/typography, Vietnamese glyph/font consistency, scroll direction, keyboard access, interrupted Anime.js reveals, button hover/focus contrast, motion preferences and automated WCAG AA checks. Color-contrast audits wait for active transitions to finish. They do not replace a complete human accessibility or linguistic review.
+This starts Vite preview on port 4173. The default browser-test mode uses the development server on port 5173. The suite contains 45 unit/component tests and 50 production browser scenarios. Actual full-suite and focused-run results are recorded in `progress/BUILD-STATUS.md`. Tests include all 170 route × locale combinations, localized commerce, storage failures, six responsive widths, photography/typography, Vietnamese glyph/font consistency, scroll direction, keyboard access, interrupted Anime.js reveals, button hover/focus contrast, cart quantity controls and variant photography, motion preferences and automated WCAG AA checks. Color-contrast audits wait for active transitions to finish. They do not replace a complete human accessibility or linguistic review.
 
 ## Try the shopping flows
 
