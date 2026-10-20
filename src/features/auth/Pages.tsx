@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -93,6 +93,25 @@ export function AuthPage() {
         : 'login';
   const [error, setError] = useState(''),
     [notice, setNotice] = useState('');
+  const shellRef = useRef<HTMLElement>(null);
+  useLayoutEffect(() => {
+    const shell = shellRef.current;
+    if (!shell) return;
+    const measure = () =>
+      shell.style.setProperty(
+        '--auth-top',
+        `${shell.getBoundingClientRect().top + window.scrollY}px`,
+      );
+    measure();
+    const observer = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(measure);
+    for (const element of document.querySelectorAll('.announcement, .header-dock'))
+      observer?.observe(element);
+    window.addEventListener('resize', measure);
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, [mode, locale]);
   const form = useForm<Fields>({
     resolver: zodResolver(schema),
     defaultValues: { fullName: '', email: '', password: '', confirmation: '' },
@@ -135,7 +154,7 @@ export function AuthPage() {
     }
   }
   return (
-    <section className="auth-page auth-shell" data-mode={mode}>
+    <section className="auth-page auth-shell" data-mode={mode} ref={shellRef}>
       <aside className="auth-visual">
         <div className="auth-photo">
           <LocalImage

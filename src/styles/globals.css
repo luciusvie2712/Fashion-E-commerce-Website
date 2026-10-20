@@ -3228,6 +3228,15 @@ body {
 }
 
 /* Compact forms: keep controls readable while using available width. */
+.auth-page.auth-shell {
+  --auth-bottom-gap: 16px;
+  min-height: calc(100svh - var(--auth-top, 145px) - var(--auth-bottom-gap));
+}
+.auth-form-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .form {
   gap: 14px;
 }
@@ -3473,6 +3482,7 @@ body {
 @media (max-width: 600px) {
   .auth-page.auth-shell {
     margin: 12px auto;
+    --auth-bottom-gap: 12px;
   }
   .auth-form-panel {
     padding: 18px 16px;

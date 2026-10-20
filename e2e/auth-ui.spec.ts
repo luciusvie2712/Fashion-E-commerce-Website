@@ -23,6 +23,11 @@ test('compact forms fit desktop viewports and keep mobile submit controls visibl
           submit = card.locator('form > .button');
         await expect(submit).toBeVisible();
         const box = (await (width > 1000 ? card : submit).boundingBox())!;
+        const cardBox = (await card.boundingBox())!;
+        expect(
+          Math.abs(cardBox.y + cardBox.height - (height - (width < 600 ? 12 : 16))),
+          `${locale} ${route} fills one viewport`,
+        ).toBeLessThanOrEqual(2);
         expect(box.y + box.height, `${locale} ${width}x${height} ${route}`).toBeLessThanOrEqual(
           height - 8,
         );
