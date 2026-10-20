@@ -32,7 +32,7 @@ npm.cmd run test:e2e
 Remove-Item Env:FLUIVIX_PREVIEW
 ```
 
-This starts Vite preview on port 4173. The default browser-test mode uses the development server on port 5173. The verified delivery has 45 passing unit/component tests and 45 passing production browser scenarios. Tests include all 170 route × locale combinations, localized commerce, storage failures, six responsive widths, photography/typography, Vietnamese glyph/font consistency, scroll direction, keyboard access, motion preferences and automated WCAG AA checks. Color-contrast audits wait for active transitions to finish. They do not replace a complete human accessibility or linguistic review.
+This starts Vite preview on port 4173. The default browser-test mode uses the development server on port 5173. The verified delivery has 45 passing unit/component tests and 46 passing production browser scenarios. Tests include all 170 route × locale combinations, localized commerce, storage failures, six responsive widths, photography/typography, Vietnamese glyph/font consistency, scroll direction, keyboard access, interrupted Anime.js reveals, motion preferences and automated WCAG AA checks. Color-contrast audits wait for active transitions to finish. They do not replace a complete human accessibility or linguistic review.
 
 ## Try the shopping flows
 
@@ -59,7 +59,7 @@ Feature modules live in `src/features/`. Pure pricing/cart/order rules are separ
 
 Translations are authored locally in `src/features/i18n/dictionaries.ts`, with localized catalog and policy fixtures in `src/data/`. Currency uses `Intl` presentation only. Product/variant IDs, snapshots and integer prices do not change with language.
 
-Typography uses the system Georgia font with local serif/CJK fallbacks. Vietnamese uses bundled Gelasio, a Georgia-compatible serif with complete Vietnamese glyph coverage, so accented letters never mix with a different system face. Regular/bold and italic variable fonts and their SIL OFL license are in `public/fonts/`. Page content fades into and out of view; dialogs animate on both open and close. The announcement scrolls away and the header hides when scrolling down, returning when scrolling up or receiving keyboard focus. Operating-system reduced-motion preferences disable transitions and keep all content visible. No font or animation service is requested at runtime.
+Typography uses the system Georgia font with local serif/CJK fallbacks. Vietnamese uses bundled Gelasio, a Georgia-compatible serif with complete Vietnamese glyph coverage, so accented letters never mix with a different system face. Regular/bold and italic variable fonts and their SIL OFL license are in `public/fonts/`. Anime.js 4.5.0 powers masked section/heading reveals, short card staggering, subtle image zoom and in/out fades. Text is not split into characters. Dialogs combine masked depth transitions with animated inner content. The announcement scrolls away and the header hides when scrolling down, returning when scrolling up or receiving keyboard focus. Operating-system reduced-motion preferences disable effects and restore all content; keyboard focus also reveals controls immediately. No font or animation service is requested at runtime.
 
 ## Static hosting
 

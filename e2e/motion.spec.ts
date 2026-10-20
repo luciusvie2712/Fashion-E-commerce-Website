@@ -65,3 +65,31 @@ test('reduced motion stays visible and reacts to preference changes', async ({ p
   await expect(page.locator('.scroll-reveal')).toHaveCount(0);
   await expect(page.locator('main h1')).toHaveCSS('opacity', '1');
 });
+
+test('interrupted reveals restore masks, image transforms and focused controls', async ({
+  page,
+}) => {
+  await page.goto('/shop');
+  const card = page.locator('.product-card').first();
+  for (const y of [1400, 0, 1800, 50, 2200]) {
+    await page.evaluate((position) => scrollTo(0, position), y);
+    await page.waitForTimeout(80);
+  }
+  await card
+    .locator('.product-name')
+    .evaluate((node: HTMLElement) => node.focus({ preventScroll: true }));
+  await expect(card).toHaveCSS('opacity', '1');
+  await expect(card).toHaveCSS('clip-path', 'none');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(page.locator('.scroll-reveal')).toHaveCount(0);
+  const styles = await page.locator('.product-image img').evaluateAll((images) =>
+    images.map((image) => ({
+      transform: (image as HTMLElement).style.transform,
+      clip: (image as HTMLElement).style.clipPath,
+    })),
+  );
+  expect(styles.every((style) => !style.transform && !style.clip)).toBe(true);
+  await page.locator('.header .wordmark').click();
+  await expect(page.locator('.hero > img')).toHaveCSS('opacity', '1');
+  await expect(page.locator('.hero > img')).toHaveCSS('clip-path', 'none');
+});
