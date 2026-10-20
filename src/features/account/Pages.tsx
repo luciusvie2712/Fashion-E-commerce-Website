@@ -95,7 +95,7 @@ export function ProfilePage() {
     <>
       <h1>{t('profile')}</h1>
       <form
-        className="form compact"
+        className="form compact field-grid"
         noValidate
         onSubmit={(e) => {
           e.preventDefault();
@@ -143,7 +143,7 @@ export function AddressForm({ value, onSaved }: { value?: Address; onSaved?: () 
   });
   return (
     <form
-      className="form compact"
+      className="form compact field-grid"
       noValidate
       onSubmit={form.handleSubmit((values) => {
         auth.saveAddress({
@@ -158,7 +158,7 @@ export function AddressForm({ value, onSaved }: { value?: Address; onSaved?: () 
       })}
     >
       {addressFields.map((key) => (
-        <label key={key}>
+        <label key={key} data-field={key}>
           {t(key)}
           <input
             aria-label={t(key)}

@@ -81,7 +81,7 @@ export function Reviews({ productId }: { productId: string }) {
           ))}
       </div>
       <form
-        className="form compact"
+        className="form compact field-grid"
         noValidate
         onSubmit={(e) => {
           e.preventDefault();

@@ -76,10 +76,10 @@ export function Checkout() {
       <h1>{t('checkout')}</h1>
       <DemoNotice />
       <form className="two-column" noValidate onSubmit={form.handleSubmit(submit)}>
-        <div className="form">
+        <div className="form checkout-fields">
           <h2>{t('recipient')}</h2>
           {auth.session && (
-            <label>
+            <label className="field-wide">
               {t('savedAddress')}
               <select
                 defaultValue=""
@@ -102,7 +102,7 @@ export function Checkout() {
             </label>
           )}
           {addressFields.map((key) => (
-            <label key={key}>
+            <label key={key} data-field={key}>
               {t(key)}
               <input
                 aria-label={t(key)}
@@ -210,33 +210,35 @@ export function Checkout() {
                 {t('apply')}
               </Button>
             </div>
-            <p id="coupon-suggestions" className="coupon-suggestions-label">
-              {t('couponSuggestions')}
-            </p>
-            <div className="coupon-suggestions">
-              {coupons
-                .filter((c) => ['FLUIVIX10', 'FREESHIP'].includes(c.code))
-                .map((c) => (
-                  <button
-                    type="button"
-                    key={c.code}
-                    className="coupon-ticket"
-                    aria-pressed={coupon.trim().toUpperCase() === c.code}
-                    onClick={() => {
-                      setCoupon(c.code);
-                      setError('');
-                    }}
-                  >
-                    <span>{c.code}</span>
-                    <small>
-                      {t(c.type === 'SHIPPING' ? 'couponShippingHint' : 'couponPercentHint', {
-                        min: money(c.min, locale),
-                        cap: money(c.cap, locale),
-                      })}
-                    </small>
-                  </button>
-                ))}
-            </div>
+            <details className="coupon-options">
+              <summary id="coupon-suggestions" className="coupon-suggestions-label">
+                {t('couponSuggestions')}
+              </summary>
+              <div className="coupon-suggestions">
+                {coupons
+                  .filter((c) => ['FLUIVIX10', 'FREESHIP'].includes(c.code))
+                  .map((c) => (
+                    <button
+                      type="button"
+                      key={c.code}
+                      className="coupon-ticket"
+                      aria-pressed={coupon.trim().toUpperCase() === c.code}
+                      onClick={() => {
+                        setCoupon(c.code);
+                        setError('');
+                      }}
+                    >
+                      <span>{c.code}</span>
+                      <small>
+                        {t(c.type === 'SHIPPING' ? 'couponShippingHint' : 'couponPercentHint', {
+                          min: money(c.min, locale),
+                          cap: money(c.cap, locale),
+                        })}
+                      </small>
+                    </button>
+                  ))}
+              </div>
+            </details>
             {applied && (
               <div className="coupon-applied" data-invalid={!!pricing.error} role="status">
                 {!pricing.error && <CheckCircle2 size={18} aria-hidden="true" />}

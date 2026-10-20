@@ -65,7 +65,7 @@ export function ContentPage() {
         <>
           <p>{t('localOnly')}</p>
           <form
-            className="form"
+            className="form field-grid"
             noValidate
             onSubmit={(e) => {
               e.preventDefault();

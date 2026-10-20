@@ -271,8 +271,12 @@ export function AuthPage() {
           </Link>
         </div>
         <div className="auth-disclosure">
-          <DemoNotice />
-          {mode !== 'forgot' && <p id="auth-password-note">{t('authNote')}</p>}
+          <p id="auth-password-note">{t('authCompactNote')}</p>
+          <details>
+            <summary>{t('demoDetails')}</summary>
+            <DemoNotice />
+            {mode !== 'forgot' && <p>{t('authNote')}</p>}
+          </details>
         </div>
       </div>
     </section>

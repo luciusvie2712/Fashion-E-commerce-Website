@@ -286,6 +286,14 @@ export const copy = {
     'このバリエーションは利用できません。削除または再選択してください。',
   ],
   login: ['Đăng nhập demo', 'Demo sign in', '데모 로그인', '演示登录', 'デモログイン'],
+  demoDetails: ['Thông tin bản demo', 'About this demo', '데모 안내', '演示说明', 'デモについて'],
+  authCompactNote: [
+    'Hồ sơ demo chỉ lưu trên thiết bị này; không lưu mật khẩu.',
+    'Demo profiles stay on this device; passwords are never saved.',
+    '데모 프로필은 이 기기에만 저장되며 비밀번호는 저장하지 않습니다.',
+    '演示资料仅保存在此设备上，不保存密码。',
+    'デモプロフィールはこの端末にのみ保存され、パスワードは保存されません。',
+  ],
   loginIntro: [
     'Tiếp tục với tủ đồ yêu thích và những đơn hàng của bạn.',
     'Return to your favorite pieces and your orders.',

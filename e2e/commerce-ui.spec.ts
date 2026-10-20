@@ -22,6 +22,7 @@ test('voucher suggestions require applying, recover from shipping conflicts and 
   await page.getByRole('spinbutton').fill('2');
   await page.getByRole('button', { name: 'Buy now', exact: true }).click();
   await expect(page.locator('.checkout-products img')).toHaveAttribute('src', /p-001-sand\.webp$/);
+  await page.locator('.coupon-options > summary').click();
   await page.getByRole('button', { name: /^FLUIVIX10/ }).click();
   await expect(page.getByRole('textbox', { name: 'Voucher code', exact: true })).toHaveValue(
     'FLUIVIX10',

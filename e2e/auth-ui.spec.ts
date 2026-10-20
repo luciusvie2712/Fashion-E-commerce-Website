@@ -2,6 +2,61 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { resources } from '../src/features/i18n/dictionaries';
 
+test('compact forms fit desktop viewports and keep mobile submit controls visible', async ({
+  page,
+}) => {
+  test.setTimeout(120000);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/login');
+  for (const locale of ['vi', 'en', 'ko', 'zh-CN', 'ja'] as const) {
+    await page.locator('.header select').selectOption(locale);
+    for (const [width, height] of [
+      [1366, 768],
+      [1440, 900],
+      [390, 844],
+      [360, 800],
+    ]) {
+      await page.setViewportSize({ width, height });
+      for (const route of ['/login', '/register', '/forgot-password']) {
+        await page.goto(route);
+        const card = page.locator('.auth-shell'),
+          submit = card.locator('form > .button');
+        await expect(submit).toBeVisible();
+        const box = (await (width > 1000 ? card : submit).boundingBox())!;
+        expect(box.y + box.height, `${locale} ${width}x${height} ${route}`).toBeLessThanOrEqual(
+          height - 8,
+        );
+        expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+          true,
+        );
+        for (const input of await card.locator('input').all())
+          expect((await input.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+      }
+    }
+  }
+  await page.locator('.header select').selectOption('vi');
+  await page.goto('/register');
+  await page.locator('.auth-disclosure summary').click();
+  await expect(page.locator('.auth-disclosure .demo-notice')).toBeVisible();
+  await page.setViewportSize({ width: 1366, height: 768 });
+  await page.evaluate(() => {
+    const identity = JSON.parse(localStorage.getItem('fluivix:v1:identity')!);
+    identity.state.session = 'demo-user';
+    localStorage.setItem('fluivix:v1:identity', JSON.stringify(identity));
+  });
+  for (const route of ['/account/profile', '/account/addresses', '/contact']) {
+    await page.goto(route);
+    if (route.endsWith('addresses'))
+      await page
+        .getByRole('button', { name: resources.vi.translation.addAddress, exact: true })
+        .click();
+    const form = page.locator('main form.field-grid');
+    await expect(form).toBeVisible();
+    const box = (await form.boundingBox())!;
+    expect(box.y + box.height, route).toBeLessThanOrEqual(760);
+  }
+});
+
 test('auth controls preserve values, clear passwords between modes and retain the intended destination', async ({
   page,
 }) => {
