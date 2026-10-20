@@ -67,4 +67,6 @@ Typography uses the system Georgia font with local serif/CJK fallbacks. Vietname
 
 For a subdirectory host such as a GitHub Pages project path, configure Vite's `base` and the router basename together before deployment. The current verified configuration serves at `/`. Client-rendered metadata does not provide SSR/SSG indexing.
 
+The storefront palette uses terracotta for prices, key shopping actions and section accents; deep teal for new-product tags; warm gold for bestseller tags; and neutral stone for sold-out tags. Labels remain translated in all five languages. Price calculations and stock rules are independent of these presentation colors.
+
 Verification details, commit references and remaining acceptance limits are recorded in [progress/BUILD-STATUS.md](progress/BUILD-STATUS.md).

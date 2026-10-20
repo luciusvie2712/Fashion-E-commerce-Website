@@ -36,6 +36,7 @@ test('primary, light, secondary and quick-view buttons keep readable hover and f
   for (const [route, selector] of [
     ['/', '.hero .button.light'],
     ['/login', 'form .button'],
+    ['/product/fluivix-tshirts-1', '.purchase-actions .button'],
     ['/product/fluivix-tshirts-1', '.purchase > .button.secondary'],
     ['/shop', '.quick-view'],
   ]) {

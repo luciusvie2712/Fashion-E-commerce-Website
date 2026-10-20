@@ -79,14 +79,18 @@ export function ProductCard({ product: p }: { product: Product }) {
           />
         </Link>
         <Favorite id={p.id} />
-        {badge && <span className="product-badge">{t(badge)}</span>}
+        {badge && (
+          <span className="product-badge" data-badge={badge}>
+            {t(badge)}
+          </span>
+        )}
         <Modal
           title={p.name[locale]}
           trigger={<Button className="quick-view">{t('quickView')}</Button>}
         >
           <LocalImage className="quick-image" src={p.imageUrls[0]} alt={p.name[locale]} />
           <p>{p.description[locale]}</p>
-          <p>{money(displayPrice(p), locale)}</p>
+          <p className="price">{money(displayPrice(p), locale)}</p>
           <Dialog.Close asChild>
             <Link className="button" to={`/product/${p.slug}`}>
               {t('description')} ↗
@@ -120,7 +124,7 @@ export function Summary({ pricing }: { pricing: Pricing }) {
   return (
     <dl className="summary">
       {(['subtotalVnd', 'discountVnd', 'shippingFeeVnd', 'totalVnd'] as const).map((key, i) => (
-        <div key={key}>
+        <div key={key} data-amount={key}>
           <dt>{t(['subtotal', 'discount', 'shipping', 'total'][i])}</dt>
           <dd>
             {key === 'discountVnd' ? '− ' : ''}
