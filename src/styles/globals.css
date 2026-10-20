@@ -1,9 +1,27 @@
 @import 'tailwindcss';
+@font-face {
+  font-family: Gelasio;
+  src: url('/fonts/Gelasio-Variable.ttf') format('truetype');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: Gelasio;
+  src: url('/fonts/Gelasio-Italic-Variable.ttf') format('truetype');
+  font-weight: 400 700;
+  font-style: italic;
+  font-display: swap;
+}
 :root {
   font-family: Georgia, 'Times New Roman', 'Yu Mincho', SimSun, Batang, serif;
   color: #161616;
   background: #f8f7f4;
   font-synthesis: none;
+}
+/* Use one complete Vietnamese face, rather than mixing Georgia with fallback glyphs. */
+:root:lang(vi) {
+  font-family: Gelasio, Cambria, Georgia, 'Times New Roman', 'Yu Mincho', SimSun, Batang, serif;
 }
 body {
   margin: 0;
