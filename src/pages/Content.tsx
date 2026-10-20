@@ -34,7 +34,7 @@ export function ContentPage() {
         <>
           <p className="muted">{t('samplePolicy')}</p>
           {key === 'about' && (
-            <img src={aboutPhoto} alt={t('illustration')} width="1600" height="1000" />
+            <img src={aboutPhoto} alt={t('atelierImageAlt')} width="1600" height="1000" />
           )}
           {story.map((text, i) =>
             i % 2 === 0 ? <h2 key={i}>{text[locale]}</h2> : <p key={i}>{text[locale]}</p>,
@@ -117,7 +117,7 @@ export function ContentPage() {
           {collections.map((c) => (
             <article key={c.id}>
               <Link to={`/collections/${c.id}`}>
-                <img src={collectionPhoto(c.id)} alt={`${c.name[locale]} — ${t('illustration')}`} />
+                <img src={collectionPhoto(c.id)} alt={c.name[locale]} />
                 <h2>{c.name[locale]} ↗</h2>
               </Link>
               <p>{c.description[locale]}</p>

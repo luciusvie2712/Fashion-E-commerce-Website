@@ -75,7 +75,7 @@ export function ProductCard({ product: p }: { product: Product }) {
             height="500"
             loading="lazy"
             src={p.imageUrls[0]}
-            alt={`${p.name[locale]} — ${t('illustration')}`}
+            alt={p.name[locale]}
           />
         </Link>
         <Favorite id={p.id} />
@@ -101,7 +101,6 @@ export function ProductCard({ product: p }: { product: Product }) {
         {money(displayPrice(p), locale)}{' '}
         {p.compareAtPriceVnd && <del>{money(p.compareAtPriceVnd, locale)}</del>}
       </p>
-      <p className="muted small">{t('illustration')}</p>
     </article>
   );
 }

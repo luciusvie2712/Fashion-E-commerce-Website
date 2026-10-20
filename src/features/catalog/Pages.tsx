@@ -34,7 +34,7 @@ export function Home() {
           src={campaignHero}
           width="1600"
           height="1000"
-          alt={t('illustration')}
+          alt={t('campaignImageAlt')}
           fetchPriority="high"
         />
         <div className="hero-copy">
@@ -77,7 +77,7 @@ export function Home() {
         <ProductGrid items={products.filter((_, i) => i % 8 === 0).slice(0, 4)} />
       </section>
       <section className="editorial">
-        <img src={collectionPhoto('studio')} alt={t('illustration')} loading="lazy" />
+        <img src={collectionPhoto('studio')} alt={collections[3].name[locale]} loading="lazy" />
         <div>
           <p className="eyebrow">FLUIVIX / STUDIO</p>
           <h2>{t('editorial')}</h2>
@@ -136,7 +136,7 @@ export function CollectionList() {
       <div className="collection-grid">
         {collections.map((c) => (
           <Link key={c.id} to={`/collections/${c.id}`}>
-            <img src={collectionPhoto(c.id)} alt={`${c.name[locale]} — ${t('illustration')}`} />
+            <img src={collectionPhoto(c.id)} alt={c.name[locale]} />
             <h2>{c.name[locale]} ↗</h2>
             <p>{c.description[locale]}</p>
           </Link>

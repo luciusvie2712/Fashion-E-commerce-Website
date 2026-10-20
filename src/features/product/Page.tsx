@@ -68,7 +68,7 @@ export function ProductPage() {
                 <button className="gallery-main" aria-label={t('zoom')}>
                   <LocalImage
                     src={p.imageUrls[activeImage]}
-                    alt={`${p.name[locale]} — ${t('illustration')}`}
+                    alt={p.name[locale]}
                     width="400"
                     height="500"
                   />
@@ -93,7 +93,6 @@ export function ProductPage() {
                 </button>
               ))}
             </div>
-            <p className="muted small">{t('illustration')}</p>
           </div>
           <div className="purchase">
             <p className="eyebrow">FLUIVIX / {p.sku}</p>

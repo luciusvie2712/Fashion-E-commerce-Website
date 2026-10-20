@@ -20,7 +20,11 @@ test('photographic product variants and section images load locally', async ({ p
     );
     await page.locator('.gallery-main img').evaluate((img: HTMLImageElement) => img.decode());
   }
-  await expect(page.locator('.gallery>.small')).toHaveText('AI-generated image');
+  await expect(page.locator('.gallery>.small')).toHaveCount(0);
+  await expect(page.locator('.gallery-main img')).toHaveAttribute(
+    'alt',
+    await page.locator('main h1').innerText(),
+  );
   for (const route of ['/collections', '/lookbook', '/about']) {
     await page.goto(route);
     await expect(page.locator('main h1')).toBeVisible();
