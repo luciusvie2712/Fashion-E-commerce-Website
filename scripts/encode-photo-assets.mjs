@@ -3,13 +3,21 @@ import path from 'node:path';
 import sharp from 'sharp';
 
 const manifest = process.argv[2] ?? '.tmp/imagegen-manifest.json';
+const incremental = process.argv.includes('--incremental');
 const assets = JSON.parse(await fs.readFile(manifest, 'utf8'));
 const destination = 'public/assets/photos';
 await fs.mkdir(destination, { recursive: true });
 for (const asset of assets) {
-  await sharp(asset.source)
-    .webp({ quality: 84, effort: 5 })
-    .toFile(path.join(destination, `${asset.id}.webp`));
+  const output = path.join(destination, `${asset.id}.webp`);
+  if (incremental) {
+    try {
+      await fs.access(output);
+      continue;
+    } catch {
+      /* New generated asset. */
+    }
+  }
+  await sharp(asset.source).webp({ quality: 84, effort: 5 }).toFile(output);
 }
 await fs.writeFile(
   path.join(destination, 'PROMPTS.json'),

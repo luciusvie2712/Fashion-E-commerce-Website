@@ -32,7 +32,7 @@ npm.cmd run test:e2e
 Remove-Item Env:FLUIVIX_PREVIEW
 ```
 
-This starts Vite preview on port 4173. The default browser-test mode uses the development server on port 5173. The verified delivery has 42 passing unit/component tests and 37 passing production browser scenarios. Tests include all 170 route × locale combinations, localized commerce, storage failures, six responsive widths and automated WCAG AA checks. They do not replace a complete human accessibility or linguistic review.
+This starts Vite preview on port 4173. The default browser-test mode uses the development server on port 5173. The verified delivery has 45 passing unit/component tests and 39 passing production browser scenarios. Tests include all 170 route × locale combinations, localized commerce, storage failures, six responsive widths, photography/typography checks and automated WCAG AA checks. They do not replace a complete human accessibility or linguistic review.
 
 ## Try the shopping flows
 
@@ -55,7 +55,7 @@ Browser state uses versioned `fluivix:v1:` keys and schema validation. If storag
 
 ## Architecture and assets
 
-Feature modules live in `src/features/`. Pure pricing/cart/order rules are separate from UI and are tested with deterministic data. The catalog contains 48 products, six categories and four collections. Product and editorial imagery is being replaced with original photorealistic images generated using the built-in ImageGen tool. Local WebP files and their prompts live in `public/assets/photos/`. Original SVG files remain for fallback and historical order snapshots. No external image service or font request is needed at runtime.
+Feature modules live in `src/features/`. Pure pricing/cart/order rules are separate from UI and are tested with deterministic data. The catalog contains 48 products, six categories and four collections. All current product and editorial imagery uses 134 original photorealistic images generated using the built-in ImageGen tool: 128 product/color photographs and six section photographs. Local WebP files and their prompts live in `public/assets/photos/` (about 16.7 MB total). Original SVG files remain for fallback and historical order snapshots. No external image service or font request is needed at runtime.
 
 Translations are authored locally in `src/features/i18n/dictionaries.ts`, with localized catalog and policy fixtures in `src/data/`. Currency uses `Intl` presentation only. Product/variant IDs, snapshots and integer prices do not change with language.
 

@@ -1,4 +1,4 @@
-import generated from './generated-photos.json';
+import generated from './generated-photos.json' with { type: 'json' };
 
 const available = new Set(generated);
 export const photo = (id: string, fallback = '/assets/campaign.svg') =>
