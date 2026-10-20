@@ -12,6 +12,8 @@ import { products } from '../../data/catalog';
 import { normalizeVietnameseSearch } from '../../lib/urls';
 import { resetFluivixStorage, storageFailed } from '../../lib/storage';
 import { DemoNotice } from '../shared';
+import { useScrollHeader } from './useScrollHeader';
+import { usePageMotion } from './usePageMotion';
 export const nav = [
   ['/shop', 'shop'],
   ['/new-arrivals', 'new'],
@@ -151,6 +153,8 @@ export function Shell() {
     cart = useCart(),
     favorites = useWishlist(),
     location = useLocation();
+  const headerRef = useScrollHeader(location.key);
+  usePageMotion(location.key);
   const [storageWarning, setStorageWarning] = useState(storageFailed);
   const [menu, setMenu] = useState(false);
   useEffect(() => {
@@ -171,40 +175,42 @@ export function Shell() {
         {t('skip')}
       </a>
       <div className="announcement">{t('announcement')}</div>
-      <header className="header">
-        <button className="icon mobile-menu" aria-label={t('menu')} onClick={() => setMenu(true)}>
-          <Menu size={22} />
-        </button>
-        <Link className="wordmark" to="/">
-          FLUIVIX<span>®</span>
-        </Link>
-        <nav className="desktop-nav" aria-label={t('menu')}>
-          {nav.map(([path, key]) => (
-            <NavLink key={path} to={path}>
-              {t(key)}
-            </NavLink>
-          ))}
-        </nav>
-        <div className="header-actions">
-          <Language />
-          <SearchBox />
-          <Link className="icon account-icon" aria-label={t('account')} to="/account">
-            <UserRound size={21} />
+      <div className="header-dock" ref={headerRef}>
+        <header className="header">
+          <button className="icon mobile-menu" aria-label={t('menu')} onClick={() => setMenu(true)}>
+            <Menu size={22} />
+          </button>
+          <Link className="wordmark" to="/" onClick={() => window.scrollTo(0, 0)}>
+            FLUIVIX<span>®</span>
           </Link>
-          <Link
-            className="icon"
-            aria-label={`${t('wishlist')} (${favorites.lists[owner]?.length ?? 0})`}
-            to="/wishlist"
-          >
-            <Heart size={21} />
-            <span className="badge">{favorites.lists[owner]?.length ?? 0}</span>
-          </Link>
-          <Link className="icon" aria-label={`${t('cart')} (${count})`} to="/cart">
-            <ShoppingBag size={21} />
-            <span className="badge">{count}</span>
-          </Link>
-        </div>
-      </header>
+          <nav className="desktop-nav" aria-label={t('menu')}>
+            {nav.map(([path, key]) => (
+              <NavLink key={path} to={path}>
+                {t(key)}
+              </NavLink>
+            ))}
+          </nav>
+          <div className="header-actions">
+            <Language />
+            <SearchBox />
+            <Link className="icon account-icon" aria-label={t('account')} to="/account">
+              <UserRound size={21} />
+            </Link>
+            <Link
+              className="icon"
+              aria-label={`${t('wishlist')} (${favorites.lists[owner]?.length ?? 0})`}
+              to="/wishlist"
+            >
+              <Heart size={21} />
+              <span className="badge">{favorites.lists[owner]?.length ?? 0}</span>
+            </Link>
+            <Link className="icon" aria-label={`${t('cart')} (${count})`} to="/cart">
+              <ShoppingBag size={21} />
+              <span className="badge">{count}</span>
+            </Link>
+          </div>
+        </header>
+      </div>
       <Modal open={menu} onOpenChange={setMenu} title={t('menu')}>
         <nav className="mobile-links">
           {[...nav, ['/account', 'account'], ['/track-order', 'track']].map(([path, key]) => (

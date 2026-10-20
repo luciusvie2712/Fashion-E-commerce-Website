@@ -91,6 +91,22 @@ test('key screens meet automated WCAG AA checks', async ({ page }) => {
   ]) {
     await page.goto(route);
     await expect(page.locator('main')).toBeVisible();
+    // Audit final rendered colors, after observer-driven entry/exit transitions settle.
+    await page.evaluate(
+      () =>
+        new Promise<void>((resolve) =>
+          requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+        ),
+    );
+    await expect
+      .poll(() =>
+        page.evaluate(
+          () =>
+            document.getAnimations().filter((animation) => animation.playState === 'running')
+              .length,
+        ),
+      )
+      .toBe(0);
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'])
       .analyze();
