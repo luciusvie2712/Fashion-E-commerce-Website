@@ -2,7 +2,18 @@ import { z } from 'zod';
 import { routeTitle } from '../../app/route-inventory';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
-import { Search, UserRound, Heart, ShoppingBag, Menu, ArrowUpRight } from 'lucide-react';
+import {
+  Search,
+  UserRound,
+  Heart,
+  ShoppingBag,
+  Menu,
+  ArrowUpRight,
+  Globe2,
+  ChevronDown,
+  ArrowRight,
+  Package,
+} from 'lucide-react';
 import { useLocale } from '../../features/i18n';
 import { useCart } from '../../features/cart/store';
 import { useWishlist } from '../../features/wishlist/store';
@@ -36,24 +47,28 @@ export const supportNav = [
 function Language() {
   const { t, locale, changeLanguage } = useLocale();
   return (
-    <select
-      className="language"
-      aria-label={t('language')}
-      value={locale}
-      onChange={(e) => void changeLanguage(e.target.value)}
-    >
-      {[
-        ['vi', 'Tiếng Việt'],
-        ['en', 'English'],
-        ['ko', '한국어'],
-        ['zh-CN', '简体中文'],
-        ['ja', '日本語'],
-      ].map(([id, label]) => (
-        <option key={id} value={id}>
-          {label}
-        </option>
-      ))}
-    </select>
+    <div className="language-picker">
+      <Globe2 size={16} aria-hidden="true" />
+      <select
+        className="language"
+        aria-label={t('language')}
+        value={locale}
+        onChange={(e) => void changeLanguage(e.target.value)}
+      >
+        {[
+          ['vi', 'Tiếng Việt'],
+          ['en', 'English'],
+          ['ko', '한국어'],
+          ['zh-CN', '简体中文'],
+          ['ja', '日本語'],
+        ].map(([id, label]) => (
+          <option key={id} value={id}>
+            {label}
+          </option>
+        ))}
+      </select>
+      <ChevronDown size={13} aria-hidden="true" />
+    </div>
   );
 }
 function SearchBox() {
@@ -76,8 +91,9 @@ function SearchBox() {
       onOpenChange={setOpen}
       title={t('search')}
       trigger={
-        <button className="icon" aria-label={t('search')}>
+        <button className="icon header-search" aria-label={t('search')}>
           <Search size={21} />
+          <span>{t('search')}</span>
         </button>
       }
     >
@@ -177,21 +193,55 @@ export function Shell() {
       <div className="announcement">{t('announcement')}</div>
       <div className="header-dock" ref={headerRef}>
         <header className="header">
-          <button className="icon mobile-menu" aria-label={t('menu')} onClick={() => setMenu(true)}>
-            <Menu size={22} />
-          </button>
+          <Modal
+            open={menu}
+            onOpenChange={setMenu}
+            title={t('menu')}
+            className="nav-drawer"
+            trigger={
+              <button className="icon mobile-menu" aria-label={t('menu')}>
+                <Menu size={22} />
+              </button>
+            }
+          >
+            <p className="nav-drawer-intro">{t('heroBody')}</p>
+            <nav className="mobile-links" aria-label={t('menu')}>
+              {nav.map(([path, key]) => (
+                <NavLink key={path} to={path} onClick={() => setMenu(false)}>
+                  <span>{t(key)}</span>
+                  <ArrowUpRight size={21} aria-hidden="true" />
+                </NavLink>
+              ))}
+            </nav>
+            <div className="nav-drawer-utilities">
+              <Link to="/account" onClick={() => setMenu(false)}>
+                <UserRound size={20} aria-hidden="true" />
+                {t('account')}
+                <ArrowRight size={16} aria-hidden="true" />
+              </Link>
+              <Link to="/track-order" onClick={() => setMenu(false)}>
+                <Package size={20} aria-hidden="true" />
+                {t('track')}
+                <ArrowRight size={16} aria-hidden="true" />
+              </Link>
+            </div>
+            <div className="nav-drawer-language">
+              <span>{t('language')}</span>
+              <Language />
+            </div>
+          </Modal>
           <Link className="wordmark" to="/" onClick={() => window.scrollTo(0, 0)}>
             FLUIVIX<span>®</span>
           </Link>
           <nav className="desktop-nav" aria-label={t('menu')}>
             {nav.map(([path, key]) => (
-              <NavLink key={path} to={path}>
+              <NavLink key={path} to={path} className={key === 'sale' ? 'nav-sale' : undefined}>
                 {t(key)}
               </NavLink>
             ))}
           </nav>
+          <Language />
           <div className="header-actions">
-            <Language />
             <SearchBox />
             <Link className="icon account-icon" aria-label={t('account')} to="/account">
               <UserRound size={21} />
@@ -202,29 +252,28 @@ export function Shell() {
               to="/wishlist"
             >
               <Heart size={21} />
-              <span className="badge" aria-hidden="true">
-                {favorites.lists[owner]?.length ?? 0}
-              </span>
+              {!!favorites.lists[owner]?.length && (
+                <span className="badge" aria-hidden="true">
+                  {favorites.lists[owner]?.length ?? 0}
+                </span>
+              )}
             </Link>
             <Link className="icon" aria-label={`${t('cart')} · ${count}`} to="/cart">
               <ShoppingBag size={21} />
-              <span className="badge" aria-hidden="true">
-                {count}
-              </span>
+              {count > 0 && (
+                <span className="badge" aria-hidden="true">
+                  {count}
+                </span>
+              )}
             </Link>
           </div>
+          <Link className="header-tracking" to="/track-order">
+            <Package size={16} aria-hidden="true" />
+            {t('track')}
+            <ArrowUpRight size={14} aria-hidden="true" />
+          </Link>
         </header>
       </div>
-      <Modal open={menu} onOpenChange={setMenu} title={t('menu')}>
-        <nav className="mobile-links">
-          {[...nav, ['/account', 'account'], ['/track-order', 'track']].map(([path, key]) => (
-            <Link key={path} to={path} onClick={() => setMenu(false)}>
-              {t(key)}
-            </Link>
-          ))}
-        </nav>
-        <Language />
-      </Modal>
       {storageWarning && (
         <p className="warning" role="alert">
           {t('storageWarning')}

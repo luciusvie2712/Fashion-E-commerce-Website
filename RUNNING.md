@@ -73,4 +73,6 @@ Checkout suggestions show voucher conditions from local pricing fixtures and req
 
 Forms use compact spacing, 44px controls and paired fields where space allows. Auth uses a short always-visible local-demo note with expandable full details; checkout voucher suggestions expand on demand. Login, registration and demo password recovery share an editorial form layout whose default card fills the viewport space below the measured announcement/header, with a small bottom gutter. Expanded details and validation content can grow naturally. Mobile prioritizes the form; desktop adds bundled Studio photography. Password visibility controls keep values in memory, mode changes clear fields, and account-entry links retain safe internal return destinations.
 
+The header groups the wordmark, active-page navigation, native language picker and shopping utilities. Phones use a compact second row for language/tracking and a right-side navigation drawer with keyboard focus return. Search, account, favorites and bag retain their existing behavior; numeric badges appear for nonempty lists/bags. Scroll-direction visibility and reduced-motion support remain enabled.
+
 Verification details, commit references and remaining acceptance limits are recorded in [progress/BUILD-STATUS.md](progress/BUILD-STATUS.md).

@@ -14,12 +14,14 @@ export function Modal({
   children,
   open,
   onOpenChange,
+  className,
 }: {
   trigger?: ReactNode;
   title: string;
   children: ReactNode;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  className?: string;
 }) {
   const { t } = useLocale();
   return (
@@ -27,7 +29,7 @@ export function Modal({
       {trigger && <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>}
       <Dialog.Portal>
         <Dialog.Overlay className="dialog-overlay" />
-        <Dialog.Content className="dialog-content" aria-describedby={undefined}>
+        <Dialog.Content className={cn('dialog-content', className)} aria-describedby={undefined}>
           <Dialog.Title>{title}</Dialog.Title>
           <Dialog.Close className="icon modal-close" aria-label={t('close')}>
             <X size={20} />
