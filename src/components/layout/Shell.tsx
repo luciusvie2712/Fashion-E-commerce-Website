@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { routeTitle } from '../../app/route-inventory';
+import { applyPageMetadata, pageMetadata } from '../../app/metadata';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
 import {
@@ -180,9 +180,7 @@ export function Shell() {
   }, []);
   useEffect(() => {
     window.scrollTo(0, 0);
-    const label = routeTitle(location.pathname);
-    document.title = `${t(label)} — FLUIVIX`;
-    document.querySelector('meta[name="description"]')?.setAttribute('content', t('demo'));
+    applyPageMetadata(pageMetadata(location.pathname, locale, t), locale);
   }, [location.pathname, t, locale]);
   const count = (cart.carts[owner] ?? []).reduce((n, l) => n + l.quantity, 0);
   return (
