@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { waapi, type WAAPIAnimation } from 'animejs/waapi';
 
 const targets = [
-  '.hero > img',
+  '.hero-media > img',
   '.hero-copy > *',
   'main > section > h1',
   'main > section > h2',

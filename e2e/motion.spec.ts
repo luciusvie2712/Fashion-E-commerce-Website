@@ -90,6 +90,6 @@ test('interrupted reveals restore masks, image transforms and focused controls',
   );
   expect(styles.every((style) => !style.transform && !style.clip)).toBe(true);
   await page.locator('.header .wordmark').click();
-  await expect(page.locator('.hero > img')).toHaveCSS('opacity', '1');
-  await expect(page.locator('.hero > img')).toHaveCSS('clip-path', 'none');
+  await expect(page.locator('.hero-media > img')).toHaveCSS('opacity', '1');
+  await expect(page.locator('.hero-media > img')).toHaveCSS('clip-path', 'none');
 });

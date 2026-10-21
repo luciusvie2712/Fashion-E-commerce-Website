@@ -3,6 +3,7 @@
 These original photorealistic images were created with the built-in ImageGen tool for this demonstration. They do not document actual merchandise or real FLUIVIX campaigns. No existing brand photography was copied.
 
 - `campaign-hero.webp`: homepage campaign photograph.
+- `campaign-hero-wide.webp`: 1983 × 793 (~2.5:1) AI-expanded homepage desktop variant; the original campaign image remains the phone/tablet source and is preserved for other sections. Both sources are served locally through a responsive picture element.
 - `collection-*.webp`: editorial collection, discovery and lookbook images.
 - `about-atelier.webp`: brand-story section photograph.
 - `p-NNN-ink.webp`, `p-NNN-sand.webp`, `p-NNN-olive.webp`: individual catalog product/color photographs. Single-color accessories use `ink`.

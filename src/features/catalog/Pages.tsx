@@ -7,7 +7,7 @@ import { ProductGrid, Empty } from '../../components/shared';
 import { Button, Modal } from '../../components/ui';
 import { filterCatalog } from './selectors';
 import { Newsletter } from '../../components/layout/Shell';
-import { campaignHero, categoryPhoto, collectionPhoto } from '../../data/photography';
+import { campaignHero, homepageHero, categoryPhoto, collectionPhoto } from '../../data/photography';
 export function Home() {
   const { t, locale } = useLocale();
   const heroRef = useRef<HTMLElement>(null);
@@ -30,13 +30,16 @@ export function Home() {
   return (
     <>
       <section className="hero" ref={heroRef}>
-        <img
-          src={campaignHero}
-          width="1600"
-          height="1000"
-          alt={t('campaignImageAlt')}
-          fetchPriority="high"
-        />
+        <picture className="hero-media">
+          <source media="(min-width: 901px)" srcSet={homepageHero} />
+          <img
+            src={campaignHero}
+            width="1600"
+            height="1000"
+            alt={t('campaignImageAlt')}
+            fetchPriority="high"
+          />
+        </picture>
         <div className="hero-copy">
           <p className="eyebrow">FLUIVIX / 2026</p>
           <h1>{t('hero')}</h1>

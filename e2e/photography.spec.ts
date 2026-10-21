@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test('photographic product variants and section images load locally', async ({ page }) => {
   await page.goto('/');
-  const hero = page.locator('.hero>img');
+  const hero = page.locator('.hero-media>img');
   await expect(hero).toHaveAttribute('src', '/assets/photos/campaign-hero.webp');
   await expect(hero).toHaveJSProperty('complete', true);
   await page.goto('/product/fluivix-tshirts-1');

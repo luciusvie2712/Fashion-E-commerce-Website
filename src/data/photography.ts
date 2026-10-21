@@ -4,6 +4,7 @@ const available = new Set(generated);
 export const photo = (id: string, fallback = '/assets/campaign.svg') =>
   available.has(id) ? `/assets/photos/${id}.webp` : fallback;
 export const campaignHero = photo('campaign-hero');
+export const homepageHero = photo('campaign-hero-wide', campaignHero);
 export const collectionPhoto = (id: string) => photo(`collection-${id}`, campaignHero);
 export const aboutPhoto = photo('about-atelier', campaignHero);
 export function productPhotos(id: string, categoryId: string) {

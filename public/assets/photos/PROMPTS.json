@@ -537,6 +537,10 @@
     {
       "file": "p-048-ink.webp",
       "prompt": "Use case: product-mockup. Asset: single fashion e-commerce product photograph, portrait 4:5. Photograph ONE charcoal black ribbed knitted beanie. The complete item is fully visible, centered, front view, neatly arranged with realistic natural volume, no person.  Premium minimalist Vietnamese contemporary fashion aesthetic. Warm light-gray seamless studio backdrop, soft diffuse light and subtle natural contact shadows. Authentic fabric weave, accurate stitching, realistic folds and construction, professional 85mm lens product photography, tack-sharp textile detail. Item occupies about 78% of the frame, generous consistent margins. Genuine photographic appearance, not drawing or 3D render. No text, no logos, no labels with writing, no watermark, no props, no collage."
+    },
+    {
+      "file": "campaign-hero-wide.webp",
+      "prompt": "Use case: precise-object-edit. Asset type: FLUIVIX fashion homepage hero photograph. Edit target: the supplied campaign photograph. Create a much wider landscape version, 2560 x 1024 pixels (2.5:1 aspect ratio), by expanding the natural courtyard architecture and shaded wall to the LEFT. Preserve the same adult Asian male model, face, sand overshirt, cream T-shirt, olive trousers and white sneakers, full body, natural anatomy, warm afternoon light, stone courtyard and restrained editorial photography. Keep the model in the rightmost 25% of the WIDE canvas, with at least 12% clear margin above his head and below his shoes so responsive cropping never cuts them. The left 65% must be continuous subtly textured dark olive-brown SHADED STONE WALL, similar to the supplied photo's shaded wall, real photographic texture with a softly shaded courtyard floor, suitable for cream headline overlay. Important: dark natural photographic background should continue seamlessly all the way to the left edge; NO solid color filler strip, NO frame or letterboxing, NO visible seam. Wide magazine campaign composition. Do not add people, logos, lettering or watermarks. Preserve realistic original mood and clothing."
     }
   ]
 }

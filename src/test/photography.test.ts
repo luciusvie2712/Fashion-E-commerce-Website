@@ -2,7 +2,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { it, expect } from 'vitest';
 import { products, categories, collections } from '../data/catalog';
-import { campaignHero, collectionPhoto, aboutPhoto, categoryPhoto } from '../data/photography';
+import {
+  campaignHero,
+  homepageHero,
+  collectionPhoto,
+  aboutPhoto,
+  categoryPhoto,
+} from '../data/photography';
 import generated from '../data/generated-photos.json';
 import sharp from 'sharp';
 
@@ -18,11 +24,12 @@ it('all 48 products have local photographs for every available color', () => {
   }
 });
 
-it('all section/category imagery and 134 prompt records are bundled locally', () => {
-  expect(generated).toHaveLength(134);
-  expect(new Set(generated).size).toBe(134);
+it('all section/category imagery and 135 prompt records are bundled locally', () => {
+  expect(generated).toHaveLength(135);
+  expect(new Set(generated).size).toBe(135);
   const images = [
     campaignHero,
+    homepageHero,
     aboutPhoto,
     ...collections.map((c) => collectionPhoto(c.id)),
     ...categories.map((c, index) => categoryPhoto(c.id, index)),
@@ -34,7 +41,7 @@ it('all section/category imagery and 134 prompt records are bundled locally', ()
   const prompts = JSON.parse(fs.readFileSync('public/assets/photos/PROMPTS.json', 'utf8')) as {
     assets: { file: string; prompt: string }[];
   };
-  expect(prompts.assets).toHaveLength(134);
+  expect(prompts.assets).toHaveLength(135);
   for (const item of prompts.assets) expect(item.prompt.length).toBeGreaterThan(40);
 });
 
