@@ -1,5 +1,42 @@
 import { localized as l } from '../../types/domain';
 
+export const imageViewerCopy = {
+  gallery: l('Thư viện hình ảnh', 'Image gallery', '이미지 갤러리', '图片库', '画像ギャラリー'),
+  previous: l('Ảnh trước', 'Previous image', '이전 이미지', '上一张', '前の画像'),
+  next: l('Ảnh tiếp theo', 'Next image', '다음 이미지', '下一张', '次の画像'),
+  fit: l('Vừa khung', 'Fit to view', '화면에 맞추기', '适应窗口', '画面に合わせる'),
+  out: l('Thu nhỏ ảnh', 'Zoom out', '축소', '缩小', '縮小'),
+  controls: l('Điều chỉnh ảnh', 'Image controls', '이미지 조작', '图片控制', '画像の操作'),
+  enlarge: l(
+    'Nhấn để xem gần hơn',
+    'Click for a closer look',
+    '클릭하여 확대',
+    '点击放大查看',
+    'クリックして拡大',
+  ),
+  pan: l(
+    'Kéo hoặc cuộn để xem chi tiết',
+    'Drag or scroll to explore',
+    '드래그하거나 스크롤하여 보기',
+    '拖动或滚动查看',
+    'ドラッグまたはスクロールで移動',
+  ),
+  keyboard: l(
+    'Dùng phím ← → để chuyển ảnh · Esc để đóng',
+    'Use ← → to browse · Esc to close',
+    '← → 키로 이동 · Esc로 닫기',
+    '使用 ← → 切换图片 · Esc 关闭',
+    '← → キーで移動 · Esc で閉じる',
+  ),
+  onlyImage: l(
+    'Sản phẩm có một ảnh · Esc để đóng',
+    'One product image · Esc to close',
+    '상품 이미지 1장 · Esc로 닫기',
+    '商品仅有一张图片 · Esc 关闭',
+    '商品画像は1枚です · Esc で閉じる',
+  ),
+};
+
 export const quickViewCopy = {
   from: l('Giá từ', 'From', '시작 가격', '起价', '最低価格'),
   sizePreview: l(

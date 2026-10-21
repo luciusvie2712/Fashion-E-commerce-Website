@@ -47,6 +47,7 @@ test('product options show exact price and stock and reset on product navigation
     /p-007-sand\.webp$/,
   );
   await page.keyboard.press('Escape');
+  await expect(page.getByRole('dialog')).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Enlarge image', exact: true })).toBeFocused();
   await page.locator('.product-section-links a').first().click();
   await expect(page).toHaveURL(/#product-information$/);

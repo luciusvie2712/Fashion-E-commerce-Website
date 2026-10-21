@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import type { Product } from '../../types/domain';
 import { productCopy as copy } from './content';
+import { ProductImageViewer } from './ImageViewer';
 import { useLocale, money } from '../i18n';
 import { useCart } from '../cart/store';
 import { useOwner } from '../auth/store';
@@ -100,8 +101,9 @@ function ProductDetails({ product: p }: { product: Product }) {
         </nav>
         <div className="pdp">
           <div className="gallery">
-            <Modal
-              title={p.name[locale]}
+            <ProductImageViewer
+              product={p}
+              initialIndex={activeImage}
               trigger={
                 <button className="gallery-main" aria-label={t('zoom')}>
                   <LocalImage
@@ -116,13 +118,7 @@ function ProductDetails({ product: p }: { product: Product }) {
                   </span>
                 </button>
               }
-            >
-              <LocalImage
-                className="zoom-image"
-                src={p.imageUrls[activeImage]}
-                alt={p.name[locale]}
-              />
-            </Modal>
+            />
             <div className="thumbnails">
               {p.imageUrls.map((url, i) => (
                 <button
