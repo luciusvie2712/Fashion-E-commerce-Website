@@ -170,12 +170,15 @@ export function Summary({ pricing }: { pricing: Pricing }) {
     </dl>
   );
 }
-export function SizeTable() {
+export function SizeTable({
+  showIntro = true,
+  scrollHint,
+}: { showIntro?: boolean; scrollHint?: string } = {}) {
   const { t, locale } = useLocale();
   const [category, setCategory] = useState('tshirts');
   return (
     <>
-      <p>{t('measure')}</p>
+      {showIntro && <p>{t('measure')}</p>}
       <label>
         {t('category')}
         <select value={category} onChange={(e) => setCategory(e.target.value)}>
@@ -191,13 +194,17 @@ export function SizeTable() {
       {category === 'accessories' ? (
         <p>{t('oneSizeNote')}</p>
       ) : (
-        <div className="table-wrap">
+        <div className="table-wrap" role="region" aria-label={t('sizeGuide')} tabIndex={0}>
+          {scrollHint && <p className="table-scroll-hint">{scrollHint}</p>}
           <table>
+            <caption className="sr-only">{t('sizeGuide')}</caption>
             <thead>
               <tr>
                 {['size', ...(category === 'tshirts' ? ['chest'] : []), 'waist', 'hips'].map(
                   (k) => (
-                    <th key={k}>{t(k)}</th>
+                    <th scope="col" key={k}>
+                      {t(k)}
+                    </th>
                   ),
                 )}
               </tr>
@@ -205,7 +212,7 @@ export function SizeTable() {
             <tbody>
               {['S', 'M', 'L', 'XL', 'XXL'].map((s, i) => (
                 <tr key={s}>
-                  <th>{s}</th>
+                  <th scope="row">{s}</th>
                   {category === 'tshirts' && (
                     <td>
                       {88 + i * 6}–{93 + i * 6}
