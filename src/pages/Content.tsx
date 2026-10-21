@@ -1,13 +1,11 @@
-import { z } from 'zod';
-import { useState } from 'react';
 import { Link, useLocation } from 'react-router';
 import { useLocale } from '../features/i18n';
 import { stories, faq } from '../data/content';
 import { products, collections } from '../data/catalog';
 import { collectionPhoto } from '../data/photography';
 import { AboutPage } from '../features/about/AboutPage';
+import { ContactPage } from '../features/contact/ContactPage';
 import { DemoNotice, SizeTable } from '../components/shared';
-import { Button } from '../components/ui';
 const pageKeys: Record<string, string> = {
   '/about': 'about',
   '/shipping-policy': 'shippingPolicy',
@@ -24,9 +22,8 @@ export function ContentPage() {
     location = useLocation(),
     key = pageKeys[location.pathname],
     story = stories[key as keyof typeof stories];
-  const [sent, setSent] = useState(false),
-    [error, setError] = useState('');
   if (key === 'about') return <AboutPage />;
+  if (key === 'contact') return <ContactPage />;
   return (
     <section className={`container section ${key === 'lookbook' ? '' : 'reading'}`}>
       <p className="eyebrow">FLUIVIX / DEMO</p>
@@ -55,57 +52,6 @@ export function ContentPage() {
             <p>{a[locale]}</p>
           </details>
         ))}
-      {key === 'contact' && (
-        <>
-          <p>{t('localOnly')}</p>
-          <form
-            className="form field-grid"
-            noValidate
-            onSubmit={(e) => {
-              e.preventDefault();
-              const data = new FormData(e.currentTarget);
-              if (
-                !z
-                  .object({
-                    name: z.string().trim().min(2),
-                    email: z.email(),
-                    message: z.string().trim().min(10),
-                  })
-                  .safeParse(Object.fromEntries(data)).success
-              ) {
-                setError('invalid');
-                return;
-              }
-              setError('');
-              setSent(true);
-              e.currentTarget.reset();
-            }}
-          >
-            <label>
-              {t('fullName')}
-              <input name="name" required minLength={2} />
-            </label>
-            <label>
-              {t('email')}
-              <input type="email" name="email" required />
-            </label>
-            <label>
-              {t('message')}
-              <textarea name="message" required minLength={10} />
-            </label>
-            <Button>{t('send')}</Button>
-            {error && (
-              <p className="field-error" role="alert">
-                {t(error)}
-              </p>
-            )}
-            {sent && <p role="status">{t('formSent')}</p>}
-          </form>
-          <p className="section">
-            <Link to="/faq">{t('faq')} ↗</Link>
-          </p>
-        </>
-      )}
       {key === 'lookbook' && (
         <div className="collection-grid">
           {collections.map((c) => (
