@@ -1,6 +1,23 @@
 import { locales, type Locale } from '../../types/domain';
 // Each row is authored in vi / en / ko / Simplified Chinese / ja order.
 export const copy = {
+  footerShopping: ['Khám phá', 'Explore', '둘러보기', '探索', '見つける'],
+  footerSupport: ['Hỗ trợ bạn', 'Here to help', '이용 안내', '帮助中心', 'サポート'],
+  footerInformation: [
+    'Về thương hiệu',
+    'Brand & information',
+    '브랜드와 정보',
+    '品牌与信息',
+    'ブランドとご案内',
+  ],
+  footerBackTop: ['Về đầu trang', 'Back to top', '맨 위로', '返回顶部', 'ページの先頭へ'],
+  footerLocal: [
+    'Trải nghiệm trên thiết bị của bạn',
+    'An experience on your device',
+    '내 기기에서 즐기는 체험',
+    '在你的设备上体验',
+    'お使いの端末で楽しむ体験',
+  ],
   checkoutEmpty: [
     'Chưa có sản phẩm để thanh toán. Hãy mở giỏ hàng hoặc chọn Mua ngay từ sản phẩm.',
     'There is no active checkout. Open your bag or choose Buy now on a product.',

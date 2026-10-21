@@ -18,11 +18,11 @@ import { useLocale } from '../../features/i18n';
 import { useCart } from '../../features/cart/store';
 import { useWishlist } from '../../features/wishlist/store';
 import { useOwner } from '../../features/auth/store';
-import { Modal, Button, Confirm } from '../ui';
+import { Modal, Button } from '../ui';
 import { products } from '../../data/catalog';
 import { normalizeVietnameseSearch } from '../../lib/urls';
-import { resetFluivixStorage, storageFailed } from '../../lib/storage';
-import { DemoNotice } from '../shared';
+import { storageFailed } from '../../lib/storage';
+import { Footer } from './Footer';
 import { useScrollHeader } from './useScrollHeader';
 import { usePageMotion } from './usePageMotion';
 export const nav = [
@@ -280,33 +280,7 @@ export function Shell() {
       <main id="main" tabIndex={-1}>
         <Outlet />
       </main>
-      <footer>
-        <div className="footer-top">
-          <Link to="/" className="wordmark">
-            FLUIVIX<span>®</span>
-          </Link>
-          <p>{t('heroBody')}</p>
-          <div className="footer-links">
-            {supportNav.map(([path, key]) => (
-              <Link key={path} to={path}>
-                {t(key)}
-              </Link>
-            ))}
-          </div>
-        </div>
-        <DemoNotice />
-        <div className="footer-bottom">
-          <span>© 2026 FLUIVIX · DEMO</span>
-          <Confirm
-            title={t('confirmDelete')}
-            onConfirm={() => {
-              resetFluivixStorage();
-              window.location.assign('/');
-            }}
-            trigger={<button className="text-button">{t('reset')}</button>}
-          />
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }
