@@ -4,7 +4,8 @@ import { Link, useLocation } from 'react-router';
 import { useLocale } from '../features/i18n';
 import { stories, faq } from '../data/content';
 import { products, collections } from '../data/catalog';
-import { aboutPhoto, collectionPhoto } from '../data/photography';
+import { collectionPhoto } from '../data/photography';
+import { AboutPage } from '../features/about/AboutPage';
 import { DemoNotice, SizeTable } from '../components/shared';
 import { Button } from '../components/ui';
 const pageKeys: Record<string, string> = {
@@ -25,6 +26,7 @@ export function ContentPage() {
     story = stories[key as keyof typeof stories];
   const [sent, setSent] = useState(false),
     [error, setError] = useState('');
+  if (key === 'about') return <AboutPage />;
   return (
     <section className={`container section ${key === 'lookbook' ? '' : 'reading'}`}>
       <p className="eyebrow">FLUIVIX / DEMO</p>
@@ -33,16 +35,8 @@ export function ContentPage() {
       {story && (
         <>
           <p className="muted">{t('samplePolicy')}</p>
-          {key === 'about' && (
-            <img src={aboutPhoto} alt={t('atelierImageAlt')} width="1600" height="1000" />
-          )}
           {story.map((text, i) =>
             i % 2 === 0 ? <h2 key={i}>{text[locale]}</h2> : <p key={i}>{text[locale]}</p>,
-          )}
-          {key === 'about' && (
-            <Link className="button" to="/collections">
-              {t('explore')} ↗
-            </Link>
           )}
         </>
       )}

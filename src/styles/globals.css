@@ -3557,9 +3557,12 @@ body {
   border: 0;
   background: #e7eee6;
 }
-.desktop-nav a.active::after,
-.desktop-nav a:hover::after {
+.desktop-nav a.active::after {
   transform: scaleX(1);
+}
+.header a:hover,
+.nav-drawer a:hover {
+  text-decoration: none;
 }
 .desktop-nav a:hover {
   background: #edf0e9;
@@ -3832,5 +3835,295 @@ body {
   .desktop-nav a::after,
   .nav-drawer .mobile-links a {
     transition: none;
+  }
+}
+
+/* About: editorial storytelling, scoped to preserve the shared reading pages. */
+.about-page {
+  --about-olive: #354739;
+  --about-muted: #5c655b;
+  --about-line: #35473930;
+  color: #26352b;
+}
+.about-intro {
+  padding-top: clamp(32px, 5vw, 72px);
+}
+.about-intro-top,
+.about-value-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.about-intro-top {
+  border-bottom: 1px solid var(--about-line);
+  padding-bottom: 18px;
+}
+.about-intro-top .eyebrow {
+  margin: 0;
+  font-size: 12px;
+  color: var(--about-olive);
+}
+.about-edition {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+.about-intro-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  align-items: end;
+  gap: clamp(32px, 7vw, 110px);
+  padding: 44px 0 48px;
+}
+.about-intro h1 {
+  font-size: clamp(44px, 5.6vw, 80px);
+  line-height: 1.16;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
+  margin: 0;
+  max-width: 13ch;
+}
+.about-intro-aside > p {
+  font-size: 17px;
+  line-height: 1.8;
+  max-width: 36ch;
+  color: var(--about-muted);
+  margin-bottom: 18px;
+}
+.about-story-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 10px 0;
+  min-height: 44px;
+  font-size: 15px;
+  border-bottom: 1px solid #6b7c65;
+}
+.about-story-link svg {
+  flex-shrink: 0;
+}
+.about-story-link:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  text-decoration: none;
+}
+.about-page a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 5px;
+}
+.about-atelier {
+  margin: 0;
+}
+.about-atelier > :is(img, svg) {
+  width: 100%;
+  height: clamp(280px, 41vw, 560px);
+  object-fit: cover;
+  object-position: center 55%;
+  border-radius: 3px;
+  background: #e7e2d5;
+}
+.about-atelier figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 14px;
+  font-size: 12px;
+  color: var(--about-muted);
+  letter-spacing: 0.04em;
+}
+.about-story {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 48px;
+  padding-top: clamp(56px, 8vw, 112px);
+  padding-bottom: clamp(56px, 8vw, 112px);
+  scroll-margin-top: 180px;
+}
+.about-section-label {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  font-size: 12px;
+  color: var(--about-muted);
+}
+.about-section-label .eyebrow {
+  font-size: 12px;
+  margin-bottom: 24px;
+}
+.about-story-copy {
+  max-width: 660px;
+}
+.about-story-copy h2,
+.about-values h2,
+.about-invitation h2 {
+  font-size: clamp(32px, 3.5vw, 50px);
+  text-wrap: balance;
+  line-height: 1.25;
+}
+.about-story-copy > p {
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--about-muted);
+  margin-bottom: 22px;
+}
+.about-story-copy > .about-lead {
+  font-size: 20px;
+  line-height: 1.85;
+  color: #354739;
+}
+.about-values {
+  background: #eaece3;
+  border-block: 1px solid var(--about-line);
+  padding-block: clamp(44px, 6vw, 80px);
+}
+.about-values h2 {
+  max-width: 22ch;
+  margin-bottom: 44px;
+}
+.about-values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
+}
+.about-values-grid article {
+  border-top: 1px solid #35473950;
+  padding-top: 24px;
+}
+.about-value-top {
+  color: #465b45;
+  margin-bottom: 36px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+}
+.about-values-grid h3 {
+  font-size: 24px;
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+.about-values-grid p {
+  color: var(--about-muted);
+  font-size: 16px;
+  line-height: 1.8;
+  max-width: 32ch;
+  margin-bottom: 0;
+}
+.about-invitation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: clamp(48px, 7vw, 96px);
+  padding-bottom: 32px;
+}
+.about-invitation-photo {
+  overflow: hidden;
+  background: #d7d4c4;
+  min-width: 0;
+}
+.about-invitation-photo > :is(img, svg) {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  object-fit: cover;
+  object-position: 72% center;
+}
+.about-invitation-copy {
+  background: var(--about-olive);
+  color: #f8f7f0;
+  padding: clamp(28px, 4vw, 60px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.about-invitation-copy .eyebrow {
+  font-size: 12px;
+  color: #d4ddc8;
+  line-height: 1.8;
+}
+.about-invitation-copy > p:not(.eyebrow) {
+  color: #dee4d6;
+  font-size: 16px;
+  line-height: 1.8;
+}
+.about-invitation-copy .button {
+  margin-top: 16px;
+  border-radius: 2px;
+}
+.about-disclosure {
+  padding-bottom: 48px;
+}
+.about-disclosure .demo-notice {
+  margin: 0;
+}
+@media (max-width: 900px) {
+  .about-intro-grid {
+    grid-template-columns: 1.3fr 1fr;
+    gap: 32px;
+  }
+  .about-story {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .about-story-copy {
+    max-width: 100%;
+  }
+  .about-values-grid {
+    gap: 24px;
+  }
+  .about-values-grid h3 {
+    font-size: 21px;
+  }
+}
+@media (max-width: 600px) {
+  .about-edition {
+    display: none;
+  }
+  .about-intro-grid,
+  .about-values-grid,
+  .about-invitation {
+    grid-template-columns: 1fr;
+  }
+  .about-intro-grid {
+    padding-block: 32px;
+    gap: 24px;
+  }
+  .about-intro h1 {
+    font-size: clamp(40px, 10vw, 58px);
+    max-width: 16ch;
+  }
+  .about-intro-aside > p {
+    font-size: 16px;
+    max-width: 100%;
+    margin-bottom: 8px;
+  }
+  .about-atelier > :is(img, svg) {
+    height: 300px;
+  }
+  .about-atelier figcaption {
+    font-size: 11px;
+    gap: 10px;
+  }
+  .about-story-copy > .about-lead {
+    font-size: 18px;
+  }
+  .about-values h2 {
+    margin-bottom: 32px;
+  }
+  .about-values-grid {
+    gap: 28px;
+  }
+  .about-value-top {
+    margin-bottom: 20px;
+  }
+  .about-values-grid p {
+    max-width: 100%;
+  }
+  .about-invitation-photo > :is(img, svg) {
+    min-height: 0;
+    height: 300px;
+  }
+  .about-invitation-copy {
+    padding: 32px 24px;
   }
 }
