@@ -1,12 +1,13 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { Link } from 'react-router';
-import { Heart, ArrowUpRight } from 'lucide-react';
+import { Heart, ArrowUpRight, Check, Layers, ChevronDown } from 'lucide-react';
 import { toast } from 'sonner';
 import { useLocale, money } from '../features/i18n';
 import type { Product, Pricing } from '../types/domain';
 import { useOwner } from '../features/auth/store';
 import { useWishlist } from '../features/wishlist/store';
-import { displayPrice, categories } from '../data/catalog';
+import { displayPrice, categories, colors, unitPrice, variantImage } from '../data/catalog';
+import { productCopy, quickViewCopy } from '../features/product/content';
 import { useState, type ImgHTMLAttributes } from 'react';
 import { Modal, Button } from './ui';
 export function LocalImage({ alt, ...props }: ImgHTMLAttributes<HTMLImageElement>) {
@@ -86,16 +87,10 @@ export function ProductCard({ product: p }: { product: Product }) {
         )}
         <Modal
           title={p.name[locale]}
+          className="quick-view-dialog"
           trigger={<Button className="quick-view">{t('quickView')}</Button>}
         >
-          <LocalImage className="quick-image" src={p.imageUrls[0]} alt={p.name[locale]} />
-          <p>{p.description[locale]}</p>
-          <p className="price">{money(displayPrice(p), locale)}</p>
-          <Dialog.Close asChild>
-            <Link className="button" to={`/product/${p.slug}`}>
-              {t('description')} ↗
-            </Link>
-          </Dialog.Close>
+          <QuickViewPreview product={p} />
         </Modal>
       </div>
       <Link to={`/product/${p.slug}`} className="product-name">
@@ -106,6 +101,120 @@ export function ProductCard({ product: p }: { product: Product }) {
         {p.compareAtPriceVnd && <del>{money(p.compareAtPriceVnd, locale)}</del>}
       </p>
     </article>
+  );
+}
+function QuickViewPreview({ product: p }: { product: Product }) {
+  const { t, locale } = useLocale();
+  const productColors = colors.filter((color) => p.variants.some((v) => v.colorId === color.id));
+  const [colorId, setColorId] = useState(productColors[0].id);
+  const color = productColors.find((c) => c.id === colorId)!;
+  const variants = p.variants.filter((v) => v.colorId === colorId);
+  const available = variants.some((v) => v.stock > 0);
+  const pricedVariants = available ? variants.filter((v) => v.stock > 0) : variants;
+  const price = Math.min(...pricedVariants.map((v) => unitPrice(p, v.id)));
+  const compare = p.compareAtPriceVnd && p.compareAtPriceVnd > price ? p.compareAtPriceVnd : null;
+  const category = categories.find((c) => c.id === p.categoryId);
+  return (
+    <div className="quick-preview">
+      <section className="quick-preview-gallery" aria-label={t('color')}>
+        <div className="quick-preview-photo">
+          <LocalImage
+            key={colorId}
+            src={variantImage(p, variants[0].id)}
+            alt={`${p.name[locale]} · ${color.name[locale]}`}
+            width="600"
+            height="750"
+          />
+          <span className="quick-preview-photo-label">
+            FLUIVIX <span aria-hidden="true">/</span> {t('quickView')}
+          </span>
+          <Favorite id={p.id} />
+        </div>
+        <div className="quick-preview-palette">
+          <p>
+            {t('color')} <strong aria-live="polite">{color.name[locale]}</strong>
+          </p>
+          <div className="quick-preview-swatches" role="group" aria-label={t('color')}>
+            {productColors.map((c) => (
+              <button
+                key={c.id}
+                type="button"
+                aria-label={c.name[locale]}
+                aria-pressed={colorId === c.id}
+                onClick={() => setColorId(c.id)}
+                style={{ backgroundColor: c.hex }}
+              >
+                {colorId === c.id && (
+                  <Check
+                    size={16}
+                    aria-hidden="true"
+                    style={{ color: c.id === 'sand' || c.id === 'cream' ? '#292c2d' : '#fff' }}
+                  />
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section className="quick-preview-info" aria-label={productCopy.information[locale]}>
+        <div className="quick-preview-heading">
+          <p className="quick-preview-eyebrow">{category?.name[locale]}</p>
+          <h3>{p.name[locale]}</h3>
+          <p className="quick-preview-code">
+            {productCopy.productCode[locale]} · {p.sku}
+          </p>
+        </div>
+        <div className="quick-preview-pricing" aria-live="polite">
+          <span>{quickViewCopy.from[locale]}</span>
+          <div>
+            <strong>{money(price, locale)}</strong>
+            {compare && <del>{money(compare, locale)}</del>}
+          </div>
+          <p className="quick-preview-stock" data-available={available}>
+            <span aria-hidden="true" />
+            {t(available ? 'inStock' : 'soldOut')} · {color.name[locale]}
+          </p>
+        </div>
+        <p className="quick-preview-description">{p.description[locale]}</p>
+        <div className="quick-preview-sizes">
+          <p>
+            {t('size')} <span>{quickViewCopy.sizePreview[locale]}</span>
+          </p>
+          <ul aria-label={t('size')}>
+            {variants.map((v) => (
+              <li key={v.id} data-unavailable={v.stock === 0}>
+                {v.size}
+                <span className="sr-only"> · {t(v.stock > 0 ? 'inStock' : 'soldOut')}</span>
+              </li>
+            ))}
+          </ul>
+          <small>{quickViewCopy.sizeHint[locale]}</small>
+        </div>
+        <div className="quick-preview-fabric">
+          <Layers size={19} aria-hidden="true" />
+          <div>
+            <h4>{t('material')}</h4>
+            <p>{p.materials[locale]}</p>
+          </div>
+        </div>
+        <details className="quick-preview-care">
+          <summary>
+            {t('care')}
+            <ChevronDown size={16} aria-hidden="true" />
+          </summary>
+          <p>{p.care[locale]}</p>
+        </details>
+        <div className="quick-preview-action">
+          <Dialog.Close asChild>
+            <Link className="button" to={`/product/${p.slug}`}>
+              {quickViewCopy.details[locale]}
+              <ArrowUpRight size={18} aria-hidden="true" />
+            </Link>
+          </Dialog.Close>
+          <p>{productCopy.priceNote[locale]}</p>
+        </div>
+      </section>
+    </div>
   );
 }
 export function ProductGrid({ items }: { items: Product[] }) {

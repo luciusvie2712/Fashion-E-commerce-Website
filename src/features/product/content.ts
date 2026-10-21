@@ -1,5 +1,30 @@
 import { localized as l } from '../../types/domain';
 
+export const quickViewCopy = {
+  from: l('Giá từ', 'From', '시작 가격', '起价', '最低価格'),
+  sizePreview: l(
+    'Theo màu đang xem',
+    'For this color',
+    '현재 색상 기준',
+    '当前颜色',
+    '表示中のカラー',
+  ),
+  sizeHint: l(
+    'Size gạch ngang đã hết hàng. Chọn size và số lượng tại trang chi tiết.',
+    'Crossed-out sizes are sold out. Choose your size and quantity on the product page.',
+    '취소선이 있는 사이즈는 품절입니다. 상품 페이지에서 사이즈와 수량을 선택하세요.',
+    '划线尺码已售罄。请在商品详情页选择尺码和数量。',
+    '取り消し線のサイズは在庫切れです。商品ページでサイズと数量をお選びください。',
+  ),
+  details: l(
+    'Khám phá sản phẩm',
+    'Explore product',
+    '상품 자세히 보기',
+    '查看商品详情',
+    '商品を詳しく見る',
+  ),
+};
+
 export const productCopy = {
   information: l('Thông tin sản phẩm', 'Product information', '상품 정보', '商品信息', '商品情報'),
   selection: l(
