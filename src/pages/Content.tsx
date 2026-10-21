@@ -1,10 +1,11 @@
 import { Link, useLocation } from 'react-router';
 import { useLocale } from '../features/i18n';
-import { stories, faq } from '../data/content';
+import { stories } from '../data/content';
 import { products, collections } from '../data/catalog';
 import { collectionPhoto } from '../data/photography';
 import { AboutPage } from '../features/about/AboutPage';
 import { ContactPage } from '../features/contact/ContactPage';
+import { FaqPage } from '../features/faq/FaqPage';
 import { DemoNotice, SizeTable } from '../components/shared';
 const pageKeys: Record<string, string> = {
   '/about': 'about',
@@ -24,6 +25,7 @@ export function ContentPage() {
     story = stories[key as keyof typeof stories];
   if (key === 'about') return <AboutPage />;
   if (key === 'contact') return <ContactPage />;
+  if (key === 'faq') return <FaqPage />;
   return (
     <section className={`container section ${key === 'lookbook' ? '' : 'reading'}`}>
       <p className="eyebrow">FLUIVIX / DEMO</p>
@@ -45,13 +47,6 @@ export function ContentPage() {
           </Link>
         </>
       )}
-      {key === 'faq' &&
-        faq.map(([q, a], i) => (
-          <details key={i}>
-            <summary>{q[locale]}</summary>
-            <p>{a[locale]}</p>
-          </details>
-        ))}
       {key === 'lookbook' && (
         <div className="collection-grid">
           {collections.map((c) => (
