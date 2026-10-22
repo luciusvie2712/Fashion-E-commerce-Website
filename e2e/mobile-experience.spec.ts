@@ -193,13 +193,15 @@ test('swipe gallery and purchase docks support a complete phone order', async ({
         requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
       ),
   );
-  await page.getByRole('button', { name: mobileCopy.quickAdd.en, exact: true }).tap();
+  // Use pointer activation immediately after the raw CDP swipe: Chromium can suppress
+  // subsequent taps' compatibility clicks. Native tap controls are covered separately.
+  await page.getByRole('button', { name: mobileCopy.quickAdd.en, exact: true }).click();
   await expect(page.locator('.purchase [role="alert"]')).toBeVisible();
-  await page.locator('.purchase').getByRole('button', { name: 'Sand', exact: true }).tap();
-  await page.locator('.purchase').getByRole('button', { name: 'M', exact: true }).tap();
+  await page.locator('.purchase').getByRole('button', { name: 'Sand', exact: true }).click();
+  await page.locator('.purchase').getByRole('button', { name: 'M', exact: true }).click();
   await expect(page.locator('.mobile-product-action strong')).toHaveText('₫279,000');
-  await page.getByRole('button', { name: mobileCopy.quickAdd.en, exact: true }).tap();
-  await page.locator('.header-actions a[href="/cart"]').tap();
+  await page.getByRole('button', { name: mobileCopy.quickAdd.en, exact: true }).click();
+  await page.locator('.header-actions a[href="/cart"]').click();
   const dock = page.locator('.cart-checkout-action');
   await expect(dock).toBeInViewport();
   for (const scroll of [0, 400, 10000]) {
@@ -212,8 +214,8 @@ test('swipe gallery and purchase docks support a complete phone order', async ({
       }),
     ).toBe(true);
   }
-  await dock.getByRole('button', { name: 'Checkout', exact: true }).tap();
-  await page.locator('.checkout-items-toggle').tap();
+  await dock.getByRole('button', { name: 'Checkout', exact: true }).click();
+  await page.locator('.checkout-items-toggle').click();
   await expect(page.locator('.checkout-products .order-product')).toBeVisible();
   for (const [name, value] of [
     ['Recipient', 'Sample Person'],
@@ -224,7 +226,7 @@ test('swipe gallery and purchase docks support a complete phone order', async ({
   ]) {
     await page.getByRole('textbox', { name, exact: true }).fill(value);
   }
-  await page.getByRole('button', { name: 'Place DEMO order', exact: true }).tap();
+  await page.getByRole('button', { name: 'Place DEMO order', exact: true }).click();
   await expect(page).toHaveURL(/checkout\/success/);
   await expect(page.locator('.receipt-products')).toContainText('Minimal T-shirts');
 });

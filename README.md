@@ -63,6 +63,8 @@ Các phiên bản phụ thuộc được khai báo trong [package.json](package.
 - Trình duyệt hiện đại có JavaScript và hỗ trợ Web Storage.
 - Kết nối mạng khi cài đặt các gói phụ thuộc và trình duyệt Playwright lần đầu.
 
+Phiên bản Node được khai báo tại `.nvmrc` và `package.json#engines`, dùng thống nhất cho môi trường phát triển, CI và Vercel. Nếu dùng nvm, chạy `nvm use` trước khi cài dependencies.
+
 ### Chạy ở môi trường phát triển
 
 Tại thư mục gốc của dự án:
@@ -239,6 +241,55 @@ Yêu cầu cấu hình hosting:
 4. Sử dụng HTTPS khi công khai ứng dụng.
 
 File `public/_redirects` cung cấp fallback cho nền tảng tương thích; các host khác cần cấu hình tương đương. Nếu triển khai dưới đường dẫn con, cần điều chỉnh đồng thời Vite `base`, router và các đường dẫn tài nguyên tuyệt đối trước khi build.
+
+### Vercel
+
+Thiết lập dự án với các giá trị sau:
+
+| Thiết lập             | Giá trị                              |
+| --------------------- | ------------------------------------ |
+| Framework Preset      | Vite                                 |
+| Root Directory        | Thư mục gốc repository               |
+| Install Command       | `npm ci`                             |
+| Build Command         | `npm run build`                      |
+| Output Directory      | `dist`                               |
+| Node.js               | `24.x`                               |
+| Environment Variables | Không bắt buộc cho bản demo hiện tại |
+
+[vercel.json](vercel.json) cấu hình rewrite về `index.html` để React Router xử lý truy cập trực tiếp và refresh. File này cũng thiết lập `X-Content-Type-Options`, `X-Frame-Options` và `Referrer-Policy`; `public/_redirects` không thay thế được cấu hình Vercel. Quy tắc rewrite theo [hướng dẫn Vite SPA của Vercel](https://vercel.com/docs/frameworks/frontend/vite#using-vite-to-make-spas).
+
+Metadata tiêu đề, mô tả và Open Graph đã có trong `index.html` và `src/app/metadata.ts`. Đây là SPA với metadata cập nhật phía trình duyệt; không có SSR hoặc prerender riêng cho từng sản phẩm. Chưa cấu hình canonical URL hoặc sitemap theo domain khi chưa có địa chỉ triển khai chính thức. Không áp dụng cache dài hạn tùy chỉnh cho HTML hoặc ảnh có tên cố định để tránh nội dung cũ sau cập nhật.
+
+### CI trên GitHub
+
+[Workflow CI](.github/workflows/ci.yml) chạy khi push hoặc mở pull request vào `main`: cài dependencies bằng `npm ci`, sau đó chạy `npm run check` trên Ubuntu và Node.js 24. Workflow chỉ có quyền đọc repository và không tự triển khai website. Playwright E2E được chạy riêng theo hướng dẫn kiểm thử.
+
+### Xác minh sau triển khai
+
+Sau khi có domain, chạy smoke test với URL thật. Biến `FLUIVIX_BASE_URL` khiến Playwright sử dụng website đã triển khai và không khởi động máy chủ cục bộ:
+
+```powershell
+# Thay URL bên dưới bằng domain thực tế, không có dấu / ở cuối.
+$env:FLUIVIX_BASE_URL = 'https://your-project.vercel.app'
+npx playwright test e2e/deployment.spec.ts
+Remove-Item Env:FLUIVIX_BASE_URL
+```
+
+```bash
+FLUIVIX_BASE_URL=https://your-project.vercel.app npx playwright test e2e/deployment.spec.ts
+```
+
+Smoke test kiểm tra trực tiếp và refresh trang sản phẩm, giỏ hàng, checkout và lịch sử đơn ở cả 5 locale trên mobile/desktop; đồng thời kiểm tra lỗi JavaScript, lỗi tải tài nguyên, ảnh và font. Tài khoản demo và giỏ hàng được tạo qua giao diện, dữ liệu chỉ nằm trong trình duyệt kiểm thử.
+
+Tiếp tục xác minh các luồng mua sắm trên domain thật:
+
+```powershell
+$env:FLUIVIX_BASE_URL = 'https://your-project.vercel.app'
+npx playwright test e2e/shopping.spec.ts e2e/checkout.spec.ts
+Remove-Item Env:FLUIVIX_BASE_URL
+```
+
+Kiểm tra thêm Network/Console trong DevTools, chuyển ngôn ngữ, hình ảnh WebP, font, JavaScript chunks và các response header. Kết quả chạy trên `vite preview` không xác nhận rewrite, cache hoặc headers thực tế của Vercel; các mục này cần kiểm tra lại sau deploy.
 
 ## Quy ước phát triển
 
