@@ -93,3 +93,17 @@ test('interrupted reveals restore masks, image transforms and focused controls',
   await expect(page.locator('.hero-media > img')).toHaveCSS('opacity', '1');
   await expect(page.locator('.hero-media > img')).toHaveCSS('clip-path', 'none');
 });
+
+test('product title links keep their hit boxes while cards reveal', async ({ page }) => {
+  for (const width of [390, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/');
+    await page.locator('.header select').selectOption('en');
+    const title = page.locator('.product-name').first();
+    const destination = await title.getAttribute('href');
+    await title.scrollIntoViewIfNeeded();
+    await title.click();
+    await expect(page).toHaveURL(new RegExp(`${destination}$`));
+    await expect(page.locator('.purchase h1')).toBeVisible();
+  }
+});

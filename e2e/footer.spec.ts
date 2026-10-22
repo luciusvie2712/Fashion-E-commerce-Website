@@ -15,6 +15,9 @@ test('footer remains readable and accessible across languages and widths', async
     await expect(footer.locator('nav a')).toHaveCount(15);
     for (const width of [320, 390, 768, 1024, 1440]) {
       await page.setViewportSize({ width, height: 900 });
+      for (const group of await footer.locator('details.site-footer-column').all()) {
+        if ((await group.getAttribute('open')) === null) await group.locator('summary').click();
+      }
       await footer.scrollIntoViewIfNeeded();
       expect(
         await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),

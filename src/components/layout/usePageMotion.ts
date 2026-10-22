@@ -130,9 +130,8 @@ export function usePageMotion(routeKey: string) {
             delay,
             ease: 'outQuint',
           });
-        const copy = node.querySelectorAll<HTMLElement>(
-          ':scope > .product-name, :scope > .price, :scope > span',
-        );
+        // Keep link hit boxes stable: resetting a translated link on focus can cancel its first click.
+        const copy = node.querySelectorAll<HTMLElement>(':scope > .price, :scope > span');
         copy.forEach((child, index) =>
           play(record, child, {
             transform: [

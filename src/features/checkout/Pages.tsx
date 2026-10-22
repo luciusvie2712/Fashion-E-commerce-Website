@@ -16,6 +16,7 @@ import { Empty, Summary, DemoNotice, OrderProduct } from '../../components/share
 import { Button } from '../../components/ui';
 import { findProduct, findVariant, colors, unitPrice, variantImage } from '../../data/catalog';
 import { Receipt } from '../orders/Pages';
+import { mobileCopy } from '../../components/mobile-content';
 export function Checkout() {
   const { t, locale } = useLocale(),
     owner = useOwner(),
@@ -28,6 +29,7 @@ export function Checkout() {
     [payment, setPayment] = useState<Payment>('COD'),
     [coupon, setCoupon] = useState(''),
     [applied, setApplied] = useState(''),
+    [itemsOpen, setItemsOpen] = useState(false),
     [error, setError] = useState('');
   const locked = useRef(false);
   const form = useForm<ContactFields>({
@@ -75,6 +77,10 @@ export function Checkout() {
     <section className="container section checkout-page">
       <h1>{t('checkout')}</h1>
       <DemoNotice />
+      <div className="checkout-mobile-intro">
+        <Link to="/cart">{mobileCopy.backToBag[locale]}</Link>
+        <strong>{money(pricing.totalVnd, locale)}</strong>
+      </div>
       <form className="two-column" noValidate onSubmit={form.handleSubmit(submit)}>
         <div className="form checkout-fields">
           <h2>{t('recipient')}</h2>
@@ -152,7 +158,19 @@ export function Checkout() {
         </div>
         <aside className="summary-panel checkout-summary">
           <h2>{t('cart')}</h2>
-          <div className="checkout-products">
+          <button
+            type="button"
+            className="checkout-items-toggle"
+            aria-expanded={itemsOpen}
+            aria-controls="checkout-products"
+            onClick={() => setItemsOpen((open) => !open)}
+          >
+            {mobileCopy.review[locale]}{' '}
+            <span>
+              {intent.items.length} {itemsOpen ? '−' : '+'}
+            </span>
+          </button>
+          <div id="checkout-products" className={`checkout-products${itemsOpen ? ' is-open' : ''}`}>
             {intent.items.map((line) => {
               const product = findProduct(line.productId),
                 variant = findVariant(line.variantId);

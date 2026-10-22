@@ -7,8 +7,9 @@ async function centeredThumbnail(row: Locator) {
   await expect(image).toHaveJSProperty('complete', true);
   const box = (await image.boundingBox())!,
     parent = (await row.boundingBox())!;
-  expect(box.width).toBe(80);
-  expect(box.height).toBe(100);
+  const mobile = row.page().viewportSize()!.width <= 700;
+  expect(box.width).toBe(mobile ? 58 : 80);
+  expect(box.height).toBe(mobile ? 74 : 100);
   expect(Math.abs(box.y + box.height / 2 - parent.y - parent.height / 2)).toBeLessThanOrEqual(1);
 }
 
@@ -107,6 +108,8 @@ test('checkout, order cards, receipts and tracking keep fixed centered images an
       ]) {
         await page.goto(route);
         await expect(page.locator('main')).toBeVisible();
+        if (width <= 700 && route === '/checkout')
+          await page.locator('.checkout-items-toggle').click();
         expect(
           await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth),
           `${locale} ${width} ${route}`,

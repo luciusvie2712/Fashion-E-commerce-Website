@@ -12,6 +12,7 @@ test('blocked local storage leaves a usable shopping session and warning', async
   await page.locator('.header select').selectOption('en');
   await expect(page.locator('.warning')).toContainText('may not survive');
   await page.locator('.product-name').first().click();
+  await expect(page).toHaveURL(/\/product\//);
   await page.getByRole('button', { name: 'Ink', exact: true }).click();
   await page.getByRole('button', { name: 'M', exact: true }).click();
   await page.getByRole('button', { name: 'Add to bag', exact: true }).click();

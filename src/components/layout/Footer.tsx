@@ -1,4 +1,12 @@
-import { ArrowRight, ArrowUp, ArrowUpRight, RotateCcw, ShieldCheck } from 'lucide-react';
+import {
+  ArrowRight,
+  ArrowUp,
+  ArrowUpRight,
+  RotateCcw,
+  ShieldCheck,
+  ChevronDown,
+} from 'lucide-react';
+import { useMediaQuery } from '../../lib/useMediaQuery';
 import { Link } from 'react-router';
 import { useLocale } from '../../features/i18n';
 import { resetFluivixStorage } from '../../lib/storage';
@@ -39,6 +47,7 @@ const groups = [
 
 export function Footer() {
   const { t } = useLocale();
+  const mobile = useMediaQuery('(max-width: 700px)');
   const backToTop = () => {
     document.querySelector<HTMLAnchorElement>('.header .wordmark')?.focus({ preventScroll: true });
     window.scrollTo({
@@ -72,9 +81,8 @@ export function Footer() {
               <ArrowRight size={17} aria-hidden="true" />
             </Link>
           </div>
-          {groups.map((group) => (
-            <div className="site-footer-column" key={group.title}>
-              <h3 id={`footer-${group.title}`}>{t(group.title)}</h3>
+          {groups.map((group) => {
+            const links = (
               <nav aria-labelledby={`footer-${group.title}`}>
                 {group.links.map(([to, key]) => (
                   <Link key={to} to={to}>
@@ -82,8 +90,22 @@ export function Footer() {
                   </Link>
                 ))}
               </nav>
-            </div>
-          ))}
+            );
+            return mobile ? (
+              <details className="site-footer-column" key={group.title}>
+                <summary>
+                  <h3 id={`footer-${group.title}`}>{t(group.title)}</h3>
+                  <ChevronDown size={17} aria-hidden="true" />
+                </summary>
+                {links}
+              </details>
+            ) : (
+              <div className="site-footer-column" key={group.title}>
+                <h3 id={`footer-${group.title}`}>{t(group.title)}</h3>
+                {links}
+              </div>
+            );
+          })}
         </div>
         <div className="site-footer-disclosure">
           <ShieldCheck size={23} strokeWidth={1.4} aria-hidden="true" />

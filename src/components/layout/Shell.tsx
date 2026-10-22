@@ -13,7 +13,9 @@ import {
   ChevronDown,
   ArrowRight,
   Package,
+  House,
 } from 'lucide-react';
+import { mobileCopy } from '../mobile-content';
 import { useLocale } from '../../features/i18n';
 import { useCart } from '../../features/cart/store';
 import { useWishlist } from '../../features/wishlist/store';
@@ -183,6 +185,7 @@ export function Shell() {
     applyPageMetadata(pageMetadata(location.pathname, locale, t), locale);
   }, [location.pathname, t, locale]);
   const count = (cart.carts[owner] ?? []).reduce((n, l) => n + l.quantity, 0);
+  const mobileNavigation = !/^\/(product\/|cart$|checkout)/.test(location.pathname);
   return (
     <>
       <a className="skip" href="#main">
@@ -277,10 +280,52 @@ export function Shell() {
           {t('storageWarning')}
         </p>
       )}
-      <main id="main" tabIndex={-1}>
+      <main
+        id="main"
+        tabIndex={-1}
+        className={mobileNavigation ? 'has-mobile-navigation' : undefined}
+      >
         <Outlet />
       </main>
       <Footer />
+      {mobileNavigation && (
+        <nav className="mobile-bottom-nav" aria-label={mobileCopy.navigation[locale]}>
+          {(
+            [
+              ['/', 'home', House],
+              ['/shop', 'shop', ShoppingBag],
+              ['/wishlist', 'wishlist', Heart],
+              ['/account', 'account', UserRound],
+            ] as const
+          ).map(([to, key, Icon]) => (
+            <Link
+              key={to}
+              to={to}
+              aria-current={
+                (
+                  key === 'home'
+                    ? location.pathname === '/'
+                    : key === 'shop'
+                      ? /^\/(shop|category|collections|search|new-arrivals|best-sellers|sale|lookbook)(\/|$)/.test(
+                          location.pathname,
+                        )
+                      : key === 'account'
+                        ? /^\/(account|login|register|forgot-password)(\/|$)/.test(
+                            location.pathname,
+                          )
+                        : location.pathname === to
+                )
+                  ? 'page'
+                  : undefined
+              }
+            >
+              <Icon size={21} strokeWidth={1.6} aria-hidden="true" />
+              <span>{t(key)}</span>
+              {key === 'wishlist' && !!favorites.lists[owner]?.length && <i aria-hidden="true" />}
+            </Link>
+          ))}
+        </nav>
+      )}
     </>
   );
 }

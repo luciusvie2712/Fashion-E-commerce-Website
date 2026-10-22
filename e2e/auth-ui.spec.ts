@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { resources } from '../src/features/i18n/dictionaries';
 
-test('compact forms fit desktop viewports and keep mobile submit controls visible', async ({
+test('compact desktop forms and scrollable phone forms keep submit controls reachable', async ({
   page,
 }) => {
   test.setTimeout(120000);
@@ -22,14 +22,16 @@ test('compact forms fit desktop viewports and keep mobile submit controls visibl
         const card = page.locator('.auth-shell'),
           submit = card.locator('form > .button');
         await expect(submit).toBeVisible();
-        const box = (await (width > 1000 ? card : submit).boundingBox())!;
         const cardBox = (await card.boundingBox())!;
-        expect(
-          Math.abs(cardBox.y + cardBox.height - (height - (width < 600 ? 12 : 16))),
-          `${locale} ${route} fills one viewport`,
-        ).toBeLessThanOrEqual(2);
+        if (width > 1000)
+          expect(
+            Math.abs(cardBox.y + cardBox.height - (height - (width < 600 ? 12 : 16))),
+            `${locale} ${route} fills one viewport`,
+          ).toBeLessThanOrEqual(2);
+        if (width < 600) await submit.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+        const box = (await (width > 1000 ? card : submit).boundingBox())!;
         expect(box.y + box.height, `${locale} ${width}x${height} ${route}`).toBeLessThanOrEqual(
-          height - 8,
+          height - (width < 600 ? 76 : 8),
         );
         expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
           true,

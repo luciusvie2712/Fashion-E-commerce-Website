@@ -1,4 +1,5 @@
 import { Link, useLocation, useParams, useSearchParams } from 'react-router';
+import * as Dialog from '@radix-ui/react-dialog';
 import { useLayoutEffect, useRef } from 'react';
 import { ArrowUpRight, SlidersHorizontal } from 'lucide-react';
 import { useLocale } from '../i18n';
@@ -8,6 +9,7 @@ import { Button, Modal } from '../../components/ui';
 import { filterCatalog } from './selectors';
 import { Newsletter } from '../../components/layout/Shell';
 import { campaignHero, homepageHero, categoryPhoto, collectionPhoto } from '../../data/photography';
+import { mobileCopy } from '../../components/mobile-content';
 export function Home() {
   const { t, locale } = useLocale();
   const heroRef = useRef<HTMLElement>(null);
@@ -28,7 +30,7 @@ export function Home() {
     };
   }, []);
   return (
-    <>
+    <div className="home-page">
       <section className="hero" ref={heroRef}>
         <picture className="hero-media">
           <source media="(min-width: 901px)" srcSet={homepageHero} />
@@ -54,7 +56,7 @@ export function Home() {
           <h2>{t('category')}</h2>
           <Link to="/shop">{t('viewAll')} ↗</Link>
         </div>
-        <div className="category-grid">
+        <div className="category-grid" role="region" aria-label={t('category')} tabIndex={0}>
           {categories.map((c, i) => (
             <Link key={c.id} to={`/category/${c.id}`}>
               <img
@@ -127,13 +129,13 @@ export function Home() {
         ))}
       </section>
       <Newsletter />
-    </>
+    </div>
   );
 }
 export function CollectionList() {
   const { t, locale } = useLocale();
   return (
-    <section className="container section">
+    <section className="container section collections-page">
       <p className="eyebrow">FLUIVIX / 2026</p>
       <h1>{t('collections')}</h1>
       <div className="collection-grid">
@@ -283,7 +285,7 @@ export function Catalog() {
     </div>
   );
   return (
-    <section className="container section">
+    <section className="container section catalog-page">
       <nav className="breadcrumb">
         <Link to="/">{t('home')}</Link> / {title}
       </nav>
@@ -295,9 +297,26 @@ export function Catalog() {
         </div>
         <p>{t('results', { count: filtered.length })}</p>
       </div>
+      {!isCategory && (
+        <nav className="catalog-category-rail" aria-label={mobileCopy.browse[locale]}>
+          <button aria-pressed={!params.has('category')} onClick={() => update('category', '')}>
+            {t('all')}
+          </button>
+          {categories.map((c) => (
+            <button
+              key={c.id}
+              aria-pressed={params.get('category') === c.id}
+              onClick={() => update('category', c.id)}
+            >
+              {c.name[locale]}
+            </button>
+          ))}
+        </nav>
+      )}
       <div className="catalog-toolbar">
         <Modal
           title={t('filters')}
+          className="catalog-filter-sheet"
           trigger={
             <Button className="secondary mobile-filter">
               <SlidersHorizontal size={16} />
@@ -306,6 +325,14 @@ export function Catalog() {
           }
         >
           {filters}
+          <div className="catalog-filter-result">
+            <Dialog.Close asChild>
+              <Button>
+                {t('results', { count: filtered.length })}
+                <ArrowUpRight size={18} aria-hidden="true" />
+              </Button>
+            </Dialog.Close>
+          </div>
         </Modal>
         <label>
           {t('sort')}

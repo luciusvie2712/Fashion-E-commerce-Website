@@ -7,6 +7,14 @@ export function useScrollHeader(routeKey: string) {
     const header = ref.current;
     if (!header) return;
     header.dataset.hidden = 'false';
+    const measure = () =>
+      document.documentElement.style.setProperty(
+        '--header-dock-height',
+        `${header.offsetHeight}px`,
+      );
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(header);
     let previous = Math.max(0, window.scrollY);
     let distance = 0;
     let frame = 0;
@@ -39,6 +47,7 @@ export function useScrollHeader(routeKey: string) {
     header.addEventListener('focusin', show);
     window.addEventListener('scroll', scroll, { passive: true });
     return () => {
+      observer.disconnect();
       cancelAnimationFrame(frame);
       header.removeEventListener('focusin', show);
       window.removeEventListener('scroll', scroll);

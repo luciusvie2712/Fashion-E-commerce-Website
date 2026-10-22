@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link, NavLink, Outlet, useNavigate } from 'react-router';
+import { Link, NavLink, Outlet, useNavigate, useLocation } from 'react-router';
+import { LogOut } from 'lucide-react';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
@@ -24,36 +25,54 @@ export const contactSchema = z.object({
   street: z.string().trim().min(3, 'required'),
 });
 export type ContactFields = z.input<typeof contactSchema>;
+const accountLinks = [
+  ['/account', 'account'],
+  ['/account/profile', 'profile'],
+  ['/account/addresses', 'addresses'],
+  ['/account/orders', 'orders'],
+  ['/account/vouchers', 'vouchers'],
+] as const;
 export function AccountLayout() {
   const { t } = useLocale(),
     auth = useAuth(),
-    navigate = useNavigate();
+    navigate = useNavigate(),
+    location = useLocation();
+  const logout = () => {
+    auth.logout();
+    navigate('/login');
+  };
   return (
-    <section className="container section">
+    <section className="container section account-page">
+      <div className="account-mobile-menu">
+        <label>
+          {t('account')}
+          <select value={location.pathname} onChange={(e) => navigate(e.target.value)}>
+            {!accountLinks.some(([path]) => path === location.pathname) && (
+              <option value={location.pathname}>{t('receipt')}</option>
+            )}
+            {accountLinks.map(([path, key]) => (
+              <option key={path} value={path}>
+                {t(key)}
+              </option>
+            ))}
+          </select>
+        </label>
+        <button className="icon" aria-label={t('logout')} onClick={logout}>
+          <LogOut size={20} aria-hidden="true" />
+        </button>
+      </div>
       <div className="account-layout">
         <nav className="account-nav">
-          {[
-            ['/account', 'account'],
-            ['/account/profile', 'profile'],
-            ['/account/addresses', 'addresses'],
-            ['/account/orders', 'orders'],
-            ['/account/vouchers', 'vouchers'],
-          ].map(([path, key]) => (
+          {accountLinks.map(([path, key]) => (
             <NavLink end key={path} to={path}>
               {t(key)}
             </NavLink>
           ))}
-          <button
-            className="text-button"
-            onClick={() => {
-              auth.logout();
-              navigate('/login');
-            }}
-          >
+          <button className="text-button" onClick={logout}>
             {t('logout')}
           </button>
         </nav>
-        <div>
+        <div className="account-content">
           <DemoNotice />
           <Outlet />
         </div>
@@ -70,7 +89,7 @@ export function AccountHome() {
   return (
     <>
       <h1>{t('account')}</h1>
-      <div className="panel">
+      <div className="panel account-member-card">
         <h2>{profile?.fullName}</h2>
         <p>{profile?.email}</p>
         <Link to="/account/profile">{t('edit')} ↗</Link>
@@ -163,6 +182,7 @@ export function AddressForm({ value, onSaved }: { value?: Address; onSaved?: () 
           <input
             aria-label={t(key)}
             {...form.register(key)}
+            inputMode={key === 'phone' ? 'tel' : 'text'}
             aria-invalid={!!form.formState.errors[key]}
             aria-describedby={`${key}-error`}
           />
@@ -265,7 +285,7 @@ export function Vouchers() {
       {coupons
         .filter((c) => c.active && c.code !== 'EXPIRED')
         .map((c) => (
-          <article className="panel" key={c.code}>
+          <article className="panel voucher-card" key={c.code}>
             <h2>{c.code}</h2>
             <p>
               {t('subtotal')}: ≥ {money(c.min, locale)}

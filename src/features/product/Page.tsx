@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { toast } from 'sonner';
 import { products, categories, collections, colors, unitPrice } from '../../data/catalog';
@@ -22,6 +22,7 @@ import {
 import type { Product } from '../../types/domain';
 import { productCopy as copy } from './content';
 import { ProductImageViewer } from './ImageViewer';
+import { mobileCopy } from '../../components/mobile-content';
 import { useLocale, money } from '../i18n';
 import { useCart } from '../cart/store';
 import { useOwner } from '../auth/store';
@@ -53,6 +54,7 @@ function ProductDetails({ product: p }: { product: Product }) {
     if (p) view(owner, p.id);
   }, [p, owner, view]);
   const activeImage = Math.min(image, p.imageUrls.length - 1);
+  const swipe = useRef({ x: 0, y: 0, moved: false });
   const variant =
     p.variants.length === 1
       ? p.variants[0]
@@ -101,24 +103,68 @@ function ProductDetails({ product: p }: { product: Product }) {
         </nav>
         <div className="pdp">
           <div className="gallery">
-            <ProductImageViewer
-              product={p}
-              initialIndex={activeImage}
-              trigger={
-                <button className="gallery-main" aria-label={t('zoom')}>
-                  <LocalImage
-                    src={p.imageUrls[activeImage]}
-                    alt={p.name[locale]}
-                    width="400"
-                    height="500"
-                  />
-                  <span className="gallery-zoom-hint">
-                    <ZoomIn size={17} aria-hidden="true" />
-                    {t('zoom')}
-                  </span>
-                </button>
-              }
-            />
+            <div className="gallery-stage">
+              <ProductImageViewer
+                product={p}
+                initialIndex={activeImage}
+                trigger={
+                  <button
+                    className="gallery-main"
+                    aria-label={t('zoom')}
+                    onKeyDown={() => {
+                      swipe.current.moved = false;
+                    }}
+                    onPointerDown={(event) => {
+                      if (event.pointerType === 'mouse') swipe.current.moved = false;
+                    }}
+                    onTouchStart={(event) => {
+                      swipe.current = {
+                        x: event.touches[0].clientX,
+                        y: event.touches[0].clientY,
+                        moved: false,
+                      };
+                    }}
+                    onTouchEnd={(event) => {
+                      const dx = event.changedTouches[0].clientX - swipe.current.x;
+                      const dy = event.changedTouches[0].clientY - swipe.current.y;
+                      if (
+                        Math.abs(dx) > 45 &&
+                        Math.abs(dx) > Math.abs(dy) &&
+                        p.imageUrls.length > 1
+                      ) {
+                        event.preventDefault();
+                        swipe.current.moved = true;
+                        setImage(
+                          (current) =>
+                            (current + (dx < 0 ? 1 : -1) + p.imageUrls.length) % p.imageUrls.length,
+                        );
+                      }
+                    }}
+                    onClickCapture={(event) => {
+                      if (swipe.current.moved) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        swipe.current.moved = false;
+                      }
+                    }}
+                  >
+                    <LocalImage
+                      src={p.imageUrls[activeImage]}
+                      alt={p.name[locale]}
+                      width="400"
+                      height="500"
+                    />
+                    <span className="gallery-zoom-hint">
+                      <ZoomIn size={17} aria-hidden="true" />
+                      {t('zoom')}
+                    </span>
+                  </button>
+                }
+              />
+              <span className="mobile-gallery-count" aria-hidden="true">
+                {activeImage + 1} / {p.imageUrls.length}
+              </span>
+            </div>
             <div className="thumbnails">
               {p.imageUrls.map((url, i) => (
                 <button
@@ -131,8 +177,11 @@ function ProductDetails({ product: p }: { product: Product }) {
                 </button>
               ))}
             </div>
+            {p.imageUrls.length > 1 && (
+              <p className="mobile-gallery-swipe">{mobileCopy.swipe[locale]}</p>
+            )}
           </div>
-          <div className="purchase">
+          <div className="purchase" id="product-options">
             <p className="eyebrow">FLUIVIX / {category.name[locale]}</p>
             <h1>{p.name[locale]}</h1>
             <p className="large-price">
@@ -310,6 +359,38 @@ function ProductDetails({ product: p }: { product: Product }) {
               </Link>
             </div>
           </div>
+        </div>
+        <div className="mobile-product-action">
+          <div>
+            <span>
+              {variant?.stock === 0
+                ? t('soldOut')
+                : variant
+                  ? `${colorName} / ${size}`
+                  : t('choose')}
+            </span>
+            <strong>{money(price, locale)}</strong>
+          </div>
+          <Button
+            aria-label={mobileCopy.quickAdd[locale]}
+            disabled={variant?.stock === 0}
+            onClick={() => {
+              buy(false);
+              if (!variant)
+                document
+                  .querySelector<HTMLButtonElement>(
+                    color
+                      ? '.product-sizes button:not(:disabled)'
+                      : '#product-options fieldset button',
+                  )
+                  ?.focus();
+              else if (!Number.isInteger(quantity) || quantity < 1 || quantity > variant.stock)
+                document.getElementById('product-quantity')?.focus();
+            }}
+          >
+            <ShoppingBag size={18} aria-hidden="true" />
+            {t('add')}
+          </Button>
         </div>
         <section
           className="product-information"
