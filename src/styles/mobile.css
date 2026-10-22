@@ -178,7 +178,7 @@
   }
   .home-page .hero-copy {
     padding-inline: 24px;
-    padding-bottom: 86px;
+    padding-bottom: 28px;
   }
   .home-page .hero-copy > p:not(.eyebrow) {
     font-size: 14px;
@@ -1400,6 +1400,32 @@
   }
   .cart-summary {
     position: static;
+  }
+}
+/* Portrait campaigns follow their photo and copy, without viewport-sized letterboxing. */
+@media (max-width: 700px) and (orientation: portrait) {
+  .home-page .hero {
+    height: auto;
+    grid-template-rows: auto auto;
+  }
+  .home-page .hero-media {
+    height: auto;
+    aspect-ratio: 8 / 5;
+  }
+  .home-page .hero-media > img {
+    object-fit: cover;
+  }
+  .home-page .hero-copy {
+    padding: 24px var(--mobile-gutter) 28px;
+  }
+  .home-page .hero-copy .eyebrow {
+    margin: 0 0 12px;
+  }
+  .home-page .hero-copy h1 {
+    margin: 0 0 16px;
+  }
+  .home-page .hero-copy > p:not(.eyebrow) {
+    margin-bottom: 24px;
   }
 }
 /* Short landscape phones need a scrollable editorial panel, not clipped viewport copy. */
